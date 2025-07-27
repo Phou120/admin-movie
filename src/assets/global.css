@@ -1,0 +1,16 @@
+/* global.css */
+* {
+  font-family: "Noto Sans Lao", sans-serif !important;
+}
+
+/* Add this to global.css as well */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-textarea,
+.ant-select-selector,
+.ant-btn,
+.ant-typography,
+.ant-form-item-label label,
+.ant-picker-input {
+  font-family: "Noto Sans Lao", sans-serif !important;
+}
