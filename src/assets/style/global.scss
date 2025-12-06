@@ -1,0 +1,129 @@
+.page-header {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  .back-button {
+    padding: 0;
+    font-size: 18px;
+    color: #0d334aff;
+
+    &:hover {
+      color: #0d334acc;
+    }
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 50px;
+    color: #0d334aff;
+  }
+}
+
+// Action icons styling
+.action-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-icons .icon {
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.action-icons .edit {
+  color: rgb(251 146 60 / var(--tw-text-opacity, 1));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid currentColor;
+  border-radius: 20%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f9eddf;
+
+  &:hover {
+    color: #f79b31;
+    border-color: #f79b31;
+  }
+}
+
+.action-icons .currency {
+  color: #52c41a; /* green color for currency */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid currentColor;
+  border-radius: 20%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #e5f6dc;
+
+  &:hover {
+    color: #73d13d; /* lighter green on hover */
+    border-color: #73d13d;
+  }
+}
+
+.action-icons .delete {
+  color: #ff4d4f;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid currentColor;
+  border-radius: 20%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8e2e2;
+
+  &:hover {
+    color: #ff7875;
+    border-color: #ff7875;
+  }
+}
+
+.action-icons .dollar {
+  width: 32px; /* adjust size as needed */
+  height: 32px;
+  border: 1px solid currentColor; /* border with current text color */
+  border-radius: 20%; /* make it a circle */
+  cursor: pointer; /* pointer cursor on hover */
+  transition: all 0.3s ease; /* smooth transition */
+  background: #f8ede2;
+
+  &:hover {
+    color: #f79b31;
+    border-color: #f79b31; /* change border color on hover if desired */
+  }
+}
+
+.add-btn {
+  background-color: #0d334aff;
+  border-color: #0d334aff;
+  color: #ffffff;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #0d334acc;
+    border-color: #0d334acc;
+    color: #ffffff;
+  }
+}

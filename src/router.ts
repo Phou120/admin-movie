@@ -1,62 +1,33 @@
 import { createRouter, createWebHistory } from "vue-router";
-import CustomerPage from "./modules/customer/customer.vue";
-import StudentPage from "./modules/student/student.vue";
 import Layout from "./components/layouts/Layout.vue";
-import LoginPage from "./modules/auth/Login.vue";
+import LoginPage from "./modules/admin/auth/Login.vue";
 import { authGuard } from "./common/guards/auth.guard";
-import HomePage from "./modules/home/Home.vue";
-import CourseCategoryPage from "./modules/course-category/CourseCategory.vue";
-import BashBoardPage from "./modules/dashboard/DashBoard.vue";
-import CoursePage from "./modules/course/Course.vue";
-import CourseDetail from "./modules/course/CourseDetail.vue";
+
+// Website
+import WebsiteHome from "./modules/website/home/Home.vue";
+
+// Dashboard
+import AdminDashboard from "./modules/admin/dashboard/DashBoard.vue";
+
+// Available Admin Modules
+import BankPage from "./modules/admin/bank/bank.vue";
+import BankCurrencyPage from "./modules/admin/bank-currency/bank-currency.vue";
+import CategoryPage from "./modules/admin/category/category.vue";
+import RolePage from "./modules/admin/role/role.vue";
+import TaxPage from "./modules/admin/tax/tax.vue";
+import UserPage from "./modules/admin/user/user.vue";
 
 const routes = [
+  // Public Routes
   {
     path: "/",
-    name: "layout",
-    component: Layout,
-    children: [
-      {
-        path: "/bashBoard",
-        name: "bashBoard",
-        component: BashBoardPage,
-      },
-      {
-        path: "/customer",
-        name: "customer",
-        component: CustomerPage,
-      },
-      {
-        path: "/student",
-        name: "student",
-        component: StudentPage,
-      },
-      {
-        path: "/course-category",
-        name: "course-category",
-        component: CourseCategoryPage,
-      },
-      {
-        path: "/course",
-        name: "course",
-        component: CoursePage,
-      },
-      {
-        path: "/course_detail/:id",
-        name: "detail",
-        component: CourseDetail,
-      },
-    ],
-  },
-  {
-    path: "/home",
-    name: "home",
-    component: HomePage,
+    name: "website",
+    component: WebsiteHome,
     meta: {
       skipAuthCheck: true,
     },
   },
-  {
+    {
     path: "/login",
     name: "login",
     component: LoginPage,
@@ -64,13 +35,63 @@ const routes = [
       skipAuthCheck: true,
     },
   },
+  
+  // Admin Layout Routes
   {
-    path: "/register",
-    name: "register",
-    component: () => import("./modules/customer/Register.vue"),
-    meta: {
-      skipAuthCheck: true,
-    },
+    path: "/",
+    name: "layout",
+    component: Layout,
+    children: [
+      // Dashboard
+      {
+        path: "/dashboard",
+        name: "dashboard",
+        component: AdminDashboard,
+      },
+      {
+        path: "/bashBoard",
+        name: "bashBoard",
+        component: AdminDashboard,
+      },
+
+      // User Management
+      {
+        path: "/user",
+        name: "user",
+        component: UserPage,
+      },
+
+      // Content Management
+      {
+        path: "/category",
+        name: "category",
+        component: CategoryPage,
+      },
+
+      // Financial Management
+      {
+        path: "/bank",
+        name: "bank",
+        component: BankPage,
+      },
+      {
+        path: "/bank-currency/:id",
+        name: "bank-currency",
+        component: BankCurrencyPage,
+      },
+      {
+        path: "/tax",
+        name: "tax",
+        component: TaxPage,
+      },
+
+      // System Management
+      {
+        path: "/role",
+        name: "role",
+        component: RolePage,
+      },
+    ],
   },
 ];
 
