@@ -69,12 +69,12 @@
 
         <!-- Created At -->
         <template v-else-if="column.key === 'created_at'">
-          {{ formatDate(record.created_at) }}
+          {{ record.created_at }}
         </template>
 
         <!-- Updated At -->
         <template v-else-if="column.key === 'updated_at'">
-          {{ formatDate(record.updated_at) }}
+          {{ record.updated_at }}
         </template>
 
         <!-- Actions -->
@@ -116,7 +116,6 @@ import {
 } from "@ant-design/icons-vue";
 import { useRoles } from "./composible";
 import type { IRoles } from "./interface/role.interface";
-import formatDate from "../../../common/utils/format-date.util";
 
 const router = useRouter();
 const { fetchAll, deleteRole: deleteRoleApi } = useRoles();

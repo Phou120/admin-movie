@@ -5,7 +5,6 @@ import { BankCurrencyComposible } from "./composible/index";
 import { DeleteOutlined, ArrowLeftOutlined } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IBankCurrencyList } from "./interface/bank-currency.interface";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -15,11 +14,12 @@ import AddButton from "../../../components/AddButton.vue";
 
 const route = useRoute();
 const router = useRouter();
-const bankId = parseInt(route.params.bankId as string);
+const bankId = parseInt(route.params.id as string);
+console.log("bankId", bankId);
 
 // Function to go back to banks page
 function goBackToBanks() {
-  router.push("/banks");
+  router.push("/bank");
 }
 
 const { fetchAll, deleteBankCurrencyById, createBankCurrency } =
@@ -226,11 +226,11 @@ async function deleteBankCurrency(id: number) {
         </template>
 
         <template v-else-if="column.key === 'created_at'">
-          <span>{{ formatDate(record.created_at) }}</span>
+          <span>{{ record.created_at }}</span>
         </template>
 
         <template v-else-if="column.key === 'updated_at'">
-          <span>{{ formatDate(record.updated_at) }}</span>
+          <span>{{ record.updated_at }}</span>
         </template>
 
         <template v-else-if="column.key === 'action'">

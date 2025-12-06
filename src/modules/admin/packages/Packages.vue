@@ -11,7 +11,6 @@ import type {
   IPackagesForm,
   IPackagesData,
 } from "./interface/packages.interface";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -236,15 +235,19 @@ function getPackageTypeLabel(type: string): string {
       </template>
       <template v-else-if="column.key === 'content'">
         <div class="content-cell">
-          <div v-if="record.content" class="rich-content" v-html="record.content"></div>
+          <div
+            v-if="record.content"
+            class="rich-content"
+            v-html="record.content"
+          ></div>
           <span v-else class="no-content">No content</span>
         </div>
       </template>
       <template v-else-if="column.key === 'created_at'">
-        {{ formatDate(record.created_at) }}
+        {{ record.created_at }}
       </template>
       <template v-else-if="column.key === 'updated_at'">
-        {{ formatDate(record.updated_at) }}
+        {{ record.updated_at }}
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">
@@ -374,7 +377,8 @@ function getPackageTypeLabel(type: string): string {
       text-decoration: underline;
     }
 
-    :deep(ul), :deep(ol) {
+    :deep(ul),
+    :deep(ol) {
       margin: 2px 0;
       padding-left: 20px;
     }

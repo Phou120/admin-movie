@@ -7,7 +7,6 @@ import type {
   ICurrencyForm,
   ICurrencyList,
 } from "./interface/currency.interface";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -257,11 +256,11 @@ async function deleteCurrency(id: number) {
         </template>
 
         <template v-else-if="column.key === 'created_at'">
-          <span>{{ formatDate(record.created_at) }}</span>
+          <span>{{ record.created_at }}</span>
         </template>
 
         <template v-else-if="column.key === 'updated_at'">
-          <span>{{ formatDate(record.updated_at) }}</span>
+          <span>{{ record.updated_at }}</span>
         </template>
 
         <template v-else-if="column.key === 'action'">

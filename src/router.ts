@@ -16,6 +16,15 @@ import CategoryPage from "./modules/admin/category/category.vue";
 import RolePage from "./modules/admin/role/role.vue";
 import TaxPage from "./modules/admin/tax/tax.vue";
 import UserPage from "./modules/admin/user/user.vue";
+import PermissionPage from "./modules/admin/permission/permission.vue";
+import ProfilePage from "./modules/admin/user/profile/profile.vue";
+
+// Banner
+import BannerPage from "./modules/admin/banner/banner.vue";
+import TagPage from "./modules/admin/tag/tag.vue";
+import CurrencyPage from "./modules/admin/currency/currency.vue";
+import ExchangeRatePage from "./modules/admin/exchange-rate/ExchangeRate.vue";
+import PackagePage from "./modules/admin/packages/Packages.vue";
 
 const routes = [
   // Public Routes
@@ -27,7 +36,7 @@ const routes = [
       skipAuthCheck: true,
     },
   },
-    {
+  {
     path: "/login",
     name: "login",
     component: LoginPage,
@@ -35,7 +44,7 @@ const routes = [
       skipAuthCheck: true,
     },
   },
-  
+
   // Admin Layout Routes
   {
     path: "/",
@@ -49,9 +58,9 @@ const routes = [
         component: AdminDashboard,
       },
       {
-        path: "/bashBoard",
-        name: "bashBoard",
-        component: AdminDashboard,
+        path: "/banner",
+        name: "banner",
+        component: BannerPage,
       },
 
       // User Management
@@ -68,6 +77,12 @@ const routes = [
         component: CategoryPage,
       },
 
+      {
+        path: "/package",
+        name: "package",
+        component: PackagePage,
+      },
+
       // Financial Management
       {
         path: "/bank",
@@ -80,9 +95,26 @@ const routes = [
         component: BankCurrencyPage,
       },
       {
+        path: "/currency",
+        name: "currency",
+        component: CurrencyPage,
+      },
+      {
+        path: "/exchange-rate",
+        name: "exchange-rate",
+        component: ExchangeRatePage,
+      },
+
+      {
         path: "/tax",
         name: "tax",
         component: TaxPage,
+      },
+
+      {
+        path: "/tag",
+        name: "tag",
+        component: TagPage,
       },
 
       // System Management
@@ -90,6 +122,18 @@ const routes = [
         path: "/role",
         name: "role",
         component: RolePage,
+      },
+
+      {
+        path: "/permission",
+        name: "permission",
+        component: PermissionPage,
+      },
+
+      {
+        path: "/profile",
+        name: "profile",
+        component: ProfilePage,
       },
     ],
   },

@@ -34,11 +34,11 @@
         </template>
 
         <template v-else-if="column.key === 'created_at'">
-          {{ formatDate(record.created_at) }}
+          {{ record.created_at }}
         </template>
 
         <template v-else-if="column.key === 'updated_at'">
-          {{ formatDate(record.updated_at) }}
+          {{ record.updated_at }}
         </template>
 
         <template v-else-if="column.key === 'action'">
@@ -86,7 +86,6 @@ import { message, Modal, type TablePaginationConfig } from "ant-design-vue";
 import type { IBanner, IBannerForm } from "./interface/banner.interface";
 import { useBanner } from "./composible/index";
 import AddButton from "../../../components/AddButton.vue";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,

@@ -94,11 +94,11 @@
         </template>
 
         <template v-else-if="column.key === 'created_at'">
-          {{ formatDate(record.created_at) }}
+          {{ record.created_at }}
         </template>
 
         <template v-else-if="column.key === 'updated_at'">
-          {{ formatDate(record.updated_at) }}
+          {{ record.updated_at }}
         </template>
 
         <template v-else-if="column.key === 'action'">
@@ -157,7 +157,6 @@ import {
   showSuccessNotification,
 } from "../../../common/utils/notification";
 import { useRouter } from "vue-router";
-import formatDate from "../../../common/utils/format-date.util";
 
 // Register the icons
 // No need for explicit registration if using as components

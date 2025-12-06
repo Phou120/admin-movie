@@ -12,7 +12,6 @@ import type {
   IExchangeRateData,
   ICurrencyOption,
 } from "./interface/exchange-rate.interface";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -111,10 +110,10 @@ async function loadExchangeRates(
 ) {
   loading.value = true;
   try {
-    console.log('Loading exchange rates with page:', page, 'limit:', limit);
+    console.log("Loading exchange rates with page:", page, "limit:", limit);
     const response = await fetchAll(page, limit);
 
-    console.log('Exchange rates API response:', response);
+    console.log("Exchange rates API response:", response);
 
     data.exchange_rates = response.data || [];
 
@@ -131,11 +130,13 @@ async function loadExchangeRates(
       };
     } else {
       // Keep existing pagination if no pagination in response
-      console.warn('No pagination in response, keeping existing pagination');
+      console.warn("No pagination in response, keeping existing pagination");
     }
   } catch (error) {
     console.error("Failed to load exchange rates:", error);
-    showErrorNotification("Failed to load exchange rates: " + (error as Error).message);
+    showErrorNotification(
+      "Failed to load exchange rates: " + (error as Error).message
+    );
   } finally {
     loading.value = false;
   }
@@ -144,32 +145,32 @@ async function loadExchangeRates(
 // Function to load currencies
 async function loadCurrencies() {
   try {
-    console.log('Loading currencies from API...');
+    console.log("Loading currencies from API...");
     const response = await fetchCurrencies();
-    console.log('Currencies API response:', response.data); // Debug log
+    console.log("Currencies API response:", response.data); // Debug log
 
     // Check if response data has the expected structure
     if (Array.isArray(response.data)) {
       currencies.value = response.data.map((curr: any) => {
-        console.log('Processing currency:', curr); // Debug individual currency
+        console.log("Processing currency:", curr); // Debug individual currency
         return {
           value: curr.id,
           label: `${curr.name} (${curr.short_name})`,
         };
       });
-      console.log('Formatted currencies for dropdown:', currencies.value); // Debug log
+      console.log("Formatted currencies for dropdown:", currencies.value); // Debug log
     } else {
-      console.error('Unexpected API response format:', response.data);
+      console.error("Unexpected API response format:", response.data);
     }
   } catch (error) {
     console.error("Failed to load currencies:", error);
     // Add some test data as fallback
     currencies.value = [
-      { value: 1, label: 'Test Dollar (USD)' },
-      { value: 2, label: 'Test Kip (LAK)' },
-      { value: 3, label: 'Test Baht (THB)' }
+      { value: 1, label: "Test Dollar (USD)" },
+      { value: 2, label: "Test Kip (LAK)" },
+      { value: 3, label: "Test Baht (THB)" },
     ];
-    console.log('Using fallback test currencies:', currencies.value);
+    console.log("Using fallback test currencies:", currencies.value);
   }
 }
 
@@ -322,10 +323,10 @@ function getOperationSymbol(operate: string): string {
         </code>
       </template>
       <template v-else-if="column.key === 'created_at'">
-        {{ formatDate(record.created_at) }}
+        {{ record.created_at }}
       </template>
       <template v-else-if="column.key === 'updated_at'">
-        {{ formatDate(record.updated_at) }}
+        {{ record.updated_at }}
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">

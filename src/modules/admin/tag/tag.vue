@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { ITagForm, ITagList } from "./interface/tag.interface";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -206,11 +205,11 @@ async function deleteTag(id: number) {
           </template>
 
           <template v-else-if="column.key === 'created_at'">
-            <span class="date-text">{{ formatDate(record.created_at) }}</span>
+            <span class="date-text">{{ record.created_at }}</span>
           </template>
 
           <template v-else-if="column.key === 'updated_at'">
-            <span class="date-text">{{ formatDate(record.updated_at) }}</span>
+            <span class="date-text">{{ record.updated_at }}</span>
           </template>
 
           <template v-else-if="column.key === 'action'">

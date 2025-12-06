@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IBankForm, IBankList } from "./interface/bank.interface";
-import formatDate from "../../../common/utils/format-date.util";
 import {
   showErrorNotification,
   showSuccessNotification,
@@ -149,6 +148,7 @@ function openEditModal(bank: any) {
 }
 
 function openBankCurrencyPage(bank: any) {
+  console.log("id", bank.id);
   router.push(`/bank-currency/${bank.id}`);
 }
 
@@ -314,11 +314,11 @@ function handleImageError(event: Event) {
         </template>
 
         <template v-else-if="column.key === 'created_at'">
-          <span>{{ formatDate(record.created_at) }}</span>
+          <span>{{ record.created_at }}</span>
         </template>
 
         <template v-else-if="column.key === 'updated_at'">
-          <span>{{ formatDate(record.updated_at) }}</span>
+          <span>{{ record.updated_at }}</span>
         </template>
 
         <template v-else-if="column.key === 'action'">

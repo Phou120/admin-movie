@@ -115,10 +115,10 @@ function confirmLogout() {
   gap: 20px;
   margin-right: -25px;
   .navbar-btn {
-    background-color: #f3dd60ff;
+    background-color: #0d334aff;
     // background-color: rgb(191, 219, 254);
     // color: #FFD700;
-    color: rgb(59, 130, 246);
+    color: rgb(255, 255, 255);
     width: 32px;
     height: 32px;
     line-height: 32px;
