@@ -5,6 +5,9 @@ import { authGuard } from "./common/guards/auth.guard";
 
 // Website
 // import WebsiteHome from "./modules/website/home/Home.vue";
+import AboutUs from "./modules/website/about-us/AboutUs.vue";
+import Contact from "./modules/website/contact/Contact.vue";
+import Register from "./modules/website/register/Register.vue";
 
 // Dashboard
 import AdminDashboard from "./modules/admin/dashboard/DashBoard.vue";
@@ -47,16 +50,43 @@ import PaymentListPage from "./modules/admin/payment/payment-list.vue";
 // QR Code Module
 import QrCodePage from "./modules/admin/qr-code/qr-code.vue";
 
+// Website
+import WebsiteHome from "./modules/website/home/Home.vue";
+
 const routes = [
   // Public Routes
-  // {
-  //   path: "/",
-  //   name: "website",
-  //   component: WebsiteHome,
-  //   meta: {
-  //     skipAuthCheck: true,
-  //   },
-  // },
+  {
+    path: "/",
+    name: "home",
+    component: WebsiteHome,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
+  {
+    path: "/about-us",
+    name: "about-us",
+    component: AboutUs,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: Contact,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
   {
     path: "/login",
     name: "login",

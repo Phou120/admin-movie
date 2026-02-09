@@ -7,7 +7,7 @@
     "video": "Video",
     "tax": "Tax",
     "package": "Package",
-    "customer": "Customer",
+    "customer": "Creators",
     "member": "Member",
     "payment": "Payment",
     "financial": "Financial",
@@ -1082,5 +1082,224 @@
     "currentImage": "Current QR Code",
     "uploadNewImage": "Upload New QR Code",
     "uploadHint": "Supported formats: PNG, JPG, JPEG. Max size: 2MB"
+  },
+  "website": {
+    "allRightsReserved": "All rights reserved",
+    "noBannersAvailable": "No banners available",
+    "menu": {
+      "home": "Home",
+      "aboutUs": "About Us",
+      "contact": "Contact",
+      "register": "Register",
+      "signIn": "Sign In"
+    },
+    "home": {
+      "howItWorks": "How It Works",
+      "step1": {
+        "title": "Fill Application",
+        "description": "Complete your application form online in just a few clicks!"
+      },
+      "step2": {
+        "title": "Review & Submit",
+        "description": "Check your details and submit your application securely."
+      },
+      "step3": {
+        "title": "Track Status",
+        "description": "Get real-time updates and notifications on your application status."
+      }
+    },
+    "aboutUs": {
+      "hero": {
+        "title": "About SAVA MOVIE",
+        "subtitle": "Your Ultimate Streaming Experience"
+      },
+      "whoWeAre": {
+        "title": "Who We Are",
+        "description": "SAVA MOVIE is a leading streaming platform dedicated to bringing you the best entertainment experience from Laos and around the world."
+      },
+      "story": {
+        "title": "Our Story",
+        "paragraph1": "Founded in 2020, SAVA MOVIE began with a simple mission: to revolutionize the way people access and enjoy digital entertainment. What started as a small startup has grown into a leading platform serving thousands of users worldwide.",
+        "paragraph2": "Our journey has been marked by innovation, dedication, and an unwavering commitment to providing exceptional service. We believe in the power of technology to bring people together and create memorable experiences."
+      },
+      "mission": {
+        "title": "Our Mission",
+        "description": "To provide high-quality, accessible entertainment that connects people through stories and culture."
+      },
+      "vision": {
+        "title": "Our Vision",
+        "description": "To be the most loved streaming platform in Southeast Asia, known for our diverse content and user experience."
+      },
+      "coreValues": {
+        "title": "Our Core Values",
+        "passion": {
+          "title": "Passion",
+          "description": "We love what we do and it shows in every aspect of our service."
+        },
+        "excellence": {
+          "title": "Excellence",
+          "description": "We strive for excellence in everything we create and deliver."
+        },
+        "collaboration": {
+          "title": "Collaboration",
+          "description": "We believe in the power of teamwork and collective success."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "description": "We constantly push boundaries to bring you cutting-edge solutions."
+        }
+      },
+      "team": {
+        "title": "Meet Our Team",
+        "subtitle": "The talented individuals behind our success"
+      },
+      "stats": {
+        "activeUsers": "Active Users",
+        "countries": "Countries",
+        "uptime": "Uptime",
+        "support": "Support"
+      },
+      "cta": {
+        "title": "Ready to Get Started?",
+        "subtitle": "Join thousands of satisfied users and experience the difference today",
+        "getStarted": "Get Started",
+        "contactUs": "Contact Us"
+      }
+    },
+    "contact": {
+      "hero": {
+        "title": "Get In Touch",
+        "subtitle": "We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+      },
+      "stats": {
+        "happyCustomers": "Happy Customers",
+        "projectsCompleted": "Projects Completed",
+        "yearsExperience": "Years of Experience",
+        "teamMembers": "Team Members"
+      },
+      "infoCards": {
+        "address": {
+          "title": "Our Address",
+          "value": "123 Movie Street, Vientiane, Laos"
+        },
+        "phone": {
+          "title": "Call Us",
+          "value": "+856 20 1234 5678"
+        },
+        "email": {
+          "title": "Email Us",
+          "value": "contact@savamovie.com"
+        },
+        "hours": {
+          "title": "Working Hours",
+          "value": "Mon - Fri: 9:00 - 18:00"
+        }
+      },
+      "form": {
+        "title": "Send us a Message",
+        "name": "Your Name",
+        "email": "Your Email",
+        "subject": "Subject",
+        "message": "Message",
+        "submit": "Send Message",
+        "callNow": "Call Now",
+        "sendEmail": "Send Email"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "q1": {
+          "question": "How do I subscribe?",
+          "answer": "Click on the Register button and fill in your details to create an account."
+        },
+        "q2": {
+          "question": "What payment methods do you accept?",
+          "answer": "We accept various payment methods including credit cards, bank transfers, and mobile payments."
+        },
+        "q3": {
+          "question": "Can I cancel my subscription?",
+          "answer": "Yes, you can cancel your subscription at any time from your account settings."
+        }
+      },
+      "sidebar": {
+        "title": "Contact Information",
+        "subtitle": "Fill up the form and our team will get back to you within 24 hours.",
+        "map": "Find Us on Map",
+        "social": {
+          "title": "Follow Us"
+        }
+      }
+    },
+    "register": {
+      "hero": {
+        "title": "Join SAVA MOVIE",
+        "subtitle": "Start your streaming journey today"
+      },
+      "form": {
+        "title": "Create Account",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "profileImage": "Profile Image",
+        "uploadPhoto": "Upload Photo",
+        "email": "Email Address",
+        "phone": "Phone Number",
+        "address": "Address",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "agreeToTerms": "I agree to the",
+        "termsOfService": "Terms of Service",
+        "and": "and",
+        "privacyPolicy": "Privacy Policy",
+        "createAccount": "Create Account",
+        "alreadyHaveAccount": "Already have an account?",
+        "signIn": "Sign In"
+      },
+      "placeholder": {
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "email": "Enter your email",
+        "phone": "Enter your phone number",
+        "address": "Enter your address",
+        "password": "Create a password",
+        "confirmPassword": "Confirm your password"
+      },
+      "validation": {
+        "firstNameRequired": "Please enter your first name",
+        "lastNameRequired": "Please enter your last name",
+        "emailRequired": "Please enter your email",
+        "emailInvalid": "Please enter a valid email",
+        "phoneRequired": "Please enter your phone number",
+        "addressRequired": "Please enter your address",
+        "passwordRequired": "Please enter your password",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "confirmPasswordRequired": "Please confirm your password",
+        "passwordMismatch": "Passwords do not match",
+        "agreeRequired": "Please agree to the Terms of Service",
+        "registrationSuccess": "Account created successfully!",
+        "registrationFailed": "Registration failed. Please try again."
+      },
+      "benefits": {
+        "title": "Why Join Us?",
+        "unlimitedStreaming": {
+          "title": "Unlimited Streaming",
+          "description": "Watch thousands of movies and TV shows"
+        },
+        "watchAnywhere": {
+          "title": "Watch Anywhere",
+          "description": "Stream on any device, anytime"
+        },
+        "secureSafe": {
+          "title": "Secure & Safe",
+          "description": "Your data is protected with us"
+        },
+        "support": {
+          "title": "24/7 Support",
+          "description": "Get help whenever you need it"
+        },
+        "affordable": {
+          "title": "Affordable Plans",
+          "description": "Flexible pricing to suit your budget"
+        }
+      }
+    }
   }
 }

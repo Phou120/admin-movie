@@ -1,7 +1,7 @@
 <template>
   <a-layout-header class="header">
     <div class="logo">
-      <img src="../../../../assets/images/logo.png" alt="ApplyOnline Logo" />
+      <img src="../../../assets/images/logo.png" alt="ApplyOnline Logo" />
       <span class="brand-title">SAVA MOVIE</span>
     </div>
 
@@ -35,7 +35,7 @@ import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { LoginOutlined, UserAddOutlined } from "@ant-design/icons-vue";
-import LanguageSwitcher from "../../../../components/LanguageSwitcher.vue";
+import LanguageSwitcher from "../../../components/LanguageSwitcher.vue";
 
 const router = useRouter();
 const route = useRoute();

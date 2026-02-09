@@ -1,112 +1,107 @@
 <template>
-  <a-layout>
-    <AppHeader />
+  <WebsiteLayout>
+    <!-- Loading state for banners -->
+    <div v-if="loadingBanners" class="banner-loading">
+      <a-spin size="large" />
+    </div>
 
-    <a-layout-content style="padding: 0 50px; min-height: 80vh">
-      <!-- Loading state for banners -->
-      <div v-if="loadingBanners" class="banner-loading">
-        <a-spin size="large" />
-      </div>
-
-      <!-- Banner carousel - only show when banners are loaded -->
-      <a-carousel
-        v-else-if="banners.length > 0"
-        autoplay
-        class="banner-carousel"
-      >
-        <div v-for="banner in banners" :key="banner.id" class="banner-slide">
-          <img
-            :src="banner.image_url || banner.image"
-            :alt="banner.title"
-            class="banner-image"
-          />
-          <div class="banner-content">
-            <a-typography-title :level="1">
-              {{ banner.title }}
-            </a-typography-title>
-            <a-typography-paragraph style="font-size: 18px; color: #eee">
-              {{ banner.description }}
-            </a-typography-paragraph>
-            <a-button
-              v-if="banner.link"
-              type="primary"
-              size="large"
-              style="
-                margin-top: 24px;
-                background: #0d334aff;
-                color: #fff;
-                font-weight: bold;
-              "
-              @click="navigateTo(banner.link)"
-            >
-              {{ banner.button_text || "Learn More" }}
-            </a-button>
-          </div>
+    <!-- Banner carousel - only show when banners are loaded -->
+    <a-carousel
+      v-else-if="banners.length > 0"
+      autoplay
+      class="banner-carousel"
+    >
+      <div v-for="banner in banners" :key="banner.id" class="banner-slide">
+        <img
+          :src="banner.image_url || banner.image"
+          :alt="banner.title"
+          class="banner-image"
+        />
+        <div class="banner-content">
+          <a-typography-title :level="1">
+            {{ banner.title }}
+          </a-typography-title>
+          <a-typography-paragraph style="font-size: 18px; color: #eee">
+            {{ banner.description }}
+          </a-typography-paragraph>
+          <a-button
+            v-if="banner.link"
+            type="primary"
+            size="large"
+            style="
+              margin-top: 24px;
+              background: #0d334aff;
+              color: #fff;
+              font-weight: bold;
+            "
+            @click="navigateTo(banner.link)"
+          >
+            {{ banner.button_text || "Learn More" }}
+          </a-button>
         </div>
-      </a-carousel>
-
-      <!-- Fallback message if no banners -->
-      <div v-else class="no-banners">
-        <a-empty description="No banners available" />
       </div>
+    </a-carousel>
 
-      <a-typography-title
-        :level="2"
-        style="text-align: center; margin-bottom: 32px; margin-top: 40px"
+    <!-- Fallback message if no banners -->
+    <div v-else class="no-banners">
+      <a-empty :description="t('website.noBannersAvailable') || 'No banners available'" />
+    </div>
+
+    <a-typography-title
+      :level="2"
+      style="text-align: center; margin-bottom: 32px; margin-top: 40px"
+    >
+      {{ t('website.home.howItWorks') }}
+    </a-typography-title>
+    <a-row :gutter="32" justify="center">
+      <a-col
+        v-for="(step, idx) in steps"
+        :key="idx"
+        :xs="24"
+        :sm="12"
+        :md="8"
+        style="margin-bottom: 24px"
       >
-        How It Works
-      </a-typography-title>
-      <a-row :gutter="32" justify="center">
-        <a-col
-          v-for="(step, idx) in steps"
-          :key="idx"
-          :xs="24"
-          :sm="12"
-          :md="8"
-          style="margin-bottom: 24px"
-        >
-          <a-card hoverable class="step-card">
-            <div class="step-media-container">
-              <img
-                v-if="step.mediaType === 'image'"
-                :src="step.mediaSource"
-                :alt="step.title"
-                class="step-media"
-              />
-              <video
-                v-else-if="step.mediaType === 'video'"
-                :src="step.mediaSource"
-                controls
-                autoplay
-                loop
-                muted
-                class="step-media"
-              />
-            </div>
-            <a-typography-title :level="4" style="margin-top: 16px">
-              {{ step.title }}
-            </a-typography-title>
-            <a-typography-paragraph>
-              {{ step.description }}
-            </a-typography-paragraph>
-          </a-card>
-        </a-col>
-      </a-row>
-    </a-layout-content>
-    <a-layout-footer style="text-align: center">
-      SAVA MOVIE &copy; {{ new Date().getFullYear() }} | All rights reserved.
-    </a-layout-footer>
-  </a-layout>
+        <a-card hoverable class="step-card">
+          <div class="step-media-container">
+            <img
+              v-if="step.mediaType === 'image'"
+              :src="step.mediaSource"
+              :alt="step.title"
+              class="step-media"
+            />
+            <video
+              v-else-if="step.mediaType === 'video'"
+              :src="step.mediaSource"
+              controls
+              autoplay
+              loop
+              muted
+              class="step-media"
+            />
+          </div>
+          <a-typography-title :level="4" style="margin-top: 16px">
+            {{ step.title }}
+          </a-typography-title>
+          <a-typography-paragraph>
+            {{ step.description }}
+          </a-typography-paragraph>
+        </a-card>
+      </a-col>
+    </a-row>
+  </WebsiteLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { message } from "ant-design-vue";
 import { useBanner } from "../../admin/banner/composible";
-import AppHeader from "./components/AppHeader.vue";
+import WebsiteLayout from "../components/WebsiteLayout.vue";
 
 // Composables
 const { fetchAll } = useBanner();
+const { t } = useI18n();
 
 // Banner state
 const banners = ref<any[]>([]);
@@ -138,31 +133,30 @@ function navigateTo(link: string) {
   }
 }
 
-// Steps data
-const steps = [
+// Steps data - using computed to get translated values
+const steps = computed(() => [
   {
-    title: "Fill Application",
+    title: t('website.home.step1.title'),
     mediaType: "video",
     mediaSource:
       "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    description: "Complete your application form online in just a few clicks!",
+    description: t('website.home.step1.description'),
   },
   {
-    title: "Review & Submit",
+    title: t('website.home.step2.title'),
     mediaType: "video",
     mediaSource:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    description: "Check your details and submit your application securely.",
+    description: t('website.home.step2.description'),
   },
   {
-    title: "Track Status",
+    title: t('website.home.step3.title'),
     mediaType: "video",
     mediaSource:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    description:
-      "Get real-time updates and notifications on your application status.",
+    description: t('website.home.step3.description'),
   },
-];
+]);
 
 // Load data on component mount
 onMounted(() => {
@@ -171,61 +165,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.header {
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  top: 0;
-  z-index: 10;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-direction: row;
-}
-
-.logo img {
-  height: 48px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.14);
-}
-
-.brand-title {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #0d334aff;
-}
-
-.main-menu {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  border-bottom: none;
-}
-
-.main-menu :deep(.ant-menu-item),
-.main-menu :deep(.ant-menu-item a) {
-  text-decoration: none !important;
-}
-
-.main-menu :deep(.ant-menu-item::after) {
-  display: none !important;
-}
-
-.main-menu :deep(.ant-menu-item:hover),
-.main-menu :deep(.ant-menu-item-selected) {
-  border-bottom: none !important;
-}
-
-.main-menu :deep(.ant-menu-item-selected) {
-  color: #0d334aff;
-  font-weight: 500;
-}
-
 /* Banner carousel styles */
 .banner-carousel {
   position: relative;
@@ -328,36 +267,4 @@ onMounted(() => {
   object-fit: contain;
 }
 
-@media (max-width: 576px) {
-  .header {
-    height: auto;
-    padding: 5px 15px;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .logo img {
-    height: 36px;
-  }
-
-  .brand-title {
-    font-size: 0.9em;
-  }
-
-  .main-menu {
-    width: 100%;
-    justify-content: center;
-    margin-top: 8px;
-  }
-
-  .main-menu :deep(.ant-menu-item) {
-    font-size: 14px;
-    padding: 0 12px;
-  }
-}
 </style>

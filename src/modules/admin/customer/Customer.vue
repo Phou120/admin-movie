@@ -71,21 +71,25 @@
         </template>
 
         <template v-else-if="column.key === 'status'">
-          <div class="status-toggle-wrapper">
-            <a-switch
-              :checked="record.status === 'approved'"
-              :checked-children="getStatusLabel('approved')"
-              :un-checked-children="getStatusLabel('blacklisted')"
-              @change="(checked: boolean) => handleStatusChange(record.id, checked)"
-              :loading="record.statusLoading"
-              :class="[
-                'status-toggle',
-                record.status === 'approved'
-                  ? 'status-approved'
-                  : 'status-blacklisted',
-              ]"
-            />
-          </div>
+          <a-select
+            :value="record.status"
+            @change="(value: string) => handleStatusChange(record.id, value)"
+            :loading="record.statusLoading"
+            :class="['status-select', `status-${record.status}`]"
+          >
+            <a-select-option value="pending">
+              <WarningOutlined style="color: #faad14; margin-right: 6px" />
+              <span>{{ getStatusLabel('pending') }}</span>
+            </a-select-option>
+            <a-select-option value="approved">
+              <CheckCircleOutlined style="color: #52c41a; margin-right: 6px" />
+              <span>{{ getStatusLabel('approved') }}</span>
+            </a-select-option>
+            <a-select-option value="blacklisted">
+              <CloseCircleOutlined style="color: #ff4d4f; margin-right: 6px" />
+              <span>{{ getStatusLabel('blacklisted') }}</span>
+            </a-select-option>
+          </a-select>
         </template>
 
         <template v-else-if="column.key === 'created_at'">
@@ -131,6 +135,9 @@ import {
   EditOutlined,
   DeleteOutlined,
   UserOutlined,
+  WarningOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { ICustomer } from "./interface/customer.interface";
@@ -217,7 +224,7 @@ const columns = computed(() => [
     title: t("modules.customer.columns.status"),
     dataIndex: "status",
     key: "status",
-    width: 160,
+    width: 180,
     align: "center",
   },
   {
@@ -325,9 +332,8 @@ const getStatusLabel = (status: string) => {
 };
 
 // Handle status change with switch
-function handleStatusChange(id: number, checked: boolean) {
-  const newStatus = checked ? "approved" : "blacklisted";
-  updateCustomerStatus(id, newStatus);
+function handleStatusChange(id: number, status: string) {
+  updateCustomerStatus(id, status);
 }
 
 onMounted(() => loadCustomers());
@@ -401,36 +407,66 @@ onMounted(() => loadCustomers());
   color: #ff4d4f;
 }
 
-// Status Toggle Switch Styling
-.status-toggle-wrapper {
-  display: inline-block;
+// Status Select Styling
+.status-select {
+  min-width: 150px;
+  width: auto;
 
-  .status-toggle {
-    // When APPROVED (checked state) - GREEN
-    &.status-approved {
-      background-color: #52c41a !important;
+  :deep(.ant-select-selector) {
+    font-weight: 500;
+    text-transform: capitalize;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    padding: 4px 12px !important;
+    min-height: 32px;
+    white-space: nowrap;
+  }
 
-      &:hover:not(.ant-switch-disabled) {
-        background-color: #73d13d !important;
-      }
+  &.status-pending {
+    :deep(.ant-select-selector) {
+      background-color: #faad14 !important;
+      border-color: #faad14 !important;
+      color: #fff !important;
     }
+    :deep(.ant-select-arrow) {
+      color: #fff;
+    }
+  }
 
-    // When BLACKLISTED (unchecked state) - RED
-    &.status-blacklisted {
+  &.status-approved {
+    :deep(.ant-select-selector) {
+      background-color: #52c41a !important;
+      border-color: #52c41a !important;
+      color: #fff !important;
+    }
+    :deep(.ant-select-arrow) {
+      color: #fff;
+    }
+  }
+
+  &.status-blacklisted {
+    :deep(.ant-select-selector) {
       background-color: #ff4d4f !important;
+      border-color: #ff4d4f !important;
+      color: #fff !important;
+    }
+    :deep(.ant-select-arrow) {
+      color: #fff;
+    }
+  }
 
-      &:hover:not(.ant-switch-disabled) {
-        background-color: #ff7875 !important;
-      }
+  // Dropdown options styling
+  :deep(.ant-select-item) {
+    display: flex;
+    align-items: center;
+
+    .anticon {
+      font-size: 14px;
     }
 
-    // Override Ant Design default checked state
-    &.ant-switch-checked {
-      background-color: #52c41a !important;
-
-      &:hover:not(.ant-switch-disabled) {
-        background-color: #73d13d !important;
-      }
+    span {
+      font-weight: 500;
     }
   }
 }

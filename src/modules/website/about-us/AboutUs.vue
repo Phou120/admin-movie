@@ -1,16 +1,13 @@
 <template>
-  <a-layout>
-    <AppHeader />
-
-    <a-layout-content class="content">
+  <WebsiteLayout>
       <!-- Hero Section -->
       <section class="hero-section">
         <div class="hero-overlay">
           <a-typography-title :level="1" class="hero-title">
-            About Us
+            {{ t('website.aboutUs.hero.title') }}
           </a-typography-title>
           <a-typography-paragraph class="hero-subtitle">
-            Discover our story, mission, and the team behind our success
+            {{ t('website.aboutUs.hero.subtitle') }}
           </a-typography-paragraph>
         </div>
       </section>
@@ -31,19 +28,13 @@
             <a-col :xs="24" :md="12">
               <div class="story-content">
                 <a-typography-title :level="2" class="section-title">
-                  Our Story
+                  {{ t('website.aboutUs.story.title') }}
                 </a-typography-title>
                 <a-typography-paragraph class="story-text">
-                  Founded in 2020, SAVA MOVIE began with a simple mission: to
-                  revolutionize the way people access and enjoy digital
-                  entertainment. What started as a small startup has grown into
-                  a leading platform serving thousands of users worldwide.
+                  {{ t('website.aboutUs.story.paragraph1') }}
                 </a-typography-paragraph>
                 <a-typography-paragraph class="story-text">
-                  Our journey has been marked by innovation, dedication, and an
-                  unwavering commitment to providing exceptional service. We
-                  believe in the power of technology to bring people together
-                  and create memorable experiences.
+                  {{ t('website.aboutUs.story.paragraph2') }}
                 </a-typography-paragraph>
               </div>
             </a-col>
@@ -64,14 +55,11 @@
                 </template>
                 <a-card-meta>
                   <template #title>
-                    <span class="card-title">Our Mission</span>
+                    <span class="card-title">{{ t('website.aboutUs.mission.title') }}</span>
                   </template>
                   <template #description>
                     <p class="card-description">
-                      To provide accessible, high-quality entertainment
-                      solutions that inspire and connect people across the
-                      globe. We strive to make every viewing experience
-                      seamless, enjoyable, and memorable.
+                      {{ t('website.aboutUs.mission.description') }}
                     </p>
                   </template>
                 </a-card-meta>
@@ -86,14 +74,11 @@
                 </template>
                 <a-card-meta>
                   <template #title>
-                    <span class="card-title">Our Vision</span>
+                    <span class="card-title">{{ t('website.aboutUs.vision.title') }}</span>
                   </template>
                   <template #description>
                     <p class="card-description">
-                      To become the world's most trusted and innovative
-                      entertainment platform, where creativity meets technology,
-                      and every user finds content that resonates with their
-                      unique tastes and preferences.
+                      {{ t('website.aboutUs.vision.description') }}
                     </p>
                   </template>
                 </a-card-meta>
@@ -107,12 +92,12 @@
       <section class="values-section">
         <div class="container">
           <a-typography-title :level="2" class="section-title centered">
-            Our Core Values
+            {{ t('website.aboutUs.coreValues.title') }}
           </a-typography-title>
           <a-row :gutter="[24, 24]" style="margin-top: 48px">
             <a-col
               v-for="value in coreValues"
-              :key="value.title"
+              :key="value.key"
               :xs="24"
               :sm="12"
               :lg="6"
@@ -137,10 +122,10 @@
       <section class="team-section">
         <div class="container">
           <a-typography-title :level="2" class="section-title centered">
-            Meet Our Team
+            {{ t('website.aboutUs.team.title') }}
           </a-typography-title>
           <a-typography-paragraph class="section-subtitle centered">
-            The talented individuals behind our success
+            {{ t('website.aboutUs.team.subtitle') }}
           </a-typography-paragraph>
 
           <a-row
@@ -188,8 +173,8 @@
         <div class="container">
           <a-row :gutter="[32, 32]">
             <a-col
-              v-for="stat in statistics"
-              :key="stat.label"
+              v-for="(stat, index) in statistics"
+              :key="`stat-${index}`"
               :xs="12"
               :sm="6"
             >
@@ -211,11 +196,10 @@
       <section class="cta-section">
         <div class="container">
           <a-typography-title :level="2" class="cta-title">
-            Ready to Get Started?
+            {{ t('website.aboutUs.cta.title') }}
           </a-typography-title>
           <a-typography-paragraph class="cta-subtitle">
-            Join thousands of satisfied users and experience the difference
-            today
+            {{ t('website.aboutUs.cta.subtitle') }}
           </a-typography-paragraph>
           <a-space size="large" style="margin-top: 32px">
             <a-button
@@ -224,35 +208,24 @@
               class="cta-button"
               @click="goToHome"
             >
-              Get Started
+              {{ t('website.aboutUs.cta.getStarted') }}
             </a-button>
             <a-button
               size="large"
               class="cta-button-secondary"
               @click="goToContact"
             >
-              Contact Us
+              {{ t('website.aboutUs.cta.contactUs') }}
             </a-button>
           </a-space>
         </div>
       </section>
-    </a-layout-content>
-
-    <a-layout-footer
-      style="text-align: center; padding: 24px 50px; background: #f0f2f5"
-    >
-      <div class="footer-content">
-        <p class="footer-text">
-          SAVA MOVIE &copy; {{ new Date().getFullYear() }} | All rights
-          reserved.
-        </p>
-      </div>
-    </a-layout-footer>
-  </a-layout>
+  </WebsiteLayout>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 import {
   RocketOutlined,
   EyeOutlined,
@@ -268,45 +241,47 @@ import {
   TwitterOutlined,
   MailOutlined,
 } from "@ant-design/icons-vue";
-import AppHeader from "./AppHeader.vue";
-import phoudImg from "../../../../assets/images/phoud.jpeg";
-import aecImg from "../../../../assets/images/aec216e7-4448-4294-8544-1cbee65d71d1.jpeg";
-import logoImg from "../../../../assets/images/logo.png";
+import WebsiteLayout from "../components/WebsiteLayout.vue";
+import phoudImg from "../../../assets/images/phoud.jpeg";
+import aecImg from "../../../assets/images/aec216e7-4448-4294-8544-1cbee65d71d1.jpeg";
+import logoImg from "../../../assets/images/logo.png";
 
 const router = useRouter();
+const { t } = useI18n();
 
 const goToHome = () => {
   router.push({ name: "home" });
 };
 
 const goToContact = () => {
-  router.push({ name: "contact" });
+  router.push("/contact");
 };
 
-// Core values data
+// Core values data - computed with translations
 const coreValues = [
   {
+    key: 'passion',
     icon: HeartOutlined,
-    title: "Passion",
-    description:
-      "We love what we do and it shows in every aspect of our service.",
+    title: t('website.aboutUs.coreValues.passion.title'),
+    description: t('website.aboutUs.coreValues.passion.description'),
   },
   {
+    key: 'excellence',
     icon: TrophyOutlined,
-    title: "Excellence",
-    description:
-      "We strive for excellence in everything we create and deliver.",
+    title: t('website.aboutUs.coreValues.excellence.title'),
+    description: t('website.aboutUs.coreValues.excellence.description'),
   },
   {
+    key: 'collaboration',
     icon: TeamOutlined,
-    title: "Collaboration",
-    description: "We believe in the power of teamwork and collective success.",
+    title: t('website.aboutUs.coreValues.collaboration.title'),
+    description: t('website.aboutUs.coreValues.collaboration.description'),
   },
   {
+    key: 'innovation',
     icon: ThunderboltOutlined,
-    title: "Innovation",
-    description:
-      "We constantly push boundaries to bring you cutting-edge solutions.",
+    title: t('website.aboutUs.coreValues.innovation.title'),
+    description: t('website.aboutUs.coreValues.innovation.description'),
   },
 ];
 
@@ -329,27 +304,27 @@ const teamMembers = [
   },
 ];
 
-// Statistics data
+// Statistics data - computed with translations
 const statistics = [
   {
     icon: UserOutlined,
     number: "50K+",
-    label: "Active Users",
+    label: t('website.aboutUs.stats.activeUsers'),
   },
   {
     icon: GlobalOutlined,
     number: "100+",
-    label: "Countries",
+    label: t('website.aboutUs.stats.countries'),
   },
   {
     icon: SafetyOutlined,
     number: "99.9%",
-    label: "Uptime",
+    label: t('website.aboutUs.stats.uptime'),
   },
   {
     icon: CustomerServiceOutlined,
     number: "24/7",
-    label: "Support",
+    label: t('website.aboutUs.stats.support'),
   },
 ];
 </script>
@@ -693,28 +668,523 @@ const statistics = [
   color: #fff;
 }
 
-/* Footer styles */
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-.footer-text {
-  font-size: 0.9rem;
-  color: #777;
+
+/* Responsive adjustments for all devices */
+
+/* iPhone SE and very small phones (320px - 374px) */
+@media (max-width: 374px) {
+  .hero-section {
+    height: 320px !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.8rem, 8vw, 2.2rem) !important;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
+  }
+
+  .hero-overlay {
+    padding: 16px !important;
+  }
+
+  .container {
+    padding: 0 16px !important;
+  }
+
+  /* Story Section */
+  .story-section {
+    padding: 40px 0 !important;
+  }
+
+  .image-wrapper {
+    margin-bottom: 24px;
+  }
+
+  /* Values Section */
+  .values-section {
+    padding: 40px 0 !important;
+  }
+
+  .section-title {
+    font-size: 1.5rem !important;
+  }
+
+  .value-item {
+    padding: 24px 12px !important;
+    margin-bottom: 16px;
+  }
+
+  .value-icon-circle {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .value-icon {
+    font-size: 28px !important;
+  }
+
+  .value-title {
+    font-size: 1.1rem !important;
+  }
+
+  .value-description {
+    font-size: 0.85rem !important;
+  }
+
+  /* Mission & Vision Cards */
+  .card-icon-wrapper {
+    height: 140px !important;
+  }
+
+  .card-icon {
+    font-size: 48px !important;
+  }
+
+  .card-title {
+    font-size: 1.25rem !important;
+  }
+
+  .card-description {
+    font-size: 0.9rem !important;
+  }
+
+  /* Team Section */
+  .team-section {
+    padding: 40px 0 !important;
+  }
+
+  .team-avatar {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .team-name {
+    font-size: 1rem !important;
+  }
+
+  .team-position {
+    font-size: 0.85rem !important;
+  }
+
+  .team-social {
+    gap: 4px !important;
+  }
+
+  /* Statistics Section */
+  .stats-section {
+    padding: 40px 0 !important;
+  }
+
+  .stat-item {
+    padding: 16px 8px !important;
+  }
+
+  .stat-icon {
+    font-size: 36px !important;
+    margin-bottom: 12px;
+  }
+
+  .stat-number {
+    font-size: clamp(1.5rem, 5vw, 2rem) !important;
+  }
+
+  .stat-label {
+    font-size: 0.85rem !important;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 48px 16px !important;
+  }
+
+  .cta-title {
+    font-size: clamp(1.5rem, 5vw, 2rem) !important;
+  }
+
+  .cta-subtitle {
+    font-size: 1rem !important;
+    margin: 0 auto 32px !important;
+  }
+
+  .cta-button,
+  .cta-button-secondary {
+    width: 100% !important;
+    margin: 0 0 12px 0 !important;
+  }
+
+  /* Footer */
+  .footer-text {
+    font-size: 0.8rem;
+  }
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  /* Make hero text smaller if needed */
+/* Small iPhones (375px - 414px) - iPhone 12, 13, 14 */
+@media (min-width: 375px) and (max-width: 414px) {
+  .hero-section {
+    height: 360px !important;
+  }
+
   .hero-title {
-    font-size: clamp(2.5rem, 5vw, 3rem) !important;
+    font-size: clamp(2rem, 6vw, 2.8rem) !important;
   }
-  /* Reduce padding for sections */
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 3vw, 1.25rem) !important;
+  }
+
+  .container {
+    padding: 0 20px !important;
+  }
+
+  /* Story Section */
+  .story-section {
+    padding: 48px 0 !important;
+  }
+
+  /* Values */
+  .value-item {
+    padding: 28px 16px !important;
+  }
+
+  .value-icon-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  /* Team */
+  .team-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* Stats */
+  .stat-icon {
+    font-size: 40px;
+  }
+
+  .stat-number {
+    font-size: clamp(1.8rem, 4vw, 2.5rem) !important;
+  }
+}
+
+/* Large iPhones (415px - 479px) - iPhone 14 Plus, 14 Pro Max */
+@media (min-width: 415px) and (max-width: 479px) {
+  .hero-section {
+    height: 380px !important;
+  }
+
+  .container {
+    padding: 0 24px !important;
+  }
+
+  .story-section,
+  .values-section,
+  .team-section {
+    padding: 56px 0 !important;
+  }
+
+  /* Stats */
+  .stat-item {
+    padding: 18px 12px;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 64px 20px !important;
+  }
+}
+
+/* iPads and tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-section {
+    height: 350px !important;
+  }
+
+  .container {
+    padding: 0 32px !important;
+  }
+
+  .story-section,
+  .values-section,
+  .team-section {
+    padding: 64px 0 !important;
+  }
+
+  .section-title {
+    font-size: 1.75rem !important;
+  }
+
+  .value-item {
+    padding: 28px 20px;
+  }
+
+  .value-icon-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .value-icon {
+    font-size: 32px;
+  }
+
+  /* Team */
+  .team-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* Stats */
+  .stat-icon {
+    font-size: 42px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem !important;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 72px 32px !important;
+  }
+
+  .cta-button,
+  .cta-button-secondary {
+    width: auto;
+  }
+}
+
+/* Small tablets and landscape phones (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .hero-section {
+    height: 340px !important;
+  }
+
+  .container {
+    padding: 0 20px !important;
+  }
+
+  /* Mission & Vision cards */
+  .card-icon-wrapper {
+    height: 160px !important;
+  }
+
+  .card-icon {
+    font-size: 56px !important;
+  }
+
+  /* Team cards */
+  .team-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Stats */
+  .stat-number {
+    font-size: 2.2rem !important;
+  }
+
+  /* CTA buttons */
+  .cta-button,
+  .cta-button-secondary {
+    width: auto !important;
+  }
+}
+
+/* General mobile improvements */
+@media (max-width: 767px) {
+  /* Fix for full-width sections */
+  .hero-section,
+  .stats-section {
+    width: 100vw !important;
+    transform: translateX(-50%) !important;
+    margin-left: 50% !important;
+  }
+
+  /* Ensure proper spacing on mobile */
   section {
-    padding: 60px 0;
+    overflow: hidden;
   }
-  /* Adjust team columns for smaller devices */
+
+  /* Story section - stack vertically */
+  .story-row {
+    flex-direction: column !important;
+  }
+
+  .story-section {
+    padding: 48px 0 !important;
+  }
+
+  .image-wrapper {
+    margin-bottom: 32px;
+  }
+
+  /* Mission & Vision - full width cards on mobile */
+  .value-card {
+    margin-bottom: 24px;
+  }
+
+  /* Team section */
+  .team-section {
+    padding: 48px 0 !important;
+  }
+
+  .team-row {
+    flex-direction: column !important;
+  }
+
+  .team-card {
+    margin-bottom: 24px;
+  }
+
+  /* Values section */
+  .values-section {
+    padding: 48px 0 !important;
+  }
+
+  /* Statistics section */
+  .stats-section {
+    padding: 48px 0 !important;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 56px 20px !important;
+  }
+
+  .cta-space {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  .cta-button,
+  .cta-button-secondary {
+    width: 100% !important;
+  }
+
+  /* Footer */
+  .footer-text {
+    font-size: 0.85rem;
+    padding: 0 16px;
+  }
+}
+
+/* Landscape mobile fixes */
+@media (max-width: 767px) and (orientation: landscape) {
+  .hero-section {
+    height: 280px !important;
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 4vw, 2rem) !important;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.85rem, 2.5vw, 1rem) !important;
+  }
+
+  .stat-number {
+    font-size: 1.8rem !important;
+  }
+}
+
+/* iPad Mini and small tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Story section */
+  .story-section {
+    padding: 64px 0 !important;
+  }
+
+  /* Values */
+  .value-item {
+    padding: 32px 24px;
+  }
+
+  /* Team */
+  .team-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* Stats */
+  .stat-icon {
+    font-size: 44px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem !important;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 72px 32px !important;
+  }
+}
+
+/* Large tablets and small laptops (1024px - 1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .container {
+    padding: 0 32px;
+  }
+
+  .section-title {
+    font-size: 1.8rem !important;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 320px) {
+  .hero-section {
+    height: 300px !important;
+  }
+
+  .hero-title {
+    font-size: 1.8rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem !important;
+  }
+
+  .value-icon-circle {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .value-icon {
+    font-size: 24px !important;
+  }
+
+  .value-title {
+    font-size: 1rem !important;
+  }
+
+  .team-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .card-icon-wrapper {
+    height: 120px !important;
+  }
+
+  .card-icon {
+    font-size: 40px !important;
+  }
+
+  .stat-icon {
+    font-size: 32px !important;
+  }
+
+  .stat-number {
+    font-size: 1.5rem !important;
+  }
+
+  .stat-label {
+    font-size: 0.75rem !important;
+  }
 }
 </style>
