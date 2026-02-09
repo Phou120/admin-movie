@@ -3,9 +3,9 @@
     <div class="page-header">
       <a-button type="link" @click="goBack" class="back-button">
         <arrow-left-outlined />
-        Back
+        {{ t("actions.back") }}
       </a-button>
-      <h1>Update Role</h1>
+      <h1>{{ t("modules.role.editForm.title") }}</h1>
     </div>
 
     <div class="form-wrapper">
@@ -19,20 +19,30 @@
         >
           <a-row :gutter="16">
             <a-col :xs="24" :sm="24" :md="12">
-              <a-form-item label="Name" name="name" required>
+              <a-form-item
+                :label="t('modules.role.editForm.name')"
+                name="name"
+                required
+              >
                 <a-input
                   v-model:value="formData.name"
-                  placeholder="Enter role name (e.g., manager)"
+                  :placeholder="t('modules.role.editForm.placeholder.name')"
                   size="large"
                 />
               </a-form-item>
             </a-col>
 
             <a-col :xs="24" :sm="24" :md="12">
-              <a-form-item label="Display Name" name="display_name" required>
+              <a-form-item
+                :label="t('modules.role.editForm.displayName')"
+                name="display_name"
+                required
+              >
                 <a-input
                   v-model:value="formData.display_name"
-                  placeholder="Enter display name (e.g., Manager)"
+                  :placeholder="
+                    t('modules.role.editForm.placeholder.displayName')
+                  "
                   size="large"
                 />
               </a-form-item>
@@ -46,7 +56,8 @@
               <a-form-item name="permission_ids" required>
                 <template #label>
                   <span class="permissions-label">
-                    <span class="required-mark">*</span> Permissions
+                    <span class="required-mark">*</span>
+                    {{ t("modules.role.editForm.permissions") }}
                   </span>
                 </template>
 
@@ -58,7 +69,7 @@
                       :indeterminate="isSomeSelected"
                       @change="toggleAll"
                     >
-                      Permissions
+                      {{ t("modules.role.editForm.permissions") }}
                     </a-checkbox>
                   </div>
 
@@ -103,14 +114,20 @@
 
                 <div v-else class="loading-container">
                   <a-spin />
-                  <span style="margin-left: 12px">Loading permissions...</span>
+                  <span style="margin-left: 12px">{{
+                    t("common.loading")
+                  }}</span>
                 </div>
 
                 <div
                   class="selected-count"
                   v-if="formData.permission_ids.length > 0"
                 >
-                  {{ formData.permission_ids.length }} permission(s) selected
+                  {{
+                    t("modules.role.editForm.selectedCount", {
+                      count: formData.permission_ids.length,
+                    })
+                  }}
                 </div>
               </a-form-item>
             </a-col>
@@ -121,7 +138,7 @@
           <div class="form-actions">
             <a-button size="large" class="custom-cancel" @click="goBack">
               <RollbackOutlined />
-              Go Back
+              {{ t("modules.role.editForm.actions.goBack") }}
             </a-button>
             <a-button
               type="primary"
@@ -131,7 +148,7 @@
               class="submit-btn"
             >
               <SaveOutlined />
-              Update Role
+              {{ t("modules.role.editForm.actions.updateRole") }}
             </a-button>
           </div>
         </a-form>
@@ -143,13 +160,13 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { message } from "ant-design-vue";
 import {
   ArrowLeftOutlined,
   SaveOutlined,
   RollbackOutlined,
 } from "@ant-design/icons-vue";
-import type { FormInstance } from "ant-design-vue";
 import { useRoles } from "../composible";
 import type { IRoleForm, PermissionModule } from "../interface/role.interface";
 import { usePermission } from "../../permission/composible";
@@ -160,10 +177,10 @@ import {
 
 const router = useRouter();
 const route = useRoute();
+const { t } = useI18n();
 const { updateRole, fetchById } = useRoles();
 const { fetchAll: fetchAllPermissions } = usePermission();
 
-const formRef = ref<FormInstance>();
 const loadingPermissions = ref(false);
 const loadingRole = ref(false);
 const submitting = ref(false);
@@ -176,24 +193,36 @@ const formData = reactive<IRoleForm>({
   permission_ids: [],
 });
 
-const rules = {
+const rules = computed(() => ({
   name: [
-    { required: true, message: "Please enter role name", trigger: "blur" },
-    { min: 2, message: "Name must be at least 2 characters", trigger: "blur" },
+    {
+      required: true,
+      message: t("modules.role.editForm.validation.nameRequired"),
+      trigger: "blur",
+    },
+    {
+      min: 2,
+      message: t("modules.role.editForm.validation.nameMinLength"),
+      trigger: "blur",
+    },
   ],
   display_name: [
-    { required: true, message: "Please enter display name", trigger: "blur" },
+    {
+      required: true,
+      message: t("modules.role.editForm.validation.displayNameRequired"),
+      trigger: "blur",
+    },
   ],
   permission_ids: [
     {
       required: true,
       type: "array",
       min: 1,
-      message: "Please select at least one permission",
+      message: t("modules.role.editForm.validation.permissionsRequired"),
       trigger: "change",
     },
   ],
-};
+}));
 
 // Computed: Check if all permissions are selected
 const isAllSelected = computed(() => {
@@ -293,8 +322,8 @@ async function loadRoleData() {
     console.log("Selected permission IDs:", formData.permission_ids);
   } catch (error) {
     console.error("Failed to load role:", error);
-    message.error("Failed to load role data");
-    router.push({ name: "roles" });
+    message.error(t("modules.role.editForm.validation.loadRoleError"));
+    router.push({ name: "role" });
   } finally {
     loadingRole.value = false;
   }
@@ -308,7 +337,7 @@ async function loadAllPermissions() {
     permissionModules.value = res.data || [];
   } catch (error) {
     console.error("Failed to load permissions:", error);
-    message.error("Failed to load permissions");
+    message.error(t("modules.role.editForm.validation.loadPermissionsError"));
   } finally {
     loadingPermissions.value = false;
   }
@@ -325,10 +354,13 @@ async function handleSubmit() {
     showSuccessNotification(response.message);
 
     // Navigate back to roles list
-    router.push({ name: "roles" });
+    router.push({ name: "role" });
   } catch (error: any) {
     console.error("Failed to update role:", error);
-    showErrorNotification("Failed to update role: ", error);
+    showErrorNotification(
+      t("modules.role.editForm.validation.updateError"),
+      error
+    );
   } finally {
     submitting.value = false;
   }

@@ -1,16 +1,20 @@
 <template>
   <a-layout style="min-height: 100vh">
     <a-layout-sider
-      v-model:collapsed="collapsed"
+      :collapsed="collapsed"
       :trigger="null"
       collapsible
       :width="220"
+      :collapsed-width="80"
       style="background: #fff"
     >
-      <SidebarComponent />
+      <SidebarComponent :collapsed="collapsed" />
     </a-layout-sider>
     <a-layout>
-      <NavbarComponent @toggle-sidebar="() => (collapsed = !collapsed)" />
+      <NavbarComponent
+        :collapsed="collapsed"
+        @toggle-sidebar="() => (collapsed = !collapsed)"
+      />
       <a-layout-content
         :style="{
           margin: '10px 10px',
@@ -25,11 +29,38 @@
   </a-layout>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import SidebarComponent from "../../components/layouts/Sidebar.vue";
 import NavbarComponent from "../../components/layouts/Navbar.vue";
+import {
+  useSocketNotification,
+  type PaymentNotificationPayload,
+} from "../../common/composables/useSocketNotification";
 
 const collapsed = ref<boolean>(false);
+
+const { connect, disconnect, onPaymentNotification } = useSocketNotification();
+
+onMounted(() => {
+  // Connect to WebSocket
+  connect();
+
+  // Listen for payment notifications from backend
+  const cleanup = onPaymentNotification(
+    (payload: PaymentNotificationPayload) => {
+      console.log("Payment notification received:", payload);
+    },
+  );
+
+  // Store cleanup for onUnmounted
+  onUnmounted(() => {
+    cleanup();
+  });
+});
+
+onUnmounted(() => {
+  disconnect();
+});
 </script>
 
 <style lang="scss" scoped>

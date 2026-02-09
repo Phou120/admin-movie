@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { BankComposible } from "./composible/index";
 import {
   EditOutlined,
@@ -20,39 +21,51 @@ import AddButton from "../../../components/AddButton.vue";
 const router = useRouter();
 const { fetchAll, deleteBankById, updateBank, createBank, upload } =
   BankComposible();
+const { t } = useI18n();
 
-const columns = [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 80 },
+const columns = computed(() => [
   {
-    title: "Logo",
+    title: t("modules.bank.columns.no"),
+    dataIndex: "id",
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.bank.columns.logo"),
     dataIndex: "logo_url",
     key: "logo_url",
     align: "center",
     width: 150,
   },
   {
-    title: "Bank Name",
+    title: t("modules.bank.columns.name"),
     dataIndex: "name",
     key: "name",
     align: "left",
     width: 250,
   },
   {
-    title: "Created At",
+    title: t("modules.bank.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 180,
   },
   {
-    title: "Updated At",
+    title: t("modules.bank.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     align: "center",
     width: 180,
   },
-  { title: "Action", key: "action", align: "center", width: 120 },
-];
+  {
+    title: t("modules.bank.columns.action"),
+    key: "action",
+    align: "center",
+    width: 120,
+  },
+]);
 
 const data = reactive<IBankList>({
   banks: [],
@@ -106,7 +119,10 @@ async function loadBanks(
     };
   } catch (error) {
     console.error("Failed to load banks", error);
-    showErrorNotification("Failed to load banks:", (error as Error).message);
+    showErrorNotification(
+      t("modules.bank.form.validation.loadError"),
+      (error as Error).message
+    );
 
     // Reset to safe defaults on error
     data.banks = [];
@@ -158,12 +174,18 @@ async function handleAddSuccess() {
     const formData = addModalRef.value?.formData;
 
     if (!formData?.name?.trim()) {
-      showErrorNotification("Validation Error", "Bank name is required");
+      showErrorNotification(
+        t("common.error"),
+        t("modules.bank.form.validation.nameRequired")
+      );
       return;
     }
 
     if (!formData?.logo) {
-      showErrorNotification("Validation Error", "Bank logo is required");
+      showErrorNotification(
+        t("common.error"),
+        t("modules.bank.form.validation.logoRequired")
+      );
       return;
     }
 
@@ -180,7 +202,7 @@ async function handleAddSuccess() {
     };
 
     const response = await createBank(payload);
-    showSuccessNotification(response.message || "Bank created successfully");
+    showSuccessNotification(response.message);
 
     // Close modal before reloading
     isAddModalVisible.value = false;
@@ -189,7 +211,10 @@ async function handleAddSuccess() {
     await loadBanks();
   } catch (error) {
     console.error("Failed to create bank:", error);
-    showErrorNotification("Failed to create bank:", (error as Error).message);
+    showErrorNotification(
+      t("modules.bank.form.validation.createError"),
+      (error as Error).message
+    );
   }
 }
 
@@ -198,12 +223,18 @@ async function handleEditSuccess() {
     const formData = editModalRef.value?.formData;
 
     if (!formData?.name?.trim()) {
-      showErrorNotification("Validation Error", "Bank name is required");
+      showErrorNotification(
+        t("common.error"),
+        t("modules.bank.form.validation.nameRequired")
+      );
       return;
     }
 
     if (!formData?.id) {
-      showErrorNotification("Validation Error", "Bank ID is missing");
+      showErrorNotification(
+        t("common.error"),
+        t("modules.bank.form.validation.idRequired")
+      );
       return;
     }
 
@@ -231,7 +262,10 @@ async function handleEditSuccess() {
     await loadBanks();
   } catch (error) {
     console.error("Failed to update bank:", error);
-    showErrorNotification("Failed to update bank:", (error as Error).message);
+    showErrorNotification(
+      t("modules.bank.form.validation.updateError"),
+      (error as Error).message
+    );
   }
 }
 
@@ -257,7 +291,10 @@ async function deleteBank(id: number) {
     }
   } catch (error) {
     console.error("Failed to delete bank:", error);
-    showErrorNotification("Failed to delete bank:", (error as Error).message);
+    showErrorNotification(
+      t("modules.bank.form.validation.deleteError"),
+      (error as Error).message
+    );
   }
 }
 
@@ -276,9 +313,9 @@ function handleImageError(event: Event) {
 
 <template>
   <div class="bank-header">
-    <h1>Bank Management</h1>
+    <h1>{{ t("modules.bank.title") }}</h1>
     <div>
-      <AddButton label="Add Bank" @click="openAddModal" />
+      <AddButton :label="t('modules.bank.addNew')" @click="openAddModal" />
     </div>
   </div>
 
@@ -323,24 +360,24 @@ function handleImageError(event: Event) {
 
         <template v-else-if="column.key === 'action'">
           <div class="action-icons">
-            <a-tooltip title="Edit">
+            <a-tooltip :title="t('actions.edit')">
               <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip>
-            <a-tooltip title="Manage Bank Currencies">
+            <a-tooltip :title="t('modules.bank.manageCurrencies')">
               <dollar-outlined
                 class="icon currency"
                 @click="openBankCurrencyPage(record)"
               />
             </a-tooltip>
             <a-popconfirm
-              title="Are you sure to delete this bank?"
+              :title="t('message.deleteConfirm')"
               placement="topRight"
-              ok-text="Delete"
-              cancel-text="Cancel"
+              :ok-text="t('actions.delete')"
+              :cancel-text="t('actions.cancel')"
               ok-type="danger"
               @confirm="deleteBank(record.id)"
             >
-              <a-tooltip title="Delete">
+              <a-tooltip :title="t('actions.delete')">
                 <delete-outlined class="icon delete" />
               </a-tooltip>
             </a-popconfirm>

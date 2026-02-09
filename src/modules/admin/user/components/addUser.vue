@@ -3,9 +3,9 @@
     <div class="page-header">
       <a-button type="link" @click="goBack" class="back-button">
         <arrow-left-outlined />
-        Back
+        {{ t('actions.back') }}
       </a-button>
-      <h1>Add New User</h1>
+      <h1>{{ t('modules.user.addForm.title') }}</h1>
     </div>
 
     <div class="form-container">
@@ -18,65 +18,65 @@
       >
         <a-row :gutter="24">
           <a-col :xs="24" :md="6">
-            <a-form-item label="Email" name="email">
+            <a-form-item :label="t('modules.user.addForm.email')" name="email">
               <a-input
                 v-model:value="formState.email"
-                placeholder="Enter email address"
+                :placeholder="t('modules.user.addForm.placeholder.email')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Name" name="name">
+            <a-form-item :label="t('modules.user.addForm.name')" name="name">
               <a-input
                 v-model:value="formState.name"
-                placeholder="Enter first name"
+                :placeholder="t('modules.user.addForm.placeholder.name')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Surname" name="surname">
+            <a-form-item :label="t('modules.user.addForm.surname')" name="surname">
               <a-input
                 v-model:value="formState.surname"
-                placeholder="Enter surname"
+                :placeholder="t('modules.user.addForm.placeholder.surname')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Telephone" name="tel">
+            <a-form-item :label="t('modules.user.addForm.telephone')" name="tel">
               <a-input
                 v-model:value="formState.tel"
-                placeholder="Enter telephone number"
+                :placeholder="t('modules.user.addForm.placeholder.telephone')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Password" name="password">
+            <a-form-item :label="t('modules.user.addForm.password')" name="password">
               <a-input-password
                 v-model:value="formState.password"
-                placeholder="Enter password"
+                :placeholder="t('modules.user.addForm.placeholder.password')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Confirm Password" name="confirm_password">
+            <a-form-item :label="t('modules.user.addForm.confirmPassword')" name="confirm_password">
               <a-input-password
                 v-model:value="formState.confirm_password"
-                placeholder="Confirm password"
+                :placeholder="t('modules.user.addForm.placeholder.confirmPassword')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="12">
-            <a-form-item label="Roles" name="roles">
+            <a-form-item :label="t('modules.user.addForm.roles')" name="roles">
               <a-select
                 v-model:value="formState.roles"
                 mode="multiple"
-                placeholder="Select roles"
+                :placeholder="t('modules.user.addForm.placeholder.roles')"
                 :options="roleOptions"
                 :loading="loadingRolePermissions"
               />
@@ -86,7 +86,7 @@
           <a-col :xs="24" :md="6"></a-col>
 
           <a-col :xs="24">
-            <a-form-item label="Profile Image" name="image">
+            <a-form-item :label="t('modules.user.addForm.profileImage')" name="image">
               <a-upload
                 name="image"
                 list-type="picture-card"
@@ -95,7 +95,7 @@
               >
                 <div v-if="!previewImage">
                   <plus-outlined />
-                  <div style="margin-top: 8px">Upload</div>
+                  <div style="margin-top: 8px">{{ t('modules.user.addForm.actions.upload') }}</div>
                 </div>
                 <img
                   v-else
@@ -113,7 +113,7 @@
             <a-form-item name="permissions" required>
               <template #label>
                 <span class="permissions-label">
-                  <span class="required-mark">*</span> Permissions
+                  <span class="required-mark">*</span> {{ t('modules.role.permissions') }}
                 </span>
               </template>
 
@@ -124,7 +124,7 @@
                     :indeterminate="isSomeSelected"
                     @change="toggleAll"
                   >
-                    Permissions
+                    {{ t('modules.role.permissions') }}
                   </a-checkbox>
                 </div>
 
@@ -164,14 +164,14 @@
 
               <div v-else class="loading-container">
                 <a-spin />
-                <span style="margin-left: 12px">Loading permissions...</span>
+                <span style="margin-left: 12px">{{ t('common.loading') }}</span>
               </div>
 
               <div
                 class="selected-count"
                 v-if="formState.permissions.length > 0"
               >
-                {{ formState.permissions.length }} permission(s) selected
+                {{ t('modules.role.addForm.selectedCount', { count: formState.permissions.length }) }}
               </div>
             </a-form-item>
           </a-col>
@@ -184,7 +184,7 @@
                 <a-space>
                   <a-button class="custom-reset-btn" @click="resetForm">
                     <ClearOutlined />
-                    Reset
+                    {{ t('actions.reset') }}
                   </a-button>
                   <a-button
                     type="primary"
@@ -192,7 +192,7 @@
                     html-type="submit"
                   >
                     <SaveOutlined />
-                    Create User
+                    {{ t('modules.user.addForm.actions.createUser') }}
                   </a-button>
                 </a-space>
               </div>
@@ -210,6 +210,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, onMounted, watch, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   ArrowLeftOutlined,
   PlusOutlined,
@@ -231,6 +232,7 @@ const { upload, createUser } = useUsers();
 const { fetchAll, fetchById } = useRoles();
 const { fetchAll: fetchAllPermissions } = usePermission();
 const router = useRouter();
+const { t } = useI18n();
 
 interface SelectOption {
   value: number | string;
@@ -265,50 +267,50 @@ const roleOptions = ref<SelectOption[]>([]);
 const permissionModules = ref<IPermissionEntity[]>([]);
 
 // Validation rules
-const rules: Record<string, Rule[]> = {
+const rules = computed(() => ({
   email: [
-    { required: true, message: "Please input email!", trigger: "blur" },
+    { required: true, message: t('modules.user.addForm.validation.emailRequired'), trigger: "blur" },
     {
       type: "email",
-      message: "Please enter a valid email!",
+      message: t('modules.user.addForm.validation.emailInvalid'),
       trigger: "blur",
     },
   ],
   password: [
-    { required: true, message: "Please input password!", trigger: "blur" },
+    { required: true, message: t('modules.user.addForm.validation.passwordRequired'), trigger: "blur" },
     {
       min: 6,
-      message: "Password must be at least 6 characters!",
+      message: t('validation.minLength', { min: 6 }),
       trigger: "blur",
     },
   ],
   confirm_password: [
     {
       required: true,
-      message: "Please confirm password!",
+      message: t('modules.user.addForm.validation.confirmPasswordRequired'),
       trigger: "blur",
     },
     {
       validator: async (_rule: Rule, value: string) => {
         if (value !== formState.password) {
-          return Promise.reject("Passwords do not match!");
+          return Promise.reject(t('modules.user.addForm.validation.passwordMismatch'));
         }
         return Promise.resolve();
       },
       trigger: "blur",
     },
   ],
-  name: [{ required: true, message: "Please input name!", trigger: "blur" }],
+  name: [{ required: true, message: t('modules.user.addForm.validation.nameRequired'), trigger: "blur" }],
   surname: [
-    { required: true, message: "Please input surname!", trigger: "blur" },
+    { required: true, message: t('modules.user.addForm.validation.surnameRequired'), trigger: "blur" },
   ],
   tel: [
-    { required: true, message: "Please input telephone!", trigger: "blur" },
+    { required: true, message: t('modules.user.addForm.validation.telephoneRequired'), trigger: "blur" },
   ],
   roles: [
     {
       required: true,
-      message: "Please select at least one role!",
+      message: t('modules.user.addForm.validation.rolesRequired'),
       trigger: "change",
       type: "array",
     },
@@ -317,14 +319,14 @@ const rules: Record<string, Rule[]> = {
     {
       validator: (_rule: Rule, value: number[]) => {
         if (value.length === 0) {
-          return Promise.reject("Please select at least one permission!");
+          return Promise.reject(t('modules.role.addForm.validation.permissionsRequired'));
         }
         return Promise.resolve();
       },
       trigger: "change",
     },
   ],
-};
+}));
 
 // --- Role Functions ---
 const mapRolesToOptions = (roles: IRoleEntity[]) => {
@@ -529,7 +531,7 @@ async function onFinish() {
   showSuccessNotification(response.message);
 
   console.log("User data to submit:", response);
-  router.push({ name: "users" });
+  router.push({ name: "user" });
 }
 
 const onFinishFailed = (errorInfo: any): void => {

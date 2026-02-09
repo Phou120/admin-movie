@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   CloseOutlined,
   SaveOutlined,
@@ -19,6 +20,7 @@ interface Emits {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
 const formData = ref<ICurrencyForm>({
   id: 0,
@@ -83,7 +85,7 @@ function handleCancel() {
 
 function validateForm(): boolean {
   if (!formData.value.name.trim()) {
-    validationError.value = "Currency name is required";
+    validationError.value = t('modules.currency.form.validation.nameRequired');
     showValidationError.value = true;
     nextTick(() => {
       nameInputRef.value?.focus();
@@ -92,7 +94,7 @@ function validateForm(): boolean {
   }
 
   if (!formData.value.short_name.trim()) {
-    validationError.value = "Currency short name is required";
+    validationError.value = t('modules.currency.form.validation.shortNameRequired');
     showValidationError.value = true;
     nextTick(() => {
       shortNameInputRef.value?.focus();
@@ -101,7 +103,7 @@ function validateForm(): boolean {
   }
 
   if (formData.value.short_name.trim().length > 5) {
-    validationError.value = "Currency short name should be 5 characters or less";
+    validationError.value = t('modules.currency.form.validation.shortNameTooLong');
     showValidationError.value = true;
     nextTick(() => {
       shortNameInputRef.value?.focus();
@@ -132,7 +134,7 @@ async function handleSubmit() {
     emit("success");
     handleCancel();
   } catch (error) {
-    showErrorNotification("Failed to update currency:", (error as Error).message);
+    showErrorNotification(t('modules.currency.form.validation.updateError'), (error as Error).message);
   } finally {
     loading.value = false;
   }
@@ -147,7 +149,7 @@ defineExpose({
 <template>
   <a-modal
     :open="visible"
-    title="Edit Currency"
+    :title="t('modules.currency.editModal')"
     :footer="null"
     @cancel="handleCancel"
     :width="modalWidth"
@@ -155,7 +157,7 @@ defineExpose({
   >
     <a-form layout="vertical" :model="formData">
       <a-form-item
-        label="Currency Name"
+        :label="t('modules.currency.form.name')"
         :validate-status="
           showValidationError && !formData.name.trim() ? 'error' : ''
         "
@@ -166,7 +168,7 @@ defineExpose({
         <a-input
           ref="nameInputRef"
           v-model:value="formData.name"
-          placeholder="Enter currency name"
+          :placeholder="t('modules.currency.form.placeholder.name')"
           size="large"
           :class="{
             'error-input': showValidationError && !formData.name.trim(),
@@ -177,7 +179,7 @@ defineExpose({
       </a-form-item>
 
       <a-form-item
-        label="Currency Short Name"
+        :label="t('modules.currency.form.shortName')"
         :validate-status="
           showValidationError && !formData.short_name.trim() ? 'error' : ''
         "
@@ -188,7 +190,7 @@ defineExpose({
         <a-input
           ref="shortNameInputRef"
           v-model:value="formData.short_name"
-          placeholder="Enter currency short name (e.g., LAK, USD, EUR)"
+          :placeholder="t('modules.currency.form.placeholder.shortName')"
           size="large"
           maxlength="5"
           :class="{
@@ -207,7 +209,7 @@ defineExpose({
         @click="handleCancel"
         :disabled="loading"
       >
-        <CloseOutlined />Close
+        <CloseOutlined />{{ t('actions.close') }}
       </a-button>
       <a-button
         class="custom-ok-btn"
@@ -215,7 +217,7 @@ defineExpose({
         @click="handleSubmit"
         :loading="loading"
       >
-        <SaveOutlined />Update
+        <SaveOutlined />{{ t('actions.update') }}
       </a-button>
     </div>
   </a-modal>

@@ -1,8 +1,8 @@
 <template>
   <div class="customer-header">
-    <h1>Banner Management</h1>
+    <h1>{{ t("modules.banner.title") }}</h1>
     <div>
-      <AddButton label="Add Banner" @click="openAddModal" />
+      <AddButton :label="t('modules.banner.addNew')" @click="openAddModal" />
     </div>
   </div>
 
@@ -43,14 +43,14 @@
 
         <template v-else-if="column.key === 'action'">
           <span class="action-icons">
-            <a-tooltip title="Edit">
+            <a-tooltip :title="t('actions.edit')">
               <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip>
             <a-popconfirm
-              title="Are you sure to delete this?"
+              :title="t('message.deleteConfirm')"
               @confirm="deleteBanner(record.id)"
             >
-              <a-tooltip title="Delete">
+              <a-tooltip :title="t('actions.delete')">
                 <delete-outlined class="icon delete" />
               </a-tooltip>
             </a-popconfirm>
@@ -81,6 +81,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 import { message, Modal, type TablePaginationConfig } from "ant-design-vue";
 import type { IBanner, IBannerForm } from "./interface/banner.interface";
@@ -95,6 +96,7 @@ import EditBannerModal from "./components/EditBannerModal.vue";
 
 const { fetchAll, createBanner, upload, updateBanner, deleteBannerById } =
   useBanner();
+const { t } = useI18n();
 
 // Modal controls
 const isAddModalVisible = ref(false);
@@ -126,38 +128,53 @@ const pageOffset = computed(() => {
 });
 
 // Table columns
-const columns = [
+const columns = computed(() => [
   // IMPORTANT: dataIndex removed to allow the custom template to work
-  { title: "No", key: "no", align: "center", width: 50 },
-  { title: "Image", dataIndex: "image_url", key: "image_url", width: 100 },
-  { title: "Link", dataIndex: "link", key: "link", width: 300 },
   {
-    title: "Order",
+    title: t("modules.banner.columns.no"),
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.banner.columns.image"),
+    dataIndex: "image_url",
+    key: "image_url",
+    width: 100,
+  },
+  {
+    title: t("modules.banner.columns.link"),
+    dataIndex: "link",
+    key: "link",
+    width: 300,
+  },
+  {
+    title: t("modules.banner.columns.order"),
     dataIndex: "order_by",
     key: "order_by",
     width: 80,
     align: "center",
   },
   {
-    title: "Created At",
+    title: t("modules.banner.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     width: 180,
   },
   {
-    title: "Updated At",
+    title: t("modules.banner.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     width: 180,
   },
   {
-    title: "Action",
+    title: t("modules.banner.columns.action"),
     key: "action",
     width: 100,
     fixed: "right",
     align: "center",
   },
-];
+]);
 
 // Load banners
 async function loadBanners(
@@ -274,7 +291,9 @@ async function handleEditSuccess() {
 // Delete Banner
 function deleteBanner(id: number) {
   Modal.confirm({
-    title: "Are you sure delete?",
+    title: t("message.deleteConfirm"),
+    okText: t("actions.confirm"),
+    cancelText: t("actions.cancel"),
     okType: "danger",
     onOk: async () => {
       const response = await deleteBannerById(id);

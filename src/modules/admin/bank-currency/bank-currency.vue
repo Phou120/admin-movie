@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { BankCurrencyComposible } from "./composible/index";
 import { DeleteOutlined, ArrowLeftOutlined } from "@ant-design/icons-vue";
@@ -14,6 +15,7 @@ import AddButton from "../../../components/AddButton.vue";
 
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 const bankId = parseInt(route.params.id as string);
 console.log("bankId", bankId);
 
@@ -25,38 +27,49 @@ function goBackToBanks() {
 const { fetchAll, deleteBankCurrencyById, createBankCurrency } =
   BankCurrencyComposible();
 
-const columns = [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 80 },
+const columns = computed(() => [
   {
-    title: "Currency Name",
+    title: t("modules.bankCurrency.columns.no"),
+    dataIndex: "id",
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.bankCurrency.columns.currencyName"),
     dataIndex: ["currency", "name"],
     key: "currency_name",
     align: "left",
     width: 200,
   },
   {
-    title: "Currency Short Name",
+    title: t("modules.bankCurrency.columns.currencyShortName"),
     dataIndex: ["currency", "short_name"],
     key: "currency_short_name",
     align: "center",
     width: 150,
   },
   {
-    title: "Created At",
+    title: t("modules.bankCurrency.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 180,
   },
   {
-    title: "Updated At",
+    title: t("modules.bankCurrency.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     align: "center",
     width: 180,
   },
-  { title: "Action", key: "action", align: "center", width: 120 },
-];
+  {
+    title: t("modules.bankCurrency.columns.action"),
+    key: "action",
+    align: "center",
+    width: 120,
+  },
+]);
 
 const data = reactive<IBankCurrencyList>({
   bankCurrencies: [],
@@ -104,7 +117,7 @@ async function loadBankCurrencies(page = 1, limit = 10) {
     };
   } catch (error) {
     showErrorNotification(
-      "Failed to load bank currencies:",
+      t("modules.bankCurrency.form.validation.loadError"),
       (error as Error).message
     );
     // Reset to safe defaults on error
@@ -142,7 +155,10 @@ async function handleAddSuccess() {
     const formData = addModalRef.value?.formData;
 
     if (!formData?.currency_id || formData.currency_id === 0) {
-      showErrorNotification("Validation Error", "Currency is required");
+      showErrorNotification(
+        t("modules.bankCurrency.form.validation.title"),
+        t("modules.bankCurrency.form.validation.currencyRequired")
+      );
       return;
     }
 
@@ -157,7 +173,7 @@ async function handleAddSuccess() {
     const errorMessage =
       error.response?.data?.message ||
       error.message ||
-      "Failed to create bank currency";
+      t("modules.bankCurrency.form.validation.createError");
     showErrorNotification(errorMessage);
   }
 }
@@ -172,8 +188,11 @@ async function deleteBankCurrency(id: number) {
     const errorMessage =
       error.response?.data?.message ||
       error.message ||
-      "Failed to delete bank currency";
-    showErrorNotification("Failed to delete bank currency", errorMessage);
+      t("modules.bankCurrency.form.validation.deleteError");
+    showErrorNotification(
+      t("modules.bankCurrency.form.validation.deleteError"),
+      errorMessage
+    );
   }
 }
 </script>
@@ -188,12 +207,15 @@ async function deleteBankCurrency(id: number) {
         @click="goBackToBanks"
       >
         <ArrowLeftOutlined />
-        Back to Banks
+        {{ t("modules.bankCurrency.actions.backToBanks") }}
       </a-button>
-      <h1>Bank Currency Management</h1>
+      <h1>{{ t("modules.bankCurrency.title") }}</h1>
     </div>
     <div class="header-right">
-      <AddButton label="Add Bank Currency" @click="openAddModal" />
+      <AddButton
+        :label="t('modules.bankCurrency.actions.addBankCurrency')"
+        @click="openAddModal"
+      />
     </div>
   </div>
 
@@ -210,7 +232,7 @@ async function deleteBankCurrency(id: number) {
     >
       <template #bodyCell="{ column, record, index }">
         <template v-if="column.key === 'no'">
-          <span class="row-number">{{ getRowNumber(index) }}</span>
+          <span>{{ getRowNumber(index) }}</span>
         </template>
 
         <template v-else-if="column.key === 'currency_name'">
@@ -239,11 +261,11 @@ async function deleteBankCurrency(id: number) {
               <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip> -->
             <a-popconfirm
-              title="Are you sure to delete this bank currency?"
+              :title="t('modules.bankCurrency.form.confirmDelete')"
               placement="topRight"
               @confirm="deleteBankCurrency(record.id)"
             >
-              <a-tooltip title="Delete">
+              <a-tooltip :title="t('common.delete')">
                 <delete-outlined class="icon delete" />
               </a-tooltip>
             </a-popconfirm>
@@ -260,14 +282,6 @@ async function deleteBankCurrency(id: number) {
     :bankId="bankId"
     @success="handleAddSuccess"
   />
-
-  <!-- <EditBankCurrencyModal
-    ref="editModalRef"
-    v-model:visible="isEditModalVisible"
-    :bankId="bankId"
-    :bankCurrency="selectedBankCurrency"
-    @success="handleEditSuccess"
-  /> -->
 </template>
 
 <style lang="scss" scoped>
@@ -330,11 +344,6 @@ async function deleteBankCurrency(id: number) {
   :deep(.ant-table-tbody > tr:hover > td) {
     background: #f5f5f5;
   }
-}
-
-.row-number {
-  font-weight: 600;
-  color: #8c8c8c;
 }
 
 .currency-name-text {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { CloseOutlined, SaveOutlined } from "@ant-design/icons-vue";
 import type { IBankCurrencyForm } from "../interface/bank-currency.interface";
 import { showErrorNotification } from "../../../../common/utils/notification";
@@ -19,6 +20,7 @@ interface Emits {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
 const formData = ref<Omit<IBankCurrencyForm, "bank_id">>({
   currency_id: 0,
@@ -93,7 +95,7 @@ function validateForm(): boolean {
     );
 
   if (!isValidCurrency) {
-    validationError.value = "Please select a valid currency";
+    validationError.value = t('modules.bankCurrency.addForm.validation.currencyRequired');
     showValidationError.value = true;
     nextTick(() => {
       currencyInputRef.value?.focus();
@@ -125,7 +127,7 @@ async function handleSubmit() {
     handleCancel();
   } catch (error) {
     showErrorNotification(
-      "Failed to create bank currency:",
+      t('modules.bankCurrency.addForm.validation.createError'),
       (error as Error).message
     );
   } finally {
@@ -142,7 +144,7 @@ defineExpose({
 <template>
   <a-modal
     :open="visible"
-    title="Add Bank Currency"
+    :title="t('modules.bankCurrency.addForm.title')"
     :footer="null"
     @cancel="handleCancel"
     :width="modalWidth"
@@ -150,7 +152,7 @@ defineExpose({
   >
     <a-form layout="vertical" :model="formData">
       <a-form-item
-        label="Currency"
+        :label="t('modules.bankCurrency.addForm.currency')"
         :validate-status="
           showValidationError && !formData.currency_id ? 'error' : ''
         "
@@ -161,7 +163,7 @@ defineExpose({
         <a-select
           ref="currencyInputRef"
           v-model:value="formData.currency_id"
-          placeholder="Select currency"
+          :placeholder="t('modules.bankCurrency.addForm.placeholder.currency')"
           size="large"
           :class="{
             'error-input': showValidationError && !formData.currency_id,
@@ -188,7 +190,7 @@ defineExpose({
         @click="handleCancel"
         :disabled="loading"
       >
-        <CloseOutlined />Close
+        <CloseOutlined />{{ t('common.cancel') }}
       </a-button>
       <a-button
         class="custom-ok-btn"
@@ -196,7 +198,7 @@ defineExpose({
         @click="handleSubmit"
         :loading="loading"
       >
-        <SaveOutlined />Create
+        <SaveOutlined />{{ t('modules.bankCurrency.addForm.actions.create') }}
       </a-button>
     </div>
   </a-modal>

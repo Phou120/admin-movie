@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { CloseOutlined, SaveOutlined } from "@ant-design/icons-vue";
 import type { IPackagesForm } from "../interface/packages.interface";
 import TextEditor from "./TextEditor.vue";
@@ -17,12 +18,13 @@ interface Emits {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
 const typeOptions = [
-  { label: "1 Month", value: "one-month" },
-  { label: "3 Months", value: "three-month" },
-  { label: "6 Months", value: "six-month" },
-  { label: "1 Year", value: "one-year" },
+  { label: t('modules.package.type.1month'), value: "one-month" },
+  { label: t('modules.package.type.3months'), value: "three-month" },
+  { label: t('modules.package.type.6months'), value: "six-month" },
+  { label: t('modules.package.type.1year'), value: "one-year" },
 ];
 
 const formUpdate = ref<IPackagesForm>({
@@ -120,26 +122,26 @@ const handleCancel = () => {
 <template>
   <a-modal
     :open="visible"
-    title="Edit Package"
+    :title="t('modules.package.editModal')"
     :footer="null"
     @cancel="handleCancel"
   >
     <a-form layout="vertical">
       <a-form-item
-        label="Package Type"
+        :label="t('modules.package.form.type')"
         :validate-status="formUpdate.type ? 'success' : 'error'"
-        :help="!formUpdate.type ? 'Package type is required' : ''"
+        :help="!formUpdate.type ? t('modules.package.form.validation.typeRequired') : ''"
       >
         <a-select
           v-model:value="formUpdate.type"
           :options="typeOptions"
-          placeholder="Select package type"
+          :placeholder="t('modules.package.form.placeholder.type')"
         />
       </a-form-item>
       <a-form-item
-        label="Price"
+        :label="t('modules.package.form.price')"
         :validate-status="formUpdate.price > 0 ? 'success' : 'error'"
-        :help="formUpdate.price <= 0 ? 'Price must be greater than 0' : ''"
+        :help="formUpdate.price <= 0 ? t('modules.package.form.validation.priceTooLow') : ''"
       >
         <a-input
           v-model:value="formattedPrice"
@@ -147,23 +149,23 @@ const handleCancel = () => {
           inputmode="numeric"
           pattern="[0-9]*"
           style="width: 100%"
-          placeholder="Enter price (e.g., 1,000,000)"
+          :placeholder="t('modules.package.form.placeholder.price')"
           @input="handlePriceInput"
           @keypress="handleKeyPress"
           @paste="handlePaste"
         />
       </a-form-item>
-      <a-form-item label="Content">
+      <a-form-item :label="t('modules.package.form.content')">
         <TextEditor
           v-model="formUpdate.content"
-          placeholder="Enter package content description"
+          :placeholder="t('modules.package.form.placeholder.content')"
           height="120px"
         />
       </a-form-item>
     </a-form>
     <div class="modal-footer">
       <a-button class="custom-cancel-btn" @click="handleCancel"
-        ><CloseOutlined />Close</a-button
+        ><CloseOutlined />{{ t('actions.close') }}</a-button
       >
       <a-button
         type="primary"
@@ -172,7 +174,7 @@ const handleCancel = () => {
         :disabled="!formUpdate.type || formUpdate.price <= 0"
       >
         <SaveOutlined />
-        Confirm
+        {{ t('actions.confirm') }}
       </a-button>
     </div>
   </a-modal>

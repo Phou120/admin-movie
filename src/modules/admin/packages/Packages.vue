@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { h, onMounted, reactive, ref } from "vue";
+import { h, onMounted, reactive, ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { PackagesComposible } from "./composible/index";
 import {
   EditOutlined,
@@ -20,53 +21,65 @@ import UpdatePackageModal from "./components/UpdatePackageModal.vue";
 
 const { fetchAll, deletePackageById, updatePackage, createPackage } =
   PackagesComposible();
+const { t } = useI18n();
 
 const typeOptions = [
-  { label: "1 Month", value: "1month" },
-  { label: "3 Months", value: "3month" },
-  { label: "6 Months", value: "6month" },
-  { label: "1 Year", value: "1year" },
+  { label: t("modules.package.type.1month"), value: "1month" },
+  { label: t("modules.package.type.3months"), value: "3month" },
+  { label: t("modules.package.type.6months"), value: "6month" },
+  { label: t("modules.package.type.1year"), value: "1year" },
 ];
 
-const columns = [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 60 },
+const columns = computed(() => [
   {
-    title: "Package Type",
+    title: t("modules.package.columns.no"),
+    dataIndex: "id",
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.package.columns.type"),
     dataIndex: "type",
     key: "type",
     align: "center",
     width: 150,
   },
   {
-    title: "Price",
+    title: t("modules.package.columns.price"),
     dataIndex: "price",
     key: "price",
     align: "center",
     width: 150,
   },
   {
-    title: "Content",
+    title: t("modules.package.columns.content"),
     dataIndex: "content",
     key: "content",
     align: "center",
     width: 300,
   },
   {
-    title: "Created At",
+    title: t("modules.package.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 200,
   },
   {
-    title: "Updated At",
+    title: t("modules.package.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     align: "center",
     width: 200,
   },
-  { title: "Action", key: "action", align: "center", width: 110 },
-];
+  {
+    title: t("modules.package.columns.action"),
+    key: "action",
+    align: "center",
+    width: 100,
+  },
+]);
 
 const data = reactive<IPackagesData>({
   packages: [],
@@ -105,19 +118,27 @@ async function loadPackages(
   try {
     const response = await fetchAll(page, limit);
 
-    data.packages = response.data;
+    data.packages = response.data || [];
 
-    const paginate = response.pagination;
-
-    // Update pagination info based on response
-    data.pagination = {
-      current: paginate.currentPage,
-      pageSize: paginate.limit,
-      total: paginate.total,
-      showSizeChanger: true,
-    };
+    // Handle pagination response safely
+    if (response.pagination) {
+      const paginate = response.pagination;
+      data.pagination = {
+        current: paginate.currentPage || page,
+        pageSize: paginate.limit || limit,
+        total: paginate.total || 0,
+        showSizeChanger: true,
+      };
+    } else {
+      // Fallback if pagination is not in response
+      data.pagination.current = page;
+      data.pagination.pageSize = limit;
+      data.pagination.total = response.data?.length || 0;
+    }
   } catch (error) {
     console.error(error);
+    // Set empty state on error
+    data.packages = [];
   } finally {
     loading.value = false;
   }
@@ -202,7 +223,7 @@ function getPackageTypeLabel(type: string): string {
 
 <template>
   <div class="customer-header">
-    <h1>Packages</h1>
+    <h1>{{ t("modules.package.title") }}</h1>
     <div>
       <a-button
         type="primary"
@@ -210,7 +231,7 @@ function getPackageTypeLabel(type: string): string {
         :icon="h(PlusCircleFilled)"
         @click="openAddModal"
       >
-        Add Package
+        {{ t("modules.package.addNew") }}
       </a-button>
     </div>
   </div>
@@ -240,7 +261,9 @@ function getPackageTypeLabel(type: string): string {
             class="rich-content"
             v-html="record.content"
           ></div>
-          <span v-else class="no-content">No content</span>
+          <span v-else class="no-content">{{
+            t("modules.package.noContent")
+          }}</span>
         </div>
       </template>
       <template v-else-if="column.key === 'created_at'">
@@ -251,14 +274,14 @@ function getPackageTypeLabel(type: string): string {
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">
-          <a-tooltip title="Edit">
+          <a-tooltip :title="t('actions.edit')">
             <edit-outlined class="icon edit" @click="openEditModal(record)" />
           </a-tooltip>
           <a-popconfirm
-            title="Are you sure to delete this package?"
+            :title="t('message.deleteConfirm')"
             @confirm="deletePackage(record.id)"
           >
-            <a-tooltip title="Delete">
+            <a-tooltip :title="t('actions.delete')">
               <delete-outlined class="icon delete" />
             </a-tooltip>
           </a-popconfirm>
@@ -292,13 +315,6 @@ function getPackageTypeLabel(type: string): string {
     font-size: 24px;
     margin: 0;
   }
-}
-
-.action-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
 }
 
 .clear-btn {

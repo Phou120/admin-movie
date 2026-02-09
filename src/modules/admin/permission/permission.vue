@@ -1,6 +1,6 @@
 <template>
   <div class="customer-header">
-    <h1>Permission</h1>
+    <h1>{{ t("modules.permission.title") }}</h1>
   </div>
 
   <div class="table-container">
@@ -36,12 +36,14 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { type TablePaginationConfig } from "ant-design-vue";
 import { usePermission } from "./composible";
 import type { IPermission } from "./interface/permission.interface";
 import formatDateBTC from "../../../common/utils/format-datebtc.util";
 
 const { fetchAll } = usePermission();
+const { t } = useI18n();
 
 // Modal controls
 const loading = ref(false);
@@ -68,38 +70,43 @@ const pageOffset = computed(() => {
 });
 
 // Table columns
-const columns = [
+const columns = computed(() => [
   // IMPORTANT: dataIndex removed to allow the custom template to work
-  { title: "No", key: "no", align: "center", width: 60 },
   {
-    title: "Name",
+    title: t("modules.permission.columns.no"),
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.permission.columns.name"),
     align: "center",
     dataIndex: "name",
     key: "name",
     width: 200,
   },
   {
-    title: "Display Name",
+    title: t("modules.permission.columns.displayName"),
     align: "center",
     dataIndex: "display_name",
     key: "display_name",
     width: 200,
   },
   {
-    title: "Created At",
+    title: t("modules.permission.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 150,
   },
   {
-    title: "Updated At",
+    title: t("modules.permission.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     align: "center",
     width: 150,
   },
-];
+]);
 
 // Load permissions
 async function loadPermissions(

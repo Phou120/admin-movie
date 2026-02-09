@@ -62,6 +62,26 @@
   }
 }
 
+.action-icons .view {
+  color: rgb(251 146 60 / var(--tw-text-opacity, 1));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid currentColor;
+  border-radius: 20%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #dfeef9;
+  color: #008bee;
+
+  &:hover {
+    color: #008bee;
+    border-color: #008bee;
+  }
+}
+
 .action-icons .currency {
   color: #52c41a; /* green color for currency */
   display: inline-flex;
@@ -112,6 +132,25 @@
   &:hover {
     color: #f79b31;
     border-color: #f79b31; /* change border color on hover if desired */
+  }
+}
+
+.action-icons .payment {
+  color: #73d13d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid currentColor;
+  border-radius: 20%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #eef7e8;
+
+  &:hover {
+    color: #73d13d;
+    border-color: #73d13d;
   }
 }
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { h, onMounted, reactive, ref } from "vue";
+import { h, onMounted, reactive, ref, computed } from "vue";
 import { CourseCategoryComposible } from "./composible/index";
+import { useI18n } from "vue-i18n";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -21,39 +22,51 @@ import {
 
 const { fetchAll, deleteCategoryById, updateCategory, createCategory } =
   CourseCategoryComposible();
+const { t } = useI18n();
 
-const columns = [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 60 },
+const columns = computed(() => [
   {
-    title: "Name",
+    title: t("modules.category.columns.no"),
+    dataIndex: "id",
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.category.columns.name"),
     dataIndex: "name",
     key: "name",
     align: "center",
     width: 200,
   },
   {
-    title: "Description",
+    title: t("modules.category.columns.description"),
     dataIndex: "description",
     key: "description",
     align: "center",
     width: 300,
   },
   {
-    title: "Created At",
+    title: t("modules.category.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 200,
   },
   {
-    title: "Updated At",
+    title: t("modules.category.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     align: "center",
     width: 200,
   },
-  { title: "Action", key: "action", align: "center", width: 110 },
-];
+  {
+    title: t("modules.category.columns.action"),
+    key: "action",
+    align: "center",
+    width: 80,
+  },
+]);
 
 const data = reactive<IUserCourseCategory>({
   categories: [],
@@ -199,7 +212,7 @@ function handleCancel() {
 
 <template>
   <div class="customer-header">
-    <h1>Category</h1>
+    <h1>{{ t("modules.category.title") }}</h1>
     <div>
       <a-button
         type="primary"
@@ -207,7 +220,7 @@ function handleCancel() {
         :icon="h(PlusCircleFilled)"
         @click="openAddModal"
       >
-        Add Category
+        {{ t("modules.category.addNew") }}
       </a-button>
     </div>
   </div>
@@ -232,14 +245,14 @@ function handleCancel() {
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">
-          <a-tooltip title="Edit">
+          <a-tooltip :title="t('actions.edit')">
             <edit-outlined class="icon edit" @click="openEditModal(record)" />
           </a-tooltip>
           <a-popconfirm
-            title="Are you sure to delete this?"
+            :title="t('message.deleteConfirm')"
             @confirm="deleteCategory(record.id)"
           >
-            <a-tooltip title="Delete">
+            <a-tooltip :title="t('actions.delete')">
               <delete-outlined class="icon delete" />
             </a-tooltip>
           </a-popconfirm>
@@ -251,35 +264,39 @@ function handleCancel() {
   <!-- Edit Modal -->
   <a-modal
     v-model:open="isEditModalVisible"
-    title="Edit Category"
+    :title="t('modules.category.edit')"
     :footer="null"
     @cancel="handleEditCancel"
   >
     <a-form layout="vertical">
       <a-form-item
-        label="Name"
+        :label="t('modules.category.form.name')"
         :validate-status="formUpdate.name ? 'success' : 'error'"
-        :help="!formUpdate.name ? 'Category name is required' : ''"
+        :help="
+          !formUpdate.name
+            ? t('modules.category.form.validation.nameRequired')
+            : ''
+        "
       >
         <a-input
           v-model:value="formUpdate.name"
-          placeholder="Enter category name"
+          :placeholder="t('modules.category.form.placeholder.name')"
         />
       </a-form-item>
-      <a-form-item label="Description">
+      <a-form-item :label="t('modules.category.form.description')">
         <a-input
           v-model:value="formUpdate.description"
-          placeholder="Enter description"
+          :placeholder="t('modules.category.form.placeholder.description')"
         />
       </a-form-item>
     </a-form>
     <div class="modal-footer">
       <a-button class="custom-cancel-btn" @click="handleEditCancel"
-        ><CloseOutlined />Close</a-button
+        ><CloseOutlined />{{ t("actions.close") }}</a-button
       >
       <a-button type="primary" class="custom-ok-btn" @click="submitUpdate">
         <SaveOutlined />
-        Confirm
+        {{ t("actions.update") }}
       </a-button>
     </div>
   </a-modal>
@@ -287,34 +304,38 @@ function handleCancel() {
   <!-- Add Modal -->
   <a-modal
     v-model:open="isAddModalVisible"
-    title="Add Category"
+    :title="t('modules.category.addNew')"
     :footer="null"
     @cancel="handleCancel"
   >
     <a-form layout="vertical">
       <a-form-item
-        label="Name"
+        :label="t('modules.category.form.name')"
         :validate-status="formAdd.name ? 'success' : 'error'"
-        :help="!formAdd.name ? 'name is required' : ''"
+        :help="
+          !formAdd.name
+            ? t('modules.category.form.validation.nameRequired')
+            : ''
+        "
       >
         <a-input
           v-model:value="formAdd.name"
-          placeholder="Enter category name"
+          :placeholder="t('modules.category.form.placeholder.name')"
         />
       </a-form-item>
-      <a-form-item label="Description">
+      <a-form-item :label="t('modules.category.form.description')">
         <a-input
           v-model:value="formAdd.description"
-          placeholder="Enter description"
+          :placeholder="t('modules.category.form.placeholder.description')"
         />
       </a-form-item>
     </a-form>
     <div class="modal-footer">
       <a-button class="custom-cancel-btn" @click="handleCancel"
-        ><CloseOutlined />Close</a-button
+        ><CloseOutlined />{{ t("actions.close") }}</a-button
       >
       <a-button type="primary" class="custom-ok-btn" @click="submitAdd"
-        ><SaveOutlined />Confirm</a-button
+        ><SaveOutlined />{{ t("actions.create") }}</a-button
       >
     </div>
   </a-modal>
@@ -334,13 +355,6 @@ function handleCancel() {
     font-size: 24px;
     margin: 0;
   }
-}
-
-.action-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
 }
 
 .clear-btn {

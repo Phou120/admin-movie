@@ -15,7 +15,9 @@
     "axios": "^1.10.0",
     "dayjs": "^1.11.13",
     "quill": "^2.0.3",
+    "socket.io-client": "^4.8.2",
     "vue": "^3.5.17",
+    "vue-i18n": "^9.14.5",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {

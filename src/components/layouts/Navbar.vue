@@ -14,19 +14,16 @@
     />
 
     <div class="header-action-container">
-      <a-badge count="2">
+      <LanguageSwitcher />
+      <PaymentNotificationDropdown />
+      <!-- <a-badge count="2">
         <a-avatar shape="square" size="large" class="navbar-btn">
           <shopping-cart-outlined class="menu-icon" />
         </a-avatar>
-      </a-badge>
-      <a-badge count="3">
+      </a-badge> -->
+      <!-- <a-badge count="3">
         <a-avatar shape="square" size="large" class="navbar-btn">
           <comment-outlined class="menu-icon" />
-        </a-avatar>
-      </a-badge>
-      <!-- <a-badge>
-        <a-avatar shape="square" size="large" class="navbar-btn">
-          <LogoutOutlined />
         </a-avatar>
       </a-badge> -->
       <a-badge>
@@ -47,19 +44,21 @@
 <script lang="ts" setup>
 import { h, ref } from "vue";
 import {
-  ShoppingCartOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  CommentOutlined,
   LogoutOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
 import { message, Modal } from "ant-design-vue";
+import LanguageSwitcher from "../LanguageSwitcher.vue";
+import PaymentNotificationDropdown from "../../modules/admin/payment/components/PaymentNotificationDropdown.vue";
+import { useI18n } from "vue-i18n";
 
 const collapsed = ref<boolean>(false);
 
 const emit = defineEmits<{ (e: "toggleSidebar"): void }>();
+const { t } = useI18n();
 
 const onCollapsed = () => {
   collapsed.value = !collapsed.value;
@@ -70,11 +69,11 @@ const router = useRouter();
 
 function confirmLogout() {
   Modal.confirm({
-    title: "ຢືນຢັນການອອກຈາກລະບົບ",
+    title: t("message.confirmLogout"),
     icon: h(ExclamationCircleOutlined),
-    content: "ທ່ານແນ່ໃຈບໍວ່າຈະອອກຈາກລະບົບ?",
-    okText: "ຕົກລົງ",
-    cancelText: "ຍົກເລີກ",
+    content: t("message.logoutConfirmMessage"),
+    okText: t("common.ok"),
+    cancelText: t("common.cancel"),
     centered: true,
     width: 280, // set smaller width directly
     class: "custom-confirm-modal",
@@ -96,10 +95,13 @@ function confirmLogout() {
       try {
         await new Promise((resolve) => setTimeout(resolve, 800));
         localStorage.removeItem("token");
-        message.success("ທ່ານໄດ້ອອກຈາກລະບົບແລ້ວ.");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("user_roles");
+        localStorage.removeItem("customer_id");
+        message.success(t("message.logoutSuccess"));
         router.push("/login");
       } catch (err) {
-        message.error("ການອອກຈາກລະບົບລົ້ມເຫຼວ. ກະລຸນາລອງໃໝ່.");
+        message.error(t("message.logoutFailed"));
       }
     },
   });
@@ -116,8 +118,6 @@ function confirmLogout() {
   margin-right: -25px;
   .navbar-btn {
     background-color: #0d334aff;
-    // background-color: rgb(191, 219, 254);
-    // color: #FFD700;
     color: rgb(255, 255, 255);
     width: 32px;
     height: 32px;

@@ -1,7 +1,7 @@
 <template>
   <div class="update-user-page">
     <div>
-      <h1>Profile</h1>
+      <h1>{{ t('modules.profile.title') }}</h1>
     </div>
 
     <div class="form-container" v-if="!loading">
@@ -14,7 +14,7 @@
       >
         <a-row :gutter="24">
           <a-col :xs="24">
-            <a-form-item label="Profile Image" name="image">
+            <a-form-item :label="t('modules.profile.form.profileImage')" name="image">
               <a-upload
                 name="image"
                 list-type="picture-card"
@@ -25,7 +25,7 @@
                   <user-outlined
                     :style="{ fontSize: '32px', color: '#8c8c8c' }"
                   />
-                  <div style="margin-top: 8px; color: #8c8c8c">Upload</div>
+                  <div style="margin-top: 8px; color: #8c8c8c">{{ t('modules.profile.form.actions.upload') }}</div>
                 </div>
                 <img
                   v-else
@@ -39,37 +39,37 @@
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Email" name="email">
+            <a-form-item :label="t('modules.profile.form.email')" name="email">
               <a-input
                 v-model:value="formState.email"
-                placeholder="Enter email address"
+                :placeholder="t('modules.profile.form.placeholder.email')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Name" name="name">
+            <a-form-item :label="t('modules.profile.form.name')" name="name">
               <a-input
                 v-model:value="formState.name"
-                placeholder="Enter first name"
+                :placeholder="t('modules.profile.form.placeholder.name')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Surname" name="surname">
+            <a-form-item :label="t('modules.profile.form.surname')" name="surname">
               <a-input
                 v-model:value="formState.surname"
-                placeholder="Enter surname"
+                :placeholder="t('modules.profile.form.placeholder.surname')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Telephone" name="tel">
+            <a-form-item :label="t('modules.profile.form.telephone')" name="tel">
               <a-input
                 v-model:value="formState.tel"
-                placeholder="Enter telephone number"
+                :placeholder="t('modules.profile.form.placeholder.telephone')"
               />
             </a-form-item>
           </a-col>
@@ -84,7 +84,7 @@
                 <a-space>
                   <a-button class="submit-btn" @click="openPasswordModal">
                     <LockOutlined />
-                    Change Password
+                    {{ t('modules.profile.form.actions.changePassword') }}
                   </a-button>
                   <a-button
                     type="primary"
@@ -93,7 +93,7 @@
                     :loading="submitting"
                   >
                     <SaveOutlined />
-                    Update Profile
+                    {{ t('modules.profile.form.actions.updateProfile') }}
                   </a-button>
                 </a-space>
               </div>
@@ -105,7 +105,7 @@
 
     <div v-else class="loading-page">
       <a-spin size="large" />
-      <p>Loading user data...</p>
+      <p>{{ t('modules.profile.loadingUserData') }}</p>
     </div>
 
     <a-modal :open="previewVisible" :footer="null" @cancel="handleCancel">
@@ -115,7 +115,7 @@
     <!-- Change Password Modal -->
     <a-modal
       :open="passwordModalVisible"
-      title="Change Password"
+      :title="t('modules.profile.passwordModal.title')"
       :confirm-loading="changingPassword"
       @cancel="closePasswordModal"
       :footer="null"
@@ -126,17 +126,17 @@
         layout="vertical"
         ref="passwordFormRef"
       >
-        <a-form-item label="New Password" name="new_password">
+        <a-form-item :label="t('modules.profile.passwordModal.newPassword')" name="new_password">
           <a-input-password
             v-model:value="passwordForm.new_password"
-            placeholder="Enter new password"
+            :placeholder="t('modules.profile.passwordModal.placeholder.newPassword')"
           />
         </a-form-item>
 
-        <a-form-item label="Confirm Password" name="confirm_password">
+        <a-form-item :label="t('modules.profile.passwordModal.confirmPassword')" name="confirm_password">
           <a-input-password
             v-model:value="passwordForm.confirm_password"
-            placeholder="Confirm new password"
+            :placeholder="t('modules.profile.passwordModal.placeholder.confirmPassword')"
           />
         </a-form-item>
 
@@ -144,7 +144,7 @@
           <div style="display: flex; justify-content: flex-end; gap: 8px">
             <a-button class="custom-cancel-btn" @click="closePasswordModal">
               <CloseOutlined />
-              Close
+              {{ t('modules.profile.passwordModal.actions.close') }}
             </a-button>
             <a-button
               type="primary"
@@ -153,7 +153,7 @@
               @click="handlePasswordChange"
             >
               <SaveOutlined />
-              Change Password
+              {{ t('modules.profile.passwordModal.actions.changePassword') }}
             </a-button>
           </div>
         </a-form-item>
@@ -164,6 +164,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, onMounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   UserOutlined,
   LockOutlined,
@@ -183,6 +184,7 @@ import { useRoute } from "vue-router";
 
 const { upload, updateProfile, profile, changePassword } = useUsers();
 const route = useRoute();
+const { t } = useI18n();
 
 // Get user ID from route params
 const userId = ref<number>(Number(route.params.id));
@@ -225,51 +227,51 @@ const hasValidImage = computed(() => {
 });
 
 // Validation rules - password is optional for update
-const rules: Record<string, Rule[]> = {
+const rules = computed(() => ({
   email: [
-    { required: true, message: "Please input email!", trigger: "blur" },
+    { required: true, message: t('modules.profile.validation.emailRequired'), trigger: "blur" },
     {
       type: "email",
-      message: "Please enter a valid email!",
+      message: t('modules.profile.validation.emailInvalid'),
       trigger: "blur",
     },
   ],
-  name: [{ required: true, message: "Please input name!", trigger: "blur" }],
+  name: [{ required: true, message: t('modules.profile.validation.nameRequired'), trigger: "blur" }],
   surname: [
-    { required: true, message: "Please input surname!", trigger: "blur" },
+    { required: true, message: t('modules.profile.validation.surnameRequired'), trigger: "blur" },
   ],
   tel: [
-    { required: true, message: "Please input telephone!", trigger: "blur" },
+    { required: true, message: t('modules.profile.validation.telephoneRequired'), trigger: "blur" },
   ],
-};
+}));
 
 // Password form validation rules
-const passwordRules: Record<string, Rule[]> = {
+const passwordRules = computed(() => ({
   new_password: [
-    { required: true, message: "Please input new password!", trigger: "blur" },
+    { required: true, message: t('modules.profile.passwordModal.validation.newPasswordRequired'), trigger: "blur" },
     {
       min: 6,
-      message: "Password must be at least 6 characters!",
+      message: t('modules.profile.passwordModal.validation.passwordMinLength'),
       trigger: "blur",
     },
   ],
   confirm_password: [
     {
       required: true,
-      message: "Please confirm your password!",
+      message: t('modules.profile.passwordModal.validation.confirmPasswordRequired'),
       trigger: "blur",
     },
     {
       validator: async (_rule: Rule, value: string) => {
         if (value && value !== passwordForm.new_password) {
-          return Promise.reject("Passwords do not match!");
+          return Promise.reject(t('modules.profile.passwordModal.validation.passwordMismatch'));
         }
         return Promise.resolve();
       },
       trigger: "blur",
     },
   ],
-};
+}));
 
 // --- Fetch User Data ---
 const loadUserData = async () => {
@@ -299,7 +301,7 @@ const loadUserData = async () => {
     }
   } catch (error) {
     console.error("Failed to fetch user:", error);
-    message.error("Failed to load user data");
+    message.error(t('modules.profile.validation.loadUserError'));
   } finally {
     loading.value = false;
   }
@@ -313,12 +315,12 @@ const handleImageError = () => {
 const beforeUploadAdd = async (file: File): Promise<boolean> => {
   const isImage = file.type.startsWith("image/");
   if (!isImage) {
-    message.error("You can only upload image files!");
+    message.error(t('modules.profile.validation.imageFileType'));
     return false;
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error("Image must be smaller than 2MB!");
+    message.error(t('modules.profile.validation.imageFileSize'));
     return false;
   }
 
@@ -367,7 +369,7 @@ const handlePasswordChange = async (): Promise<void> => {
     });
 
     showSuccessNotification(
-      response.message || "Password changed successfully!"
+      response.message || t('modules.profile.passwordModal.passwordChangeSuccess')
     );
     closePasswordModal();
   } catch (error: any) {
@@ -377,7 +379,7 @@ const handlePasswordChange = async (): Promise<void> => {
     }
     console.error("Failed to change password:", error);
     const errorMessage =
-      error?.response?.data?.message || "Failed to change password";
+      error?.response?.data?.message || t('modules.profile.passwordModal.passwordChangeError');
     showErrorNotification(errorMessage);
   } finally {
     changingPassword.value = false;
@@ -398,12 +400,12 @@ async function onFinish() {
     };
 
     const response = await updateProfile(updateData);
-    showSuccessNotification(response.message || "User updated successfully!");
+    showSuccessNotification(response.message || t('modules.profile.updateSuccess'));
     console.log("User updated:", response);
   } catch (error: any) {
     console.error("Failed to update user:", error);
     const errorMessage =
-      error?.response?.data?.message || "Failed to update user";
+      error?.response?.data?.message || t('modules.profile.updateError');
     showErrorNotification(errorMessage);
   } finally {
     submitting.value = false;

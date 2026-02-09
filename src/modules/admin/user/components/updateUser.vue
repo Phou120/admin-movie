@@ -3,9 +3,9 @@
     <div class="page-header">
       <a-button type="link" @click="goBack" class="back-button">
         <arrow-left-outlined />
-        Back
+        {{ t('actions.back') }}
       </a-button>
-      <h1>Update User</h1>
+      <h1>{{ t('modules.user.editForm.title') }}</h1>
     </div>
 
     <div class="form-container" v-if="!loading">
@@ -18,7 +18,7 @@
       >
         <a-row :gutter="24">
           <a-col :xs="24">
-            <a-form-item label="Profile Image" name="image">
+            <a-form-item :label="t('modules.user.editForm.profileImage')" name="image">
               <a-upload
                 name="image"
                 list-type="picture-card"
@@ -27,7 +27,7 @@
               >
                 <div v-if="!previewImage">
                   <plus-outlined />
-                  <div style="margin-top: 8px">Upload</div>
+                  <div style="margin-top: 8px">{{ t('modules.user.editForm.actions.upload') }}</div>
                 </div>
                 <img
                   v-else
@@ -40,47 +40,47 @@
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Email" name="email">
+            <a-form-item :label="t('modules.user.editForm.email')" name="email">
               <a-input
                 v-model:value="formState.email"
-                placeholder="Enter email address"
+                :placeholder="t('modules.user.editForm.placeholder.email')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Name" name="name">
+            <a-form-item :label="t('modules.user.editForm.name')" name="name">
               <a-input
                 v-model:value="formState.name"
-                placeholder="Enter first name"
+                :placeholder="t('modules.user.editForm.placeholder.name')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Surname" name="surname">
+            <a-form-item :label="t('modules.user.editForm.surname')" name="surname">
               <a-input
                 v-model:value="formState.surname"
-                placeholder="Enter surname"
+                :placeholder="t('modules.user.editForm.placeholder.surname')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="6">
-            <a-form-item label="Telephone" name="tel">
+            <a-form-item :label="t('modules.user.editForm.telephone')" name="tel">
               <a-input
                 v-model:value="formState.tel"
-                placeholder="Enter telephone number"
+                :placeholder="t('modules.user.editForm.placeholder.telephone')"
               />
             </a-form-item>
           </a-col>
 
           <a-col :xs="24" :md="12">
-            <a-form-item label="Roles" name="roles">
+            <a-form-item :label="t('modules.user.editForm.roles')" name="roles">
               <a-select
                 v-model:value="formState.roles"
                 mode="multiple"
-                placeholder="Select roles"
+                :placeholder="t('modules.user.editForm.placeholder.roles')"
                 :options="roleOptions"
                 :loading="loadingRolePermissions"
               />
@@ -95,7 +95,7 @@
             <a-form-item name="permissions" required>
               <template #label>
                 <span class="permissions-label">
-                  <span class="required-mark">*</span> Permissions
+                  <span class="required-mark">*</span> {{ t('modules.user.editForm.permissions') }}
                 </span>
               </template>
 
@@ -107,7 +107,7 @@
                       :indeterminate="isSomeSelected"
                       @change="toggleAll"
                     >
-                      Permissions
+                      {{ t('modules.user.editForm.permissions') }}
                     </a-checkbox>
                   </div>
 
@@ -151,14 +151,14 @@
 
                 <div v-else class="loading-container">
                   <a-spin />
-                  <span style="margin-left: 12px">Loading permissions...</span>
+                  <span style="margin-left: 12px">{{ t('common.loading') }}</span>
                 </div>
 
                 <div
                   class="selected-count"
                   v-if="formState.permissions.length > 0"
                 >
-                  {{ formState.permissions.length }} permission(s) selected
+                  {{ t('modules.user.editForm.selectedCount', { count: formState.permissions.length }) }}
                 </div>
               </a-form-item-rest>
             </a-form-item>
@@ -172,7 +172,7 @@
                 <a-space>
                   <a-button class="custom-reset-btn" @click="goBack">
                     <RollbackOutlined />
-                    Go Back
+                    {{ t('modules.user.editForm.actions.goBack') }}
                   </a-button>
                   <a-button
                     type="primary"
@@ -181,7 +181,7 @@
                     :loading="submitting"
                   >
                     <SaveOutlined />
-                    Update User
+                    {{ t('modules.user.editForm.actions.updateUser') }}
                   </a-button>
                 </a-space>
               </div>
@@ -193,7 +193,7 @@
 
     <div v-else class="loading-page">
       <a-spin size="large" />
-      <p>Loading user data...</p>
+      <p>{{ t('modules.user.editForm.loadingUserData') }}</p>
     </div>
 
     <a-modal :open="previewVisible" :footer="null" @cancel="handleCancel">
@@ -204,6 +204,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, onMounted, watch, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   ArrowLeftOutlined,
   PlusOutlined,
@@ -226,6 +227,7 @@ const { fetchAll, fetchById: fetchRolesById } = useRoles();
 const { fetchAll: fetchAllPermissions } = usePermission();
 const router = useRouter();
 const route = useRoute();
+const { t } = useI18n();
 
 interface SelectOption {
   value: number | string;
@@ -267,19 +269,19 @@ const roleOptions = ref<SelectOption[]>([]);
 const permissionModules = ref<IPermissionEntity[]>([]);
 
 // Validation rules - password is optional for update
-const rules: Record<string, Rule[]> = {
+const rules = computed(() => ({
   email: [
-    { required: true, message: "Please input email!", trigger: "blur" },
+    { required: true, message: t('modules.user.editForm.validation.emailRequired'), trigger: "blur" },
     {
       type: "email",
-      message: "Please enter a valid email!",
+      message: t('modules.user.editForm.validation.emailInvalid'),
       trigger: "blur",
     },
   ],
   password: [
     {
       min: 6,
-      message: "Password must be at least 6 characters!",
+      message: t('modules.user.editForm.validation.passwordMinLength'),
       trigger: "blur",
     },
   ],
@@ -287,24 +289,24 @@ const rules: Record<string, Rule[]> = {
     {
       validator: async (_rule: Rule, value: string) => {
         if (formState.password && value !== formState.password) {
-          return Promise.reject("Passwords do not match!");
+          return Promise.reject(t('modules.user.editForm.validation.passwordMismatch'));
         }
         return Promise.resolve();
       },
       trigger: "blur",
     },
   ],
-  name: [{ required: true, message: "Please input name!", trigger: "blur" }],
+  name: [{ required: true, message: t('modules.user.editForm.validation.nameRequired'), trigger: "blur" }],
   surname: [
-    { required: true, message: "Please input surname!", trigger: "blur" },
+    { required: true, message: t('modules.user.editForm.validation.surnameRequired'), trigger: "blur" },
   ],
   tel: [
-    { required: true, message: "Please input telephone!", trigger: "blur" },
+    { required: true, message: t('modules.user.editForm.validation.telephoneRequired'), trigger: "blur" },
   ],
   roles: [
     {
       required: true,
-      message: "Please select at least one role!",
+      message: t('modules.user.editForm.validation.rolesRequired'),
       trigger: "change",
       type: "array",
     },
@@ -313,14 +315,14 @@ const rules: Record<string, Rule[]> = {
     {
       validator: (_rule: Rule, value: number[]) => {
         if (value.length === 0) {
-          return Promise.reject("Please select at least one permission!");
+          return Promise.reject(t('modules.user.editForm.validation.permissionsRequired'));
         }
         return Promise.resolve();
       },
       trigger: "change",
     },
   ],
-};
+}));
 
 // --- Fetch User Data ---
 const loadUserData = async () => {
@@ -349,7 +351,7 @@ const loadUserData = async () => {
     }
   } catch (error) {
     console.error("Failed to fetch user:", error);
-    message.error("Failed to load user data");
+    message.error(t('modules.user.editForm.validation.loadUserError'));
     router.push({ name: "users" });
   } finally {
     loading.value = false;
@@ -374,7 +376,7 @@ const fetchRoles = async () => {
     roleModules.value = response.data || [];
   } catch (error) {
     console.error("Failed to fetch roles:", error);
-    message.error("Failed to load user roles. Please check API server status.");
+    message.error(t('modules.user.editForm.validation.loadRolesError'));
   }
 };
 
@@ -429,7 +431,7 @@ watch(
           }
         } catch (error) {
           console.error(`Failed to fetch role ${roleId} permissions:`, error);
-          message.warning(`Could not load permissions for role ${roleId}`);
+          message.warning(t('modules.user.editForm.validation.loadRolePermissionsError', { roleId }));
         }
       }
 
@@ -524,7 +526,7 @@ async function loadAllPermissions() {
     permissionModules.value = res.data || [];
   } catch (error) {
     console.error("Failed to load permissions:", error);
-    message.error("Failed to load permissions");
+    message.error(t('modules.user.editForm.validation.loadPermissionsError'));
   } finally {
     loadingPermissions.value = false;
   }
@@ -532,18 +534,18 @@ async function loadAllPermissions() {
 
 // --- General Functions ---
 const goBack = (): void => {
-  router.push({ name: "users" });
+  router.push({ name: "user" });
 };
 
 const beforeUploadAdd = async (file: File): Promise<boolean> => {
   const isImage = file.type.startsWith("image/");
   if (!isImage) {
-    message.error("You can only upload image files!");
+    message.error(t('modules.user.editForm.validation.imageFileType'));
     return false;
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error("Image must be smaller than 2MB!");
+    message.error(t('modules.user.editForm.validation.imageFileSize'));
     return false;
   }
 
@@ -584,13 +586,13 @@ async function onFinish() {
     }
 
     const response = await updateUser(userId.value, updateData);
-    showSuccessNotification(response.message || "User updated successfully!");
+    showSuccessNotification(response.message || t('modules.user.editForm.updateSuccess'));
     console.log("User updated:", response);
     router.push({ name: "users" });
   } catch (error: any) {
     console.error("Failed to update user:", error);
     const errorMessage =
-      error?.response?.data?.message || "Failed to update user";
+      error?.response?.data?.message || t('modules.user.editForm.updateError');
     message.error(errorMessage);
   } finally {
     submitting.value = false;
@@ -600,9 +602,9 @@ async function onFinish() {
 const onFinishFailed = (errorInfo: any): void => {
   console.log("Failed:", errorInfo);
   if (formState.permissions.length === 0) {
-    message.error("Please select at least one permission!");
+    message.error(t('modules.user.editForm.validation.permissionsRequired'));
   } else {
-    message.error("Please check the form for errors");
+    message.error(t('modules.user.editForm.validation.formError'));
   }
 };
 

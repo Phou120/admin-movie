@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   CloseOutlined,
   SaveOutlined,
@@ -19,6 +20,7 @@ interface Emits {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
 const formData = ref<IBannerForm>({
   file_banner: "",
@@ -77,7 +79,7 @@ function validateForm(): boolean {
       formData.value.file_banner.trim() === "");
 
   if (isEmptyBanner) {
-    validationError.value = "Please upload a banner image";
+    validationError.value = t('modules.banner.form.validation.imageRequired');
     showValidationError.value = true;
     nextTick(() => {
       fileInputRef.value?.focus();
@@ -86,7 +88,7 @@ function validateForm(): boolean {
   }
 
   if (!formData.value.link.trim()) {
-    validationError.value = "Link is required";
+    validationError.value = t('modules.banner.form.validation.linkRequired');
     showValidationError.value = true;
     nextTick(() => {
       linkInputRef.value?.focus();
@@ -95,7 +97,7 @@ function validateForm(): boolean {
   }
 
   if (!formData.value.order_by) {
-    validationError.value = "Order is required";
+    validationError.value = t('modules.banner.form.validation.orderRequired');
     showValidationError.value = true;
     nextTick(() => {
       orderBy.value?.focus();
@@ -118,13 +120,13 @@ function handleInputChange() {
 function beforeUpload(file: File) {
   const isImage = file.type.startsWith("image/");
   if (!isImage) {
-    showErrorNotification("Error", "You can only upload image files!");
+    showErrorNotification("Error", t('modules.banner.form.validation.invalidImage'));
     return false;
   }
 
   const isLt5M = file.size / 1024 / 1024 < 5;
   if (!isLt5M) {
-    showErrorNotification("Error", "Image must smaller than 5MB!");
+    showErrorNotification("Error", t('modules.banner.form.validation.imageTooLarge'));
     return false;
   }
 
@@ -166,7 +168,7 @@ defineExpose({
 <template>
   <a-modal
     :open="visible"
-    title="Add Banner"
+    :title="t('modules.banner.addModal')"
     :footer="null"
     @cancel="handleCancel"
     :width="modalWidth"
@@ -174,7 +176,7 @@ defineExpose({
   >
     <a-form layout="vertical" :model="formData">
       <a-form-item
-        label="Banner Image"
+        :label="t('modules.banner.form.bannerImage')"
         :validate-status="
           showValidationError && !formData.file_banner ? 'error' : ''
         "
@@ -194,7 +196,7 @@ defineExpose({
         >
           <div v-if="!previewAddImage">
             <plus-outlined />
-            <div style="margin-top: 8px">Upload</div>
+            <div style="margin-top: 8px">{{ t('modules.banner.form.upload') }}</div>
           </div>
           <img
             v-else
@@ -206,7 +208,7 @@ defineExpose({
       </a-form-item>
 
       <a-form-item
-        label="Link"
+        :label="t('modules.banner.form.link')"
         :validate-status="
           showValidationError && !formData.link.trim() ? 'error' : ''
         "
@@ -217,7 +219,7 @@ defineExpose({
         <a-input
           ref="linkInputRef"
           v-model:value="formData.link"
-          placeholder="Enter banner link"
+          :placeholder="t('modules.banner.form.placeholder.link')"
           size="large"
           :class="{
             'error-input': showValidationError && !formData.link.trim(),
@@ -227,12 +229,12 @@ defineExpose({
         />
       </a-form-item>
 
-      <a-form-item label="Order By">
+      <a-form-item :label="t('modules.banner.form.order')">
         <a-input-number
           v-model:value="formData.order_by"
           :min="0"
           :precision="0"
-          placeholder="Enter order"
+          :placeholder="t('modules.banner.form.placeholder.order')"
           size="large"
           style="width: 100%"
         />
@@ -245,7 +247,7 @@ defineExpose({
         @click="handleCancel"
         :disabled="loading"
       >
-        <CloseOutlined />Close
+        <CloseOutlined />{{ t('actions.close') }}
       </a-button>
       <a-button
         class="custom-ok-btn"
@@ -253,7 +255,7 @@ defineExpose({
         @click="handleSubmit"
         :loading="loading"
       >
-        <SaveOutlined />Create
+        <SaveOutlined />{{ t('actions.create') }}
       </a-button>
     </div>
   </a-modal>

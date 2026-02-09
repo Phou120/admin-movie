@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { ViewsComposible } from "./composible/index";
 import { EditOutlined } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
@@ -10,11 +10,13 @@ import {
   showSuccessNotification,
 } from "../../../common/utils/notification";
 import UpdateViewModal from "./components/UpdateViewModal.vue";
+import { useI18n } from "vue-i18n";
 
 const { fetchAll, updateView } = ViewsComposible();
+const { t } = useI18n();
 
-const columns = [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 60 },
+const columns = computed(() => [
+  { title: "No", dataIndex: "id", key: "no", align: "center", width: 70 },
   {
     title: "Quantity",
     dataIndex: "qty",
@@ -42,7 +44,7 @@ const columns = [
     align: "center",
     width: 100,
   },
-];
+]);
 
 const data = reactive<IViewsData>({
   views: [],
@@ -163,7 +165,7 @@ function formatPrice(price: number): string {
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">
-          <a-tooltip title="Edit">
+          <a-tooltip :title="t('actions.edit')">
             <edit-outlined class="icon edit" @click="openUpdateModal(record)" />
           </a-tooltip>
         </span>

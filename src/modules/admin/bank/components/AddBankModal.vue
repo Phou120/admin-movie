@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, computed, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
 import {
   CloseOutlined,
   SaveOutlined,
@@ -19,6 +20,7 @@ interface Emits {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
 const formData = ref<IBankForm>({
   name: "",
@@ -68,7 +70,7 @@ function handleCancel() {
 
 function validateForm(): boolean {
   if (!formData.value.name.trim()) {
-    validationError.value = "Bank name is required";
+    validationError.value = t('modules.bank.form.validation.nameRequired');
     showValidationError.value = true;
     nextTick(() => {
       nameInputRef.value?.focus();
@@ -83,7 +85,7 @@ function validateForm(): boolean {
       formData.value.logo.trim() === "");
 
   if (isEmptyLogo) {
-    validationError.value = "Please upload a bank logo";
+    validationError.value = t('modules.bank.form.validation.logoRequired');
     showValidationError.value = true;
     nextTick(() => {
       fileInputRef.value?.focus();
@@ -106,13 +108,13 @@ function handleInputChange() {
 function beforeUpload(file: File) {
   const isImage = file.type.startsWith("image/");
   if (!isImage) {
-    showErrorNotification("Error", "You can only upload image files!");
+    showErrorNotification(t('common.error'), t('modules.bank.form.validation.invalidImage'));
     return false;
   }
 
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    showErrorNotification("Error", "Logo must be smaller than 2MB!");
+    showErrorNotification(t('common.error'), t('modules.bank.form.validation.imageTooLarge'));
     return false;
   }
 
@@ -148,7 +150,7 @@ async function handleSubmit() {
     emit("success");
     handleCancel();
   } catch (error) {
-    showErrorNotification("Failed to create bank:", (error as Error).message);
+    showErrorNotification(t('modules.bank.form.validation.createError'), (error as Error).message);
   } finally {
     loading.value = false;
   }
@@ -164,7 +166,7 @@ defineExpose({
 <template>
   <a-modal
     :open="visible"
-    title="Add Bank"
+    :title="t('modules.bank.addModal')"
     :footer="null"
     @cancel="handleCancel"
     :width="modalWidth"
@@ -172,7 +174,7 @@ defineExpose({
   >
     <a-form layout="vertical" :model="formData">
       <a-form-item
-        label="Bank Name"
+        :label="t('modules.bank.form.name')"
         :validate-status="
           showValidationError && !formData.name.trim() ? 'error' : ''
         "
@@ -183,7 +185,7 @@ defineExpose({
         <a-input
           ref="nameInputRef"
           v-model:value="formData.name"
-          placeholder="Enter bank name"
+          :placeholder="t('modules.bank.form.placeholder.name')"
           size="large"
           :class="{
             'error-input': showValidationError && !formData.name.trim(),
@@ -194,7 +196,7 @@ defineExpose({
       </a-form-item>
 
       <a-form-item
-        label="Bank Logo"
+        :label="t('modules.bank.form.logo')"
         :validate-status="showValidationError && !formData.logo ? 'error' : ''"
         :help="showValidationError && !formData.logo ? validationError : ''"
       >
@@ -208,7 +210,7 @@ defineExpose({
         >
           <div v-if="!previewLogoImage" class="upload-placeholder">
             <bank-outlined class="upload-icon" />
-            <div class="upload-text">Upload Logo</div>
+            <div class="upload-text">{{ t('modules.bank.form.upload') }}</div>
           </div>
           <img
             v-else
@@ -227,7 +229,7 @@ defineExpose({
         @click="handleCancel"
         :disabled="loading"
       >
-        <CloseOutlined />Close
+        <CloseOutlined />{{ t('actions.close') }}
       </a-button>
       <a-button
         class="custom-ok-btn"
@@ -235,7 +237,7 @@ defineExpose({
         @click="handleSubmit"
         :loading="loading"
       >
-        <SaveOutlined />Create
+        <SaveOutlined />{{ t('actions.create') }}
       </a-button>
     </div>
   </a-modal>

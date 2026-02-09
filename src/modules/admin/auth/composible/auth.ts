@@ -9,6 +9,15 @@ export function useAuth() {
     if (response.status === 201 || response.status === 200) {
       localStorage.setItem("token", response.data.data.access_token);
       localStorage.setItem("user_id", response.data.data.user.id);
+      localStorage.setItem("user_roles", response.data.data.roles);
+
+      // Only set customer_id if customer object exists
+      if (response.data.data.customer && response.data.data.customer.id) {
+        localStorage.setItem("customer_id", response.data.data.customer.id);
+      } else {
+        // Remove any existing customer_id for admin/super-admin users
+        localStorage.removeItem("customer_id");
+      }
     } else {
       console.error("Login failed:", response.data.data.message);
     }

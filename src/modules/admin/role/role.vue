@@ -1,13 +1,13 @@
 <template>
   <div class="customer-header">
-    <h1>Role</h1>
+    <h1>{{ t("modules.role.title") }}</h1>
 
     <!-- Search + Add Button Row -->
     <div class="right-actions">
       <!-- 🔍 Search Box -->
       <a-input
         v-model:value="search"
-        placeholder="Search Role..."
+        :placeholder="t('modules.role.searchPlaceholder')"
         class="search-input"
         allow-clear
         @input="handleSearch"
@@ -25,7 +25,7 @@
         :icon="h(PlusCircleFilled)"
         @click="navigateToAddRole"
       >
-        Add Role
+        {{ t("modules.role.addNew") }}
       </a-button>
     </div>
   </div>
@@ -61,7 +61,8 @@
               </div>
             </template>
             <a-tag color="green">
-              {{ record.role_permissions.length }} permissions
+              {{ record.role_permissions.length }}
+              {{ t("modules.role.permissions") }}
             </a-tag>
           </a-tooltip>
           <span v-else>-</span>
@@ -80,21 +81,25 @@
         <!-- Actions -->
         <template v-else-if="column.key === 'action'">
           <span class="action-icons">
-            <a-tooltip title="Edit">
+            <a-tooltip :title="t('actions.edit')">
               <edit-outlined
                 class="icon edit"
                 @click="navigateToEditRole(record.id)"
-                title="Edit"
+                :title="t('actions.edit')"
               />
             </a-tooltip>
             <a-popconfirm
-              title="Are you sure you want to delete this role?"
-              ok-text="Yes"
-              cancel-text="No"
+              :title="t('modules.role.deleteConfirm')"
+              :ok-text="t('common.yes')"
+              :cancel-text="t('common.no')"
+              placement="topRight"
               @confirm="deleteRole(record.id)"
             >
-              <a-tooltip title="Delete">
-                <delete-outlined class="icon delete" title="Delete" />
+              <a-tooltip :title="t('actions.delete')">
+                <delete-outlined
+                  class="icon delete"
+                  :title="t('actions.delete')"
+                />
               </a-tooltip>
             </a-popconfirm>
           </span>
@@ -106,6 +111,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed, h } from "vue";
+import { useI18n } from "vue-i18n";
 import { message, type TablePaginationConfig } from "ant-design-vue";
 import { useRouter } from "vue-router";
 import {
@@ -119,6 +125,7 @@ import type { IRoles } from "./interface/role.interface";
 
 const router = useRouter();
 const { fetchAll, deleteRole: deleteRoleApi } = useRoles();
+const { t } = useI18n();
 
 const loading = ref(false);
 const search = ref("");
@@ -145,51 +152,56 @@ const pageOffset = computed(() => {
 });
 
 // Columns - headers centered, data left-aligned
-const columns = [
-  { title: "No", key: "no", align: "center", width: 80 },
+const columns = computed(() => [
   {
-    title: "Name",
+    title: t("modules.role.columns.no"),
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.role.columns.name"),
     dataIndex: "name",
     key: "name",
     width: 200,
     align: "center",
   },
   {
-    title: "Name",
+    title: t("modules.role.columns.displayName"),
     dataIndex: "display_name",
     key: "display_name",
     width: 200,
     align: "center",
   },
   {
-    title: "permissions",
+    title: t("modules.role.columns.permissions"),
     dataIndex: "role_permissions",
     key: "role_permissions",
     width: 150,
     align: "center",
   },
   {
-    title: "Created At",
+    title: t("modules.role.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     width: 180,
     align: "center",
   },
   {
-    title: "Updated At",
+    title: t("modules.role.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     width: 180,
     align: "center",
   },
   {
-    title: "Action",
+    title: t("modules.role.columns.action"),
     key: "action",
     align: "center",
     width: 120,
     fixed: "right",
   },
-];
+]);
 
 // Load data
 async function loadRoles(
@@ -249,13 +261,13 @@ function navigateToEditRole(id: number) {
 async function deleteRole(id: number) {
   try {
     await deleteRoleApi(id);
-    message.success("Role deleted successfully");
+    message.success(t("modules.role.deleteSuccess"));
 
     // Reload the current page
     loadRoles();
   } catch (error: any) {
     console.error("Failed to delete role:", error);
-    message.error(error.message || "Failed to delete role");
+    message.error(error.message || t("modules.role.deleteError"));
   }
 }
 

@@ -1,0 +1,1079 @@
+{
+  "sidebar": {
+    "dashboard": "ໜ້າຫຼັກ",
+    "banner": "ແບນເນີ",
+    "category": "ໝວດໝູ່",
+    "tag": "ແທັກ",
+    "video": "ວິດີໂອ",
+    "tax": "ອາກອນ",
+    "package": "ແພັກເກັດ",
+    "customer": "ລູກຄ້າ",
+    "member": "ສະມາຊິກ",
+    "payment": "ການຊຳລະ",
+    "financial": "ການເງິນ",
+    "bank": "ທະນາຄານ",
+    "currency": "ສະກຸນເງິນ",
+    "exchangeRate": "ອັດຕາແລກປ່ຽນ",
+    "system": "ລະບົບ",
+    "permission": "ສິດນຳໃຊ້",
+    "role": "ບົດບາດ",
+    "user": "ຜູ້ໃຊ້",
+    "profile": "ໂປຣໄຟລ໌",
+    "reports": "ລາຍງານ",
+    "report": {
+      "video": "ລາຍງານວິດີໂອ",
+      "member": "ລາຍງານສະມາຊິກ"
+    },
+    "qrCode": "ຄຄິວຣາໂຄດ"
+  },
+  "common": {
+    "search": "ຄົ້ນຫາ",
+    "filter": "ກັ່ນຕອງ",
+    "clear": "ລຶບລ້າງ",
+    "add": "ເພີ່ມ",
+    "edit": "ແກ້ໄຂ",
+    "delete": "ລຶບ",
+    "save": "ບັນທຶກ",
+    "cancel": "ຍົກເລີກ",
+    "submit": "ສົ່ງ",
+    "back": "ກັບຄືນ",
+    "loading": "ກຳລັງໂຫຼດ...",
+    "confirm": "ຢືນຢັນ",
+    "yes": "ແມ່ນ",
+    "no": "ບໍ່",
+    "ok": "ຕົກລົງ",
+    "success": "ສຳເລັດ",
+    "error": "ຜິດພາດ",
+    "warning": "ຄຳເຕືອນ",
+    "info": "ຂໍ້ມູນ"
+  },
+  "auth": {
+    "login": "ເ�ົ້າສູ່ລະບົບ",
+    "logout": "ອອກຈາກລະບົບ",
+    "email": "ອີເມວ",
+    "password": "ລະຫັດຜ່ານ",
+    "forgotPassword": "ລືມລະຫັດຜ່ານ?",
+    "resetPassword": "ຕັ້ງລະຫັດຜ່ານໃໝ່",
+    "rememberMe": "ຈື່ຂ້າພວກ້າ"
+  },
+  "dashboard": {
+    "title": "ແຜັງຄວາມ",
+    "cards": {
+      "totalUsers": "ຜູ້ໃຊ້ນທັງຫຼົ",
+      "totalRoles": "ບົດບາດທັງຫຼົ",
+      "totalCourses": "ຫຼັກສອນາທັງຫຼົ",
+      "totalStudents": "ນັກສຶກທັງຫຼົ",
+      "totalTeachers": "ອາຈາຍສອນາທັງຫຼົ"
+    }
+  },
+  "video": {
+    "title": "ການຈັດການວິດີໂອ",
+    "addNewVideo": "ເພີ່ມວິດີໂອໃໝ່",
+    "editVideo": "ແກ້ໄຂວິດີໂອ",
+    "videoTitle": "ຫົວຂໍ້ວິດີໂອ",
+    "content": "ເນື້ອຫາ",
+    "image": "ຮູບພາບ",
+    "video": "ວິດີໂອ",
+    "trailer": "ຕົວຢ່າງ",
+    "categories": "ໝວດໝູ່",
+    "tags": "ແທັກ",
+    "status": "ສະຖານະ",
+    "customer": "ລູກຄ້າ",
+    "createdAt": "ສ້າງເມື່ອ",
+    "updatedAt": "ອັບເດດເມື່ອ",
+    "action": "ການດຳເນີນການ",
+    "no": "ລຳດັບ",
+    "active": "ໃຊ້ງານ",
+    "inactive": "ບໍ່ໃຊ້ງານ",
+    "searchPlaceholder": "ຄົ້ນຫາວິດີໂອຕາມຫົວຂໍ້ ຫຼື ເນື້ອຫາ...",
+    "filterByCategory": "ກັ່ນຕອງຕາມໝວດໝູ່",
+    "filterByTag": "ກັ່ນຕອງຕາມແທັກ",
+    "filterByCustomer": "ກັ່ນຕອງຕາມລູກຄ້າ",
+    "uploadImage": "ອັບໂຫຼດຮູບພາບ",
+    "selectVideo": "ເລືອກວິດີໂອ",
+    "selectTrailer": "ເລືອກຕົວຢ່າງ",
+    "selectCategories": "ເລືອກໝວດໝູ່",
+    "selectTags": "ເລືອກແທັກ",
+    "selectCustomer": "ເລືອກລູກຄ້າ",
+    "form": {
+      "title": "ຫົວຂໍ້ວິດີໂອ",
+      "content": "ເນື້ອຫາວິດີໂອ",
+      "image": "ຮູບພາບວິດີໂອ",
+      "videoFile": "ໄຟລ໌ວິດີໂອ",
+      "trailerFile": "ໄຟລ໌ຕົວຢ່າງ",
+      "categories": "ໝວດໝູ່",
+      "tags": "ແທັກ",
+      "customer": "ລູກຄ້າ",
+      "placeholder": {
+        "title": "ປ້ອນຫົວຂໍ້ວິດີໂອ",
+        "content": "ປ້ອນຄຳອະທິບາຍ ຫຼື ເນື້ອຫາວິດີໂອ",
+        "customer": "ເລືອກລູກຄ້າ",
+        "categories": "ເລືອກໝວດໝູ່",
+        "tags": "ເລືອກແທັກ"
+      },
+      "validation": {
+        "titleRequired": "ກະລຸນາປ້ອນຫົວຂໍ້ວິດີໂອ",
+        "customerRequired": "ກະລຸນາເລືອກລູກຄ້າ",
+        "imageRequired": "ກະລຸນາອັບໂຫຼດຮູບພາບວິດີໂອ",
+        "videoRequired": "ກະລຸນາເລືອກໄຟລ໌ວິດີໂອ",
+        "categoriesRequired": "ກະລຸນາເລືອກໝວດໝູ່ຢ່າງຫນ້ອຍໜຶ່ງ",
+        "tagsRequired": "ກະລຸນາເລືອກແທັກຢ່າງຫນ້ອຍໜຶ່ງ",
+        "invalidImage": "ທ່ານສາມາດອັບໂຫຼດໄດ້ພຽງໄຟລ໌ຮູບພາບເທົ່ານ!",
+        "imageTooLarge": "ຮູບພາບຕ້ອງນ້ອຍກວ່າ 5MB!",
+        "invalidVideo": "ທ່ານສາມາດອັບໂຫຼດໄດ້ພຽງໄຟລ໌ວິດີໂອເທົ່ານ!",
+        "videoTooLarge": "ວິດີໂອຕ້ອງນ້ອຍກວ່າ 100MB!",
+        "trailerTooLarge": "ຕົວຢ່າງຕ້ອງນ້ອຍກວ່າ 50MB!",
+        "createError": "ສ້າງວິດີໂອບໍ່ສຳເລັດ",
+        "updateError": "ອັບເດດວິດີໂອບໍ່ສຳເລັດ"
+      },
+      "sections": {
+        "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+        "mediaFiles": "ໄຟລ໌ມີເດຍ",
+        "categoriesAndTags": "ໝວດໝູ່ ແລະ ແທັກ",
+        "customerInformation": "ຂໍ້ມູນລູກຄ້າ"
+      }
+    }
+  },
+  "pagination": {
+    "total": "ທັງໝົດ {count} ລາຍການ",
+    "pageSize": "ຂະໜາດຫນ້າ",
+    "itemsPerPage": "{current}-{total} ຂອງ {totalItems} ລາຍການ"
+  },
+  "validation": {
+    "required": "ຈຳເປັນຕ້ອງປ້ອນຟິວລ໌ນີ້",
+    "email": "ກະລຸນາປ້ອນອີເມວທີ່ຖືກຕ້ອງ",
+    "minLength": "ຄວາມຍາວຕໍາ່ສຸດ {min} ຕົວອັກສອນ",
+    "maxLength": "ຄວາມຍາວສູງສຸດ {max} ຕົວອັກສອນ",
+    "selectOption": "ກະລຸນາເລືອກຕົວເລືອກ"
+  },
+  "modules": {
+    "video": {
+      "title": "ການຈັດການວິດີໂອ",
+      "addNew": "ເພີ່ມວິດີໂອໃໝ່",
+      "edit": "ແກ້ໄຂວິດີໂອ",
+      "editVideo": "ແກ້ໄຂວິດີໂອ",
+      "addModal": "ເພີ່ມວິດີໂອ",
+      "editModal": "ແກ້ໄຂວິດີໂອ",
+      "tableTitle": "ລາຍການວິດີໂອ",
+      "searchPlaceholder": "ຄົ້ນຫາວິດີໂອຕາມຫົວຂໍ້ ຫຼື ເນື້ອຫາ...",
+      "noData": "ບໍ່ພົບວິດີໂອ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "title": "ຫົວຂໍ້",
+        "content": "ເນື້ອຫາ",
+        "image": "ຮູບພາບ",
+        "video": "ວິດີໂອ",
+        "trailer": "ຕົວຢ່າງ",
+        "customer": "ລູກຄ້າ",
+        "categories": "ໝວດໝູ່",
+        "tags": "ແທັກ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "title": "ຫົວຂໍ້ວິດີໂອ",
+        "content": "ເນື້ອຫາ",
+        "image": "ຮູບພາບ",
+        "videoFile": "ໄຟລ໌ວິດີໂອ",
+        "trailerFile": "ໄຟລ໌ຕົວຢ່າງ",
+        "categories": "ໝວດໝູ່",
+        "tags": "ແທັກ",
+        "customer": "ລູກຄ້າ",
+        "status": "ສະຖານະ",
+        "placeholder": {
+          "title": "ປ້ອນຫົວຂໍ້ວິດີໂອ",
+          "content": "ປ້ອນຄຳອະທິບາຍ ຫຼື ເນື້ອຫາວິດີໂອ",
+          "customer": "ເລືອກລູກຄ້າ",
+          "categories": "ເລືອກໝວດໝູ່",
+          "tags": "ເລືອກແທັກ"
+        },
+        "sections": {
+          "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+          "mediaFiles": "ໄຟລ໌ມີເດຍ",
+          "categoriesAndTags": "ໝວດໝູ່ ແລະ ແທັກ",
+          "customerInformation": "ຂໍ້ມູນລູກຄ້າ"
+        }
+      },
+      "actions": {
+        "view": "ເບິ່ງ",
+        "edit": "ແກ້ໄຂ",
+        "delete": "ລຶບ",
+        "play": "ເລີ່ນ",
+        "upload": "ອັບໂຫຼດ",
+        "save": "ບັນທຶກ",
+        "cancel": "ຍົກເລີກ",
+        "selectVideo": "ເລືອກວິດີໂອ",
+        "selectTrailer": "ເລືອກຕົວຢ່າງ"
+      }
+    },
+    "customer": {
+      "title": "ການຈັດການລູກຄ້າ",
+      "addNew": "ເພີ່ມລູກຄ້າໃໝ່",
+      "edit": "ແກ້ໄຂລູກຄ້າ",
+      "addModal": "ເພີ່ມລູກຄ້າ",
+      "editModal": "ແກ້ໄຂລູກຄ້າ",
+      "tableTitle": "ລາຍການລູກຄ້າ",
+      "searchPlaceholder": "ຄົ້ນຫາລູກຄ້າຕາມຊື່ ຫຼື ອີເມວ...",
+      "noData": "ບໍ່ພົບລູກຄ້າ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "profile": "ໂປຣໄຟລ໌",
+        "customer": "ລູກຄ້າ",
+        "name": "ຊື່",
+        "surname": "ນາມສະກຸນ",
+        "email": "ອີເມວ",
+        "phone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່",
+        "surname": "ນາມສະກຸນ",
+        "email": "ອີເມວ",
+        "phone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "status": "ສະຖານະ",
+        "customer": "ລູກຄ້າ",
+        "avatar": "ຮູບໂປຣໄຟລ໌",
+        "password": "ລະຫັດຜ່ານ",
+        "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+        "sections": {
+          "personalInformation": "ຂໍ້ມູນສ່ວນຕົວ"
+        },
+        "placeholder": {
+          "name": "ປ້ອນຊື່",
+          "surname": "ປ້ອນນາມສະກຸນ",
+          "email": "ປ້ອນທີ່ຢູ່ອີເມວ",
+          "phone": "ປ້ອນເບີໂທ",
+          "address": "ປ້ອນທີ່ຢູ່",
+          "password": "ປ້ອນລະຫັດຜ່ານ",
+          "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ"
+        },
+        "validation": {
+          "nameRequired": "ຊື່ຈຳເປັນ",
+          "surnameRequired": "ນາມສະກຸນຈຳເປັນ",
+          "emailRequired": "ອີເມວຈຳເປັນ",
+          "emailInvalid": "ກະລຸນາປ້ອນອີເມວທີ່ຖືກຕ້ອງ",
+          "phoneRequired": "ເບີໂທຈຳເປັນ",
+          "addressRequired": "ທີ່ຢູ່ຈຳເປັນ",
+          "passwordRequired": "ລະຫັດຜ່ານຈຳເປັນ",
+          "confirmPasswordRequired": "ກະລຸນາຢືນຢັນລະຫັດຜ່ານຂອງທ່ານ",
+          "passwordMismatch": "ລະຫັດຜ່ານບໍ່ກົງກັນ"
+        }
+      }
+    },
+    "category": {
+      "title": "ການຈັດການໝວດໝູ່",
+      "addNew": "ເພີ່ມໝວດໝູ່ໃໝ່",
+      "edit": "ແກ້ໄຂໝວດໝູ່",
+      "tableTitle": "ລາຍການໝວດໝູ່",
+      "searchPlaceholder": "ຄົ້ນຫາໝວດໝູ່ຕາມຊື່...",
+      "noData": "ບໍ່ພົບໝວດໝູ່",
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່",
+        "description": "ຄຳອະທິບາຍ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່ໝວດໝູ່",
+        "description": "ຄຳອະທິບາຍ",
+        "status": "ສະຖານະ",
+        "placeholder": {
+          "name": "ປ້ອນຊື່ໝວດໝູ່",
+          "description": "ປ້ອນຄຳອະທິບາຍ"
+        },
+        "validation": {
+          "nameRequired": "ຊື່ໝວດໝູ່ຈຳເປັນ",
+          "descriptionRequired": "ຄຳອະທິບາຍຈຳເປັນ"
+        }
+      }
+    },
+    "tag": {
+      "title": "ການຈັດການແທັກ",
+      "addNew": "ເພີ່ມແທັກໃໝ່",
+      "edit": "ແກ້ໄຂແທັກ",
+      "tableTitle": "ລາຍການແທັກ",
+      "searchPlaceholder": "ຄົ້ນຫາແທັກຕາມຊື່...",
+      "noData": "ບໍ່ພົບແທັກ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່",
+        "color": "ສີ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່ແທັກ",
+        "color": "ສີ",
+        "status": "ສະຖານະ",
+        "placeholder": {
+          "name": "ປ້ອນຊື່ແທັກ",
+          "color": "ເລືອກສີແທັກ"
+        },
+        "validation": {
+          "nameRequired": "ຊື່ແທັກຈຳເປັນ",
+          "colorRequired": "ສີແທັກຈຳເປັນ"
+        }
+      }
+    },
+    "payment": {
+      "title": "ການຈັດການການຊຳລະ",
+      "memberPaymentTitle": "ການຊຳລະຂອງສະມາຊິກ",
+      "addNew": "ເພີ່ມການຊຳລະໃໝ່",
+      "addPayment": "ເພີ່ມການຊຳລະ",
+      "editPayment": "ແກ້ໄຂການຊຳລະ",
+      "tableTitle": "ລາຍການການຊຳລະ",
+      "viewPayments": "ເບິ່ງການຊຳລະ",
+      "viewSlip": "ເບິ່ງສະລິບ",
+      "searchPlaceholder": "ຄົ້ນຫາການຊຳລະຕາມຊື່ສະມາຊິກ...",
+      "filterStatus": "ກັ່ນສະຖານະ",
+      "noData": "ບໍ່ພົບການຊຳລະ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "member": "ສະມາຊິກ",
+        "package": "ແພັກເກັດ",
+        "bank": "ທະນາຄານ",
+        "currency": "ສະກຸນເງິນ",
+        "amount": "ຈຳນວນ",
+        "paymentType": "ປະເພດການຊຳລະ",
+        "status": "ສະຖານະ",
+        "slip": "ສະລິບ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "member": "ສະມາຊິກ",
+        "package": "ແພັກເກັດ",
+        "bank": "ທະນາຄານ ແລະ ສະກຸນເງິນ",
+        "paymentType": "ປະເພດການຊຳລະ",
+        "status": "ສະຖານະ",
+        "slip": "ສະລິບການຊຳລະ",
+        "selectMember": "ເລືອກສະມາຊິກ",
+        "selectPackage": "ເລືອກແພັກເກັດ",
+        "selectBank": "ເລືອກທະນາຄານ ແລະ ສະກຸນເງິນ",
+        "selectPaymentType": "ເລືອກປະເພດການຊຳລະ",
+        "selectStatus": "ເລືອກສະຖານະ",
+        "placeholder": {
+          "member": "ເລືອກສະມາຊິກ",
+          "package": "ເລືອກແພັກເກັດ",
+          "bank": "ເລືອກທະນາຄານ ແລະ ສະກຸນເງິນ",
+          "paymentType": "ເລືອກປະເພດການຊຳລະ",
+          "status": "ເລືອກສະຖານະ"
+        }
+      },
+      "paymentTypes": {
+        "transfer": "ໂອນເງິນ",
+        "cash": "ເງິນສົດ",
+        "creditCard": "�ັດເຄຣດິດ"
+      },
+      "paymentDetails": "ລາຍລະອຽດການຊຳລະ",
+      "paymentInformation": "ຂໍ້ມູນການຊຳລະ",
+      "memberInformation": "ຂໍ້ມູນສະມາຊິກ",
+      "packageInformation": "ຂໍ້ມູນແພັກເກັດ",
+      "bankInformation": "ຂໍ້ມູນທະນາຄານ",
+      "startDate": "ວັນທີເລີ່ມ",
+      "endDate": "ວັນທີສິ້ນສຸດ",
+      "updateStatus": "ອັບເດດສະຖານະ",
+      "paymentNotFound": "ບໍ່ພົບການຊຳລະ",
+      "paymentNotFoundMessage": "ການຊຳລະທີ່ທ່ານກຳລັງຊອກຫາບໍ່ມີຢູ່ ຫຼື ຖືກລຶບອອກໄປແລ້ວ.",
+      "notifications": {
+        "title": "ແຈ້ງເຕືອນການຊຳລະ",
+        "unread": "ຍັງບໍ່ໄດ້ອ່ານ",
+        "markAllRead": "ອ່ານທັງໝົດແລ້ວ",
+        "viewAll": "ເບິ່ງການຊຳລະທັງໝົດ",
+        "viewAllPayments": "ເບິ່ງການຊຳລະທັງໝົດ",
+        "settings": "ການຕັ້ງຄ່າແຈ້ງເຕືອນ",
+        "sound": "ສຽງແຈ້ງເຕືອນ",
+        "testSound": "ທົດສອບສຽງ",
+        "noNotifications": "ບໍ່ມີແຈ້ງເຕືອນໃໝ່",
+        "noPaymentNotifications": "ບໍ່ມີແຈ້ງເຕືອນການຊຳລະໃໝ່",
+        "allCaughtUp": "ທຸກຢ່າງພ້ອມເປັນ!",
+        "newPayment": "ການຊຳລະໃໝ່",
+        "newPayments": "ການຊຳລະໃໝ່",
+        "clickBelowToView": "ກົດໃຊ້ລຸດນີ້ເພື່ອເບິ່ງການຊຳລະທັງໝົດ",
+        "paymentId": "ລະຫັດການຊຳລະ",
+        "notification": "ແຈ້ງເຕືອນ",
+        "notifications": "ແຈ້ງເຕືອນ",
+        "justNow": "ດຽວນີ້",
+        "minutesAgo": "ນາທີກ່ອນໜ້ານີ້",
+        "hoursAgo": "ຊົ່ວໂມງກ່ອນໜ້ານີ້",
+        "daysAgo": "ວັນກ່ອນໜ້ານີ້"
+      }
+    },
+    "member": {
+      "title": "ການຈັດການສະມາຊິກ",
+      "addNew": "ເພີ່ມສະມາຊິກໃໝ່",
+      "edit": "ແກ້ໄຂສະມາຊິກ",
+      "tableTitle": "ລາຍການສະມາຊິກ",
+      "searchPlaceholder": "ຄົ້ນຫາສະມາຊິກຕາມຊື່ ຫຼື ອີເມວ...",
+      "noData": "ບໍ່ພົບສະມາຊິກ",
+      "membersTab": "ສະມາຊິກ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "profile": "ໂປຣໄຟລ໌",
+        "name": "ຊື່",
+        "surname": "ນາມສະກຸນ",
+        "email": "ອີເມວ",
+        "phone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "view": {
+        "details": "ລາຍລະອຽດ",
+        "backToMembers": "ກັບຄືນຫາສະມາຊິກ",
+        "information": "ຂໍ້ມູນ",
+        "profileImage": "ຮູບໂປຣໄຟລ໌",
+        "type": "ປະເພດ",
+        "loadError": "ການໂຫຼດຂໍ້ມູນສະມາຊິກລົ້ມເຫຼວ"
+      }
+    },
+    "banner": {
+      "title": "ການຈັດການແບນເນີ",
+      "addNew": "ເພີ່ມແບນເນີໃໝ່",
+      "edit": "ແກ້ໄຂແບນເນີ",
+      "addModal": "ເພີ່ມແບນເນີໃໝ່",
+      "editModal": "ແກ້ໄຂແບນເນີ",
+      "tableTitle": "ລາຍການແບນເນີ",
+      "searchPlaceholder": "ຄົ້ນຫາແບນເນີຕາມຫົວຂໍ້...",
+      "noData": "ບໍ່ພົບແບນເນີ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "image": "ຮູບພາບ",
+        "link": "ລິ້ງຄ໌",
+        "order": "ລຳດັບ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "bannerImage": "ຮູບແບນເນີ",
+        "link": "ລິ້ງຄ໌",
+        "order": "ລຳດັບ",
+        "placeholder": {
+          "link": "ປ້ອນລິ້ງຄ໌ແບນເນີ",
+          "order": "ປ້ອນລຳດັບ"
+        },
+        "upload": "ອັບໂຫຼດ",
+        "validation": {
+          "imageRequired": "ກະລຸນາອັບໂຫຼດຮູບແບນເນີ",
+          "linkRequired": "ລິ້ງຄ໌ຈຳເປັນ",
+          "orderRequired": "ລຳດັບຈຳເປັນ",
+          "invalidImage": "ທ່ານເຈົ້າອັບໂຫຼດໄດ້ຮູບພາບເທົ່ານ!",
+          "imageTooLarge": "ຮູບພາບຕ້ອງນ້ອຍກວ່າ 5MB!"
+        }
+      }
+    },
+    "package": {
+      "title": "ການຈັດການແພັກເກັດ",
+      "addNew": "ເພີ່ມແພັກເກັດໃໝ່",
+      "edit": "ແກ້ໄຂແພັກເກັດ",
+      "editPackage": "ແກ້ໄຂແພັກເກັດ",
+      "addModal": "ເພີ່ມແພັກເກັດ",
+      "editModal": "ແກ້ໄຂແພັກເກັດ",
+      "tableTitle": "ລາຍການແພັກເກັດ",
+      "searchPlaceholder": "ຄົ້ນຫາແພັກເກັດຕາມຊື່...",
+      "noData": "ບໍ່ພົບແພັກເກັດ",
+      "type": {
+        "1month": "1 ເດືອນ",
+        "3months": "3 ເດືອນ",
+        "6months": "6 ເດືອນ",
+        "1year": "1 ປີ"
+      },
+      "noContent": "ບໍ່ມີເນື້ອຫາ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "type": "ປະເພດແພັກເກັດ",
+        "price": "ລາຄາ",
+        "content": "ເນື້ອຫາ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "type": "ປະເພດແພັກເກັດ",
+        "price": "ລາຄາ",
+        "content": "ເນື້ອຫາ",
+        "sections": {
+          "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+          "packageDetails": "ລາຍລະອຽດແພັກເກັດ"
+        },
+        "placeholder": {
+          "type": "ເລືອກປະເພດແພັກເກັດ",
+          "price": "ປ້ອນລາຄາ",
+          "content": "ປ້ອນເນື້ອຫາແພັກເກັດ"
+        },
+        "validation": {
+          "typeRequired": "ປະເພດແພັກເກັດຈຳເປັນ",
+          "priceRequired": "ລາຄາຈຳເປັນ",
+          "contentRequired": "ເນື້ອຫາຈຳເປັນ",
+          "invalidPrice": "ກະລຸນາປ້ອນລາຄາທີ່ຖືກຕ້ອງ",
+          "priceTooLow": "ລາຄາຕ້ອງຫຼາຍກວ່າ 0"
+        },
+        "actions": {
+          "selectType": "ເລືອກປະເພດແພັກເກັດ",
+          "addContent": "ເພີ່ມເນື້ອຫາ",
+          "removeContent": "ລຶບເນື້ອຫາ"
+        }
+      }
+    },
+    "tax": {
+      "title": "ການຈັດການອາກອນ",
+      "addNew": "ເພີ່ມອາກອນໃໝ່",
+      "edit": "ແກ້ໄຂອາກອນ",
+      "tableTitle": "ລາຍການອາກອນ",
+      "searchPlaceholder": "ຄົ້ນຫາອາກອນຕາມຊື່...",
+      "noData": "ບໍ່ພົບອາກອນ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່",
+        "percentage": "ເປີເຊັນ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່",
+        "percentage": "ເປີເຊັນ",
+        "placeholder": "ປ້ອນເປີເຊັນ (ຕົວຢ່າງ: 10.5)"
+      }
+    },
+    "bank": {
+      "title": "ການຈັດການທະນາຄານ",
+      "addNew": "ເພີ່ມທະນາຄານໃໝ່",
+      "edit": "ແກ້ໄຂທະນາຄານ",
+      "addModal": "ເພີ່ມທະນາຄານ",
+      "editModal": "ແກ້ໄຂທະນາຄານ",
+      "tableTitle": "ລາຍການທະນາຄານ",
+      "searchPlaceholder": "ຄົ້ນຫາທະນາຄານຕາມຊື່...",
+      "noData": "ບໍ່ພົບທະນາຄານ",
+      "manageCurrencies": "ຈັດການສະກຸນເງິນທະນາຄານ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "logo": "ໂລໂກ້",
+        "name": "ຊື່ທະນາຄານ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່ທະນາຄານ",
+        "logo": "ໂລໂກ້ທະນາຄານ",
+        "placeholder": {
+          "name": "ປ້ອນຊື່ທະນາຄານ"
+        },
+        "validation": {
+          "nameRequired": "ຊື່ທະນາຄານຈຳເປັນ",
+          "logoRequired": "ໂລໂກ້ທະນາຄານຈຳເປັນ",
+          "invalidImage": "ທ່ານສາມາດອັບໂຫຼດໄດ້ພຽງໄຟລ໌ຮູບພາບເທົ່ານ!",
+          "imageTooLarge": "ໂລໂກ້ຕ້ອງນ້ອຍກວ່າ 2MB!",
+          "updateError": "ອັບເດດທະນາຄານບໍ່ສຳເລັດ",
+          "loadError": "ດຶງຂໍ້ມູນທະນາຄານບໍ່ສຳເລັດ",
+          "createError": "ສ້າງທະນາຄານບໍ່ສຳເລັດ",
+          "deleteError": "ລຶບທະນາຄານບໍ່ສຳເລັດ",
+          "idRequired": "ລະຫັດປະຈຳຕົວທະນາຄານບໍ່ມີ"
+        },
+        "upload": "ອັບໂຫຼດ"
+      }
+    },
+    "bankCurrency": {
+      "title": "ການຈັດການສະກຸນເງິນທະນາຄານ",
+      "addNew": "ເພີ່ມສະກຸນເງິນທະນາຄານ",
+      "actions": {
+        "backToBanks": "ກັບຄືນຫາທະນາຄານ",
+        "addBankCurrency": "ເພີ່ມສະກຸນເງິນທະນາຄານ"
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "currencyName": "ຊື່ສະກຸນເງິນ",
+        "currencyShortName": "ຊື່ຫຍໍ້ໄຂສະກຸນເງິນ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "confirmDelete": "ທ່ານແນ່ໃຈບໍ່ທີ່ຈະລຶບສະກຸນເງິນທະນາຄານນີ້?",
+        "validation": {
+          "title": "ຂໍ້ຜິດພາດການກວດສອບ",
+          "currencyRequired": "ຕ້ອງເລືອກສະກຸນເງິນ",
+          "loadError": "ດຶງຂໍ້ມູນສະກຸນເງິນທະນາຄານບໍ່ສຳເລັດ",
+          "createError": "ສ້າງສະກຸນເງິນທະນາຄານບໍ່ສຳເລັດ",
+          "deleteError": "ລຶບສະກຸນເງິນທະນາຄານບໍ່ສຳເລັດ"
+        }
+      },
+      "addForm": {
+        "title": "ເພີ່ມສະກຸນເງິນທະນາຄານ",
+        "currency": "ສະກຸນເງິນ",
+        "placeholder": {
+          "currency": "ເລືອກສະກຸນເງິນ"
+        },
+        "validation": {
+          "currencyRequired": "ກະລຸນາເລືອກສະກຸນເງິນທີ່ຖືກຕ້ອງ",
+          "createError": "ສ້າງສະກຸນເງິນທະນາຄານບໍ່ສຳເລັດ"
+        },
+        "actions": {
+          "create": "ສ້າງ"
+        }
+      }
+    },
+    "currency": {
+      "title": "ການຈັດການສະກຸນເງິນ",
+      "addNew": "ເພີ່ມສະກຸນເງິນໃໝ່",
+      "edit": "ແກ້ໄຂສະກຸນເງິນ",
+      "addModal": "ເພີ່ມສະກຸນເງິນ",
+      "editModal": "ແກ້ໄຂສະກຸນເງິນ",
+      "tableTitle": "ລາຍການສະກຸນເງິນ",
+      "searchPlaceholder": "ຄົ້ນຫາສະກຸນເງິນຕາມຊື່...",
+      "noData": "ບໍ່ພົບສະກຸນເງິນ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່ສະກຸນເງິນ",
+        "shortName": "ຊື່ຫຍໍ້",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່ສະກຸນເງິນ",
+        "shortName": "ຊື່ຫຍໍ້",
+        "placeholder": {
+          "name": "ປ້ອນຊື່ສະກຸນເງິນ",
+          "shortName": "ປ້ອນຊື່ຫຍໍ້ (ຕົວຢ່າງ: USD)"
+        },
+        "validation": {
+          "nameRequired": "ຊື່ສະກຸນເງິນຈຳເປັນ",
+          "shortNameRequired": "ຊື່ຫຍໍ້ສະກຸນເງິນຈຳເປັນ",
+          "shortNameTooLong": "ຊື່ຫຍໍ້ສະກຸນເງິນຕ້ອງມີຄວາມຍາວບໍ່ເກີນ 5 ຕົວອັກສອນ",
+          "loadError": "ດຶງຂໍ້ມູນສະກຸນເງິນບໍ່ສຳເລັດ",
+          "createError": "ສ້າງສະກຸນເງິນບໍ່ສຳເລັດ",
+          "updateError": "ອັບເດດສະກຸນເງິນບໍ່ສຳເລັດ",
+          "deleteError": "ລຶບສະກຸນເງິນບໍ່ສຳເລັດ"
+        }
+      }
+    },
+    "exchangeRate": {
+      "title": "ການຈັດການອັດຕາແລກປ່ຽນ",
+      "addNew": "ເພີ່ມອັດຕາແລກປ່ຽນໃໝ່",
+      "edit": "ແກ້ໄຂອັດຕາແລກປ່ຽນ",
+      "tableTitle": "ລາຍການອັດຕາແລກປ່ຽນ",
+      "searchPlaceholder": "ຄົ້ນຫາອັດຕາແລກປ່ຽນ...",
+      "noData": "ບໍ່ພົບອັດຕາແລກປ່ຽນ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "fromCurrency": "ສະກຸນເງິນຕົ້ນຕົ້ນ",
+        "toCurrency": "ສະກຸນເງິນປາຍທານ",
+        "operator": "ດຳລັດການ",
+        "rate": "ອັດຕາ",
+        "formula": "ສູດ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      }
+    },
+    "permission": {
+      "title": "ການຈັດການສິດນຳໃຊ້",
+      "tableTitle": "ລາຍການສິດນຳໃຊ້",
+      "searchPlaceholder": "ຄົ້ນຫາສິດນຳໃຊ້...",
+      "noData": "ບໍ່ພົບສິດນຳໃຊ້",
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່",
+        "displayName": "ຊື່ທີ່ສະແດງ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      }
+    },
+    "role": {
+      "title": "ການຈັດການບົດບາດ",
+      "addNew": "ເພີ່ມບົດບາດໃໝ່",
+      "edit": "ແກ້ໄຂບົດບາດ",
+      "tableTitle": "ລາຍການບົດບາດ",
+      "searchPlaceholder": "ຄົ້ນຫາບົດບາດຕາມຊື່...",
+      "noData": "ບໍ່ພົບບົດບາດ",
+      "permissions": "ສິດນຳໃຊ້",
+      "deleteConfirm": "ທ່ານແນ່ໃຈວ່າຈະລຶບບົດບາດນີ້ບໍ?",
+      "deleteSuccess": "ລຶບບົດບາດສຳເລັດ",
+      "deleteError": "ລຶບບົດບາດບໍ່ສຳເລັດ",
+      "addForm": {
+        "title": "ເພີ່ມບົດບາດໃໝ່",
+        "name": "ຊື່",
+        "displayName": "ຊື່ທີ່ສະແດງ",
+        "permissions": "ສິດນຳໃຊ້",
+        "sections": {
+          "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+          "permissionsSection": "ສິດນຳໃຊ້"
+        },
+        "placeholder": {
+          "name": "ປ້ອນຊື່ບົດບາດ (ຕົວຢ່າງ: manager)",
+          "displayName": "ປ້ອນຊື່ທີ່ສະແດງ (ຕົວຢ່າງ: Manager)"
+        },
+        "validation": {
+          "nameRequired": "ກະລຸນາປ້ອນຊື່ບົດບາດ",
+          "nameMinLength": "ຊື່ຕ້ອງມີຄວາມຍາວຢ່າງໜ້ອຍ 2 ຕົວອັກສອນ",
+          "displayNameRequired": "ກະລຸນາປ້ອນຊື່ທີ່ສະແດງ",
+          "permissionsRequired": "ກະລຸນາເລືອກສິດນຳໃຊ້ຢ່າງຫນ້ອຍໜຶ່ງ",
+          "loadPermissionsError": "ດຶງຂໍ້ມູນສິດນຳໃຊ້ບໍ່ສຳເລັດ",
+          "createError": "ສ້າງບົດບາດບໍ່ສຳເລັດ"
+        },
+        "actions": {
+          "goBack": "ກັບຄືນ",
+          "createRole": "ສ້າງບົດບາດ"
+        },
+        "selectedCount": "{count} ສິດນຳໃຊ້ທີ່ເລືອກ"
+      },
+      "editForm": {
+        "title": "ແກ້ໄຂບົດບາດ",
+        "name": "ຊື່",
+        "displayName": "ຊື່ທີ່ສະແດງ",
+        "permissions": "ສິດນຳໃຊ້",
+        "sections": {
+          "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+          "permissionsSection": "ສິດນຳໃຊ້"
+        },
+        "placeholder": {
+          "name": "ປ້ອນຊື່ບົດບາດ (ຕົວຢ່າງ: manager)",
+          "displayName": "ປ້ອນຊື່ທີ່ສະແດງ (ຕົວຢ່າງ: Manager)"
+        },
+        "validation": {
+          "nameRequired": "ກະລຸນາປ້ອນຊື່ບົດບາດ",
+          "nameMinLength": "ຊື່ຕ້ອງມີຄວາມຍາວຢ່າງຫນ້ອຍ 2 ຕົວອັກສອນ",
+          "displayNameRequired": "ກະລຸນາປ້ອນຊື່ທີ່ສະແດງ",
+          "permissionsRequired": "ກະລຸນາເລືອກສິດນຳໃຊ້ຢ່າງຫນ້ອຍໜຶ່ງ",
+          "loadPermissionsError": "ດຶງຂໍ້ມູນສິດນຳໃຊ້ບໍ່ສຳເລັດ",
+          "loadRoleError": "ດຶງຂໍ້ມູນບົດບາດບໍ່ສຳເລັດ",
+          "updateError": "ອັບເດດບົດບາດບໍ່ສຳເລັດ"
+        },
+        "actions": {
+          "goBack": "ກັບຄືນ",
+          "updateRole": "ອັບເດດບົດບາດ"
+        },
+        "selectedCount": "{count} ສິດນຳໃຊ້ທີ່ເລືອກ"
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່",
+        "displayName": "ຊື່ທີ່ສະແດງ",
+        "permissions": "ສິດນຳໃຊ້",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      }
+    },
+    "user": {
+      "title": "ການຈັດການຜູ້ໃຊ້",
+      "addNew": "ເພີ່ມຜູ້ໃຊ້ໃໝ່",
+      "edit": "ແກ້ໄຂຜູ້ໃຊ້",
+      "tableTitle": "ລາຍການຜູ້ໃຊ້",
+      "searchPlaceholder": "ຄົ້ນຫາຜູ້ໃຊ້...",
+      "noData": "ບໍ່ພົບຜູ້ໃຊ້",
+      "deleteConfirm": "ທ່ານແນ່ໃຈວ່າຈະລຶບຜູ້ໃຊ້ນີ້ບໍ?",
+      "deleteSuccess": "ລຶບຜູ້ໃຊ້ສຳເລັດ",
+      "deleteError": "ລຶບຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+      "addForm": {
+        "title": "ເພີ່ມຜູ້ໃຊ້ໃໝ່",
+        "email": "ອີເມວ",
+        "name": "ຊື່",
+        "surname": "ນາມສະກຸນ",
+        "telephone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "password": "ລະຫັດຜ່ານ",
+        "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+        "roles": "ບົດບາດ",
+        "sections": {
+          "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+          "accountDetails": "ລາຍລະອຽດບັນຊີ",
+          "profileImage": "ຮູບໂປຣໄຟລ໌"
+        },
+        "placeholder": {
+          "email": "ປ້ອນທີ່ຢູ່ອີເມວ",
+          "name": "ປ້ອນຊື່",
+          "surname": "ປ້ອນນາມສະກຸນ",
+          "telephone": "ປ້ອນເບີໂທ",
+          "address": "ປ້ອນທີ່ຢູ່",
+          "password": "ປ້ອນລະຫັດຜ່ານ",
+          "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+          "roles": "ເລືອກບົດບາດ"
+        },
+        "validation": {
+          "emailRequired": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວ",
+          "emailInvalid": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ",
+          "nameRequired": "ກະລຸນາປ້ອນຊື່",
+          "surnameRequired": "ກະລຸນາປ້ອນນາມສະກຸນ",
+          "telephoneRequired": "ກະລຸນາປ້ອນເບີໂທ",
+          "addressRequired": "ກະລຸນາປ້ອນທີ່ຢູ່",
+          "passwordRequired": "ກະລຸນາປ້ອນລະຫັດຜ່ານ",
+          "confirmPasswordRequired": "ກະລຸນາຢືນຢັນລະຫັດຜ່ານ",
+          "passwordMismatch": "ລະຫັດຜ່ານບໍ່ກົງກັນ",
+          "rolesRequired": "ກະລຸນາເລືອກບົດບາດຢ່າງຫນ້ອຍໜຶ່ງ",
+          "createError": "ສ້າງຜູ້ໃຊ້ບໍ່ສຳເລັດ"
+        },
+        "actions": {
+          "goBack": "ກັບຄືນ",
+          "createUser": "ສ້າງຜູ້ໃຊ້",
+          "upload": "ອັບໂຫຼດ"
+        }
+      },
+      "editForm": {
+        "title": "ແກ້ໄຂຜູ້ໃຊ້",
+        "email": "ອີເມວ",
+        "name": "ຊື່",
+        "surname": "ນາມສະກຸນ",
+        "telephone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "roles": "ບົດບາດ",
+        "permissions": "ສິດທິການໃຊ້ງານ",
+        "profileImage": "ຮູບໂປຣໄຟລ໌",
+        "loadingUserData": "ກຳລັງໂຫຼດຂໍ້ມູນຜູ້ໃຊ້...",
+        "updateSuccess": "ອັບເດດຜູ້ໃຊ້ສຳເລັດແລ້ວ",
+        "selectedCount": "{count} ສິດທິການໃຊ້ງານຖືກເລືອກ",
+        "sections": {
+          "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
+          "accountDetails": "ລາຍລະອຽດບັນຊີ",
+          "profileImage": "ຮູບໂປຣໄຟລ໌"
+        },
+        "placeholder": {
+          "email": "ປ້ອນທີ່ຢູ່ອີເມວ",
+          "name": "ປ້ອນຊື່",
+          "surname": "ປ້ອນນາມສະກຸນ",
+          "telephone": "ປ້ອນເບີໂທ",
+          "address": "ປ້ອນທີ່ຢູ່",
+          "roles": "ເລືອກບົດບາດ"
+        },
+        "validation": {
+          "emailRequired": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວ",
+          "emailInvalid": "ກະລຸນາປ້ອນທີ່ຢູ່ອີເມວທີ່ຖືກຕ້ອງ",
+          "nameRequired": "ກະລຸນາປ້ອນຊື່",
+          "surnameRequired": "ກະລຸນາປ້ອນນາມສະກຸນ",
+          "telephoneRequired": "ກະລຸນາປ້ອນເບີໂທ",
+          "addressRequired": "ກະລຸນາປ້ອນທີ່ຢູ່",
+          "rolesRequired": "ກະລຸນາເລືອກບົດບາດຢ່າງຫນ້ອຍໜຶ່ງ",
+          "loadUserError": "ດຶງຂໍ້ມູນຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+          "updateError": "ອັບເດດຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+          "passwordMinLength": "ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 6 ຕົວອັກສອນ",
+          "passwordMismatch": "ລະຫັດຜ່ານບໍ່ຕົງກັນ",
+          "permissionsRequired": "ກະລຸນາເລືອກສິດທິການໃຊ້ງານຢ່າງຫນ້ອຍໜຶ່ງ",
+          "loadRolesError": "ດຶງຂໍ້ມູນບົດບາດຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+          "loadRolePermissionsError": "ບໍ່ສາມາດໂຫຼດສິດທິການໃຊ້ງານສຳລັບບົດບາດ {roleId}",
+          "loadPermissionsError": "ດຶງຂໍ້ມູນສິດທິການໃຊ້ງານບໍ່ສຳເລັດ",
+          "imageFileType": "ສາມາດອັບໂຫຼດໄດ້ພຽງໄຟລ໌ຮູບພາບ!",
+          "imageFileSize": "ຮູບພາບຕ້ອງນ້ອຍກວ່າ 2MB!",
+          "formError": "ກະລຸນາກວດສອບຟອມຫາຂໍ້ຜິດພາດ"
+        },
+        "actions": {
+          "goBack": "ກັບຄືນ",
+          "updateUser": "ອັບເດດຜູ້ໃຊ້",
+          "upload": "ອັບໂຫຼດ"
+        }
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "profile": "ໂປຣໄຟລ໌",
+        "email": "ອີເມວ",
+        "name": "ຊື່",
+        "surname": "ນາມສະກຸນ",
+        "telephone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "roles": "ບົດບາດ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      }
+    },
+    "profile": {
+      "title": "ໂປຣໄຟລ໌",
+      "edit": "ແກ້ໄຂໂປຣໄຟລ໌",
+      "editModal": "ແກ້ໄຂໂປຣໄຟລ໌",
+      "changePassword": "ປ່ຽນລະຫັດຜ່ານ",
+      "personalInfo": "ຂໍ້ມູນສ່ວນຕົວ",
+      "accountSettings": "ການຕັ້ງຄ່າບັນຊີ",
+      "loadingUserData": "ກຳລັງໂຫຼດຂໍ້ມູນຜູ້ໃຊ້...",
+      "updateSuccess": "ອັບເດດໂປຣໄຟລ໌ສຳເລັດແລ້ວ",
+      "updateError": "ອັບເດດໂປຣໄຟລ໌ບໍ່ສຳເລັດ",
+      "columns": {
+        "no": "ລຳດັບ",
+        "field": "ຟິວລ໌ດ໌",
+        "value": "ຄ່າ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ການດຳເນີນການ"
+      },
+      "form": {
+        "name": "ຊື່",
+        "email": "ອີເມວ",
+        "surname": "ນາມສະກຸນ",
+        "telephone": "ເບີໂທ",
+        "phone": "ເບີໂທ",
+        "address": "ທີ່ຢູ່",
+        "avatar": "ຮູບໂປຣໄຟລ໌",
+        "profileImage": "ຮູບໂປຣໄຟລ໌",
+        "placeholder": {
+          "name": "ປ້ອນຊື່ຂອງທ່ານ",
+          "email": "ປ້ອນອີເມວຂອງທ່ານ",
+          "surname": "ປ້ອນນາມສະກຸນ",
+          "telephone": "ປ້ອນເບີໂທ",
+          "phone": "ປ້ອນເບີໂທຂອງທ່ານ",
+          "address": "ປ້ອນທີ່ຢູ່ຂອງທ່ານ"
+        },
+        "validation": {
+          "nameRequired": "ກະລຸນາປ້ອນຊື່",
+          "emailRequired": "ກະລຸນາປ້ອນອີເມວ",
+          "surnameRequired": "ກະລຸນາປ້ອນນາມສະກຸນ",
+          "telephoneRequired": "ກະລຸນາປ້ອນເບີໂທ",
+          "emailInvalid": "ກະລຸນາປ້ອນອີເມວທີ່ຖືກຕ້ອງ",
+          "loadUserError": "ດຶງຂໍ້ມູນຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+          "imageFileType": "ສາມາດອັບໂຫຼດໄດ້ພຽງໄຟລ໌ຮູບພາບ!",
+          "imageFileSize": "ຮູບພາບຕ້ອງນ້ອຍກວ່າ 2MB!"
+        },
+        "actions": {
+          "upload": "ອັບໂຫຼດ",
+          "updateProfile": "ອັບເດດໂປຣໄຟລ໌",
+          "changePassword": "ປ່ຽນລະຫັດຜ່ານ"
+        }
+      },
+      "passwordModal": {
+        "title": "ປ່ຽນລະຫັດຜ່ານ",
+        "newPassword": "ລະຫັດຜ່ານໃໝ່",
+        "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+        "passwordChangeSuccess": "ປ່ຽນລະຫັດຜ່ານສຳເລັດແລ້ວ!",
+        "passwordChangeError": "ປ່ຽນລະຫັດຜ່ານບໍ່ສຳເລັດ",
+        "placeholder": {
+          "newPassword": "ປ້ອນລະຫັດຜ່ານໃໝ່",
+          "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານໃໝ່"
+        },
+        "validation": {
+          "newPasswordRequired": "ກະລຸນາປ້ອນລະຫັດຜ່ານໃໝ່",
+          "confirmPasswordRequired": "ກະລຸນາຢືນຢັນລະຫັດຜ່ານ",
+          "passwordMinLength": "ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 6 ຕົວອັກສອນ",
+          "passwordMismatch": "ລະຫັດຜ່ານບໍ່ຕົງກັນ"
+        },
+        "actions": {
+          "close": "ປິດ",
+          "changePassword": "ປ່ຽນລະຫັດຜ່ານ"
+        }
+      }
+    },
+    "qrCode": {
+      "title": "ການຈັດການລະຫັດ QR",
+      "editModal": "ແກ້ໄຂລະຫັດ QR",
+      "columns": {
+        "no": "ລຳດັບ",
+        "image": "ຮູບພາບ",
+        "file": "ຊື່ໄຟລ໌",
+        "createdAt": "ສ້າງເມື່ອ",
+        "updatedAt": "ອັບເດດເມື່ອ",
+        "action": "ຈັດການ"
+      },
+      "form": {
+        "currentImage": "ລະຫັດ QR ປະຈຸບັນ",
+        "uploadNewImage": "ອັບໂຫຼດລະຫັດ QR ໃໝ່",
+        "noImage": "ບໍ່ມີຮູບພາບ",
+        "upload": "ອັບໂຫຼດ",
+        "uploadHint": "ຮູບແບບທີ່ຮອງຮັບ: PNG, JPG, JPEG. ຂະໜາດສູງສຸດ: 2MB",
+        "validation": {
+          "loadError": "ດຶງຂໍ້ມູນລະຫັດ QR ບໍ່ສຳເລັດ",
+          "idRequired": "ຕ້ອງການ ID",
+          "updateError": "ອັບເດດລະຫັດ QR ບໍ່ສຳເລັດ",
+          "invalidImage": "ອະນຸຍາດໃຫ້ອັບໂຫຼດໄຟລ໌ຮູບພາບເທົ່ານັ້ນ",
+          "imageTooLarge": "ຂະໜາດຮູບພາບຕ້ອງນ້ອຍກວ່າ 2MB",
+          "fileRequired": "ກະລຸນາເລືອກໄຟລ໌ທີ່ຈະອັບໂຫຼດ"
+        },
+        "currentFile": "ໄຟລ໌ປະຈຸບັນ",
+        "fileName": "ຊື່ໄຟລ໌",
+        "unknown": "ບໍ່ຮູ້ຈັກ",
+        "updateFile": "ອັບໂຫຼດໄຟລ໌ໃໝ່",
+        "newFile": "ໃໝ່",
+        "selectFile": "ເລືອກໄຟລ໌",
+        "noFileSelected": "ບໍ່ໄດ້ເລືອກໄຟລ໌",
+        "qrCodeFile": "ໄຟລ໌ລະຫັດ QR",
+        "chooseFile": "ເລືອກໄຟລ໌",
+        "clickToBrowse": "ຄລິກເພື້ຊອການຄົ້ນາໄຟລ໌",
+        "newFileSelected": "ໄຟລ໌ໃໝ່ທີ່ເລືອກ",
+        "dragOrClick": "ລາກໄຟລ໌ມານີ້ ຫຼື ຄລິກເພື່ອຊອກຫາໄຟລ໌"
+      }
+    }
+  },
+  "status": {
+    "active": "ໃຊ້ງານ",
+    "inactive": "ບໍ່ໃຊ້ງານ",
+    "pending": "ລໍຖ້າອະນຸມັດ",
+    "suspended": "ຖືກລົບກວງ",
+    "approved": "ອະນຸມັດ",
+    "rejected": "ປະຕິເສດ",
+    "blacklisted": "ເຂົ້າບັນຊີດຳ",
+    "success": "ສຳເລັດ",
+    "failed": "ລົບເຫຼວ"
+  },
+  "actions": {
+    "view": "ເບິ່ງ",
+    "edit": "ແກ້ໄຂ",
+    "delete": "ລຶບ",
+    "add": "ເພີ່ມ",
+    "create": "ສ້າງ",
+    "update": "ອັບເດດ",
+    "save": "ບັນທຶກ",
+    "cancel": "ຍົກເລີກ",
+    "submit": "ສົ່ງ",
+    "search": "ຄົ້ນຫາ",
+    "filter": "ກັ່ນຕອງ",
+    "clear": "ລຶບລ້າງ",
+    "reset": "ຣີເຊັດ",
+    "upload": "ອັບໂຫຼດ",
+    "download": "ດາວໂຫຼດ",
+    "export": "ສົ່ງອອກ",
+    "import": "ນຳເຂົ້າ",
+    "play": "ເລີ່ນ",
+    "pause": "ຢຸດ",
+    "stop": "ຢຸດຊົ່ວງ",
+    "refresh": "ຣີເຟຣສ",
+    "reload": "ໂຫຼດໃໝ່",
+    "close": "ປິດ",
+    "open": "ເປີດ",
+    "back": "ກັບຄືນ",
+    "next": "ຕໍ່ໄປ",
+    "previous": "ກ່ອນໜ້າ",
+    "confirm": "ຢືນຢັນ",
+    "approve": "ອະນຸມັດ",
+    "reject": "ປະຕິເສດ",
+    "remove": "ລຶບ",
+    "restore": "ກູ້ຄືນ",
+    "change": "ປ່ຽນ",
+    "new": "ໃໝ່"
+  },
+  "message": {
+    "loginSuccess": "ເຂົ້າສູ່ລະບົບສຳເລັດ",
+    "loginFailed": "ເຂົ້າສູ່ລະບົບບໍ່ສຳເລັດ",
+    "createSuccess": "ສ້າງສຳເລັດ",
+    "updateSuccess": "ອັບເດດສຳເລັດ",
+    "deleteSuccess": "ລຶບສຳເລັດ",
+    "deleteConfirm": "ທ່ານແນ່ໃຈວ່າຈະລຶບລາຍການນີ້ບໍ?",
+    "operationSuccess": "ດຳເນີນການສຳເລັດ",
+    "operationFailed": "ດຳເນີນການບໍ່ສຳເລັດ",
+    "confirmLogout": "ຢືນຢັນການອອກຈາກລະບົບ",
+    "logoutConfirmMessage": "ທ່ານແນ່ໃຈບໍວ່າຈະອອກຈາກລະບົບ?",
+    "logoutSuccess": "ທ່ານໄດ້ອອກຈາກລະບົບແລ້ວ.",
+    "logoutFailed": "ການອອກຈາກລະບົບລົ້ມເຫຼວ. ກະລຸນາລອງໃໝ່."
+  },
+  "qrCode": {
+    "title": "ການຈັດການລະຫັດ QR",
+    "editTitle": "ແກ້ໄຂລະຫັດ QR",
+    "currentImage": "ລະຫັດ QR ປະຈຸບັນ",
+    "uploadNewImage": "ອັບໂຫຼດລະຫັດ QR ໃໝ່",
+    "uploadHint": "ຮູບແບບທີ່ຮອງຮັບ: PNG, JPG, JPEG. ຂະໜາດສູງສຸດ: 2MB"
+  }
+}

@@ -1,0 +1,1086 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "banner": "Banner",
+    "category": "Category",
+    "tag": "Tag",
+    "video": "Video",
+    "tax": "Tax",
+    "package": "Package",
+    "customer": "Customer",
+    "member": "Member",
+    "payment": "Payment",
+    "financial": "Financial",
+    "bank": "Bank",
+    "currency": "Currency",
+    "exchangeRate": "Exchange Rate",
+    "system": "System",
+    "permission": "Permission",
+    "role": "Role",
+    "user": "User",
+    "profile": "Profile",
+    "reports": "Report",
+    "report": {
+      "video": "Video Report",
+      "member": "Member Report"
+    },
+    "qrCode": "QR Code"
+  },
+  "common": {
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "back": "Back",
+    "loading": "Loading...",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Information"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reset Password",
+    "rememberMe": "Remember Me"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "cards": {
+      "totalUsers": "Total Users",
+      "totalRoles": "Total Roles",
+      "totalCourses": "Total Courses",
+      "totalStudents": "Total Students",
+      "totalTeachers": "Total Teachers"
+    }
+  },
+  "video": {
+    "title": "Video Management",
+    "addNewVideo": "Add New Video",
+    "editVideo": "Edit Video",
+    "videoTitle": "Video Title",
+    "content": "Content",
+    "image": "Image",
+    "video": "Video",
+    "trailer": "Trailer",
+    "categories": "Categories",
+    "tags": "Tags",
+    "status": "Status",
+    "customer": "Customer",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "action": "Action",
+    "no": "No",
+    "active": "Active",
+    "inactive": "Inactive",
+    "searchPlaceholder": "Search videos by title or content...",
+    "filterByCategory": "Filter by category",
+    "filterByTag": "Filter by tag",
+    "filterByCustomer": "Filter by customer",
+    "uploadImage": "Upload Image",
+    "selectVideo": "Select Video",
+    "selectTrailer": "Select Trailer",
+    "selectCategories": "Select categories",
+    "selectTags": "Select tags",
+    "selectCustomer": "Select a customer",
+    "form": {
+      "title": "Video Title",
+      "content": "Video Content",
+      "image": "Video Image",
+      "videoFile": "Video File",
+      "trailerFile": "Trailer File",
+      "categories": "Categories",
+      "tags": "Tags",
+      "customer": "Customer",
+      "placeholder": {
+        "title": "Enter video title",
+        "content": "Enter video description or content",
+        "customer": "Select a customer",
+        "categories": "Select categories",
+        "tags": "Select tags"
+      },
+      "validation": {
+        "titleRequired": "Please enter video title",
+        "customerRequired": "Please select a customer",
+        "imageRequired": "Please upload a video image",
+        "videoRequired": "Please select a video file",
+        "categoriesRequired": "Please select at least one category",
+        "tagsRequired": "Please select at least one tag",
+        "invalidImage": "You can only upload image files!",
+        "imageTooLarge": "Image must be smaller than 5MB!",
+        "invalidVideo": "You can only upload video files!",
+        "videoTooLarge": "Video must be smaller than 100MB!",
+        "trailerTooLarge": "Trailer must be smaller than 50MB!",
+        "createError": "Failed to create video",
+        "updateError": "Failed to update video"
+      },
+      "sections": {
+        "basicInformation": "Basic Information",
+        "mediaFiles": "Media Files",
+        "categoriesAndTags": "Categories & Tags",
+        "customerInformation": "Customer Information"
+      }
+    }
+  },
+  "pagination": {
+    "total": "Total {count} items",
+    "pageSize": "Page size",
+    "itemsPerPage": "{current}-{total} of {totalItems} items"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email",
+    "minLength": "Minimum length is {min} characters",
+    "maxLength": "Maximum length is {max} characters",
+    "selectOption": "Please select an option"
+  },
+  "modules": {
+    "video": {
+      "title": "Video Management",
+      "addNew": "Add New Video",
+      "edit": "Edit Video",
+      "editVideo": "Edit Video",
+      "addModal": "Add Video",
+      "editModal": "Edit Video",
+      "tableTitle": "Video List",
+      "searchPlaceholder": "Search videos by title or content...",
+      "noData": "No videos found",
+      "columns": {
+        "no": "No",
+        "title": "Title",
+        "content": "Content",
+        "image": "Image",
+        "video": "Video",
+        "trailer": "Trailer",
+        "customer": "Customer",
+        "categories": "Categories",
+        "tags": "Tags",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "title": "Video Title",
+        "content": "Content",
+        "image": "Image",
+        "videoFile": "Video File",
+        "trailerFile": "Trailer File",
+        "categories": "Categories",
+        "tags": "Tags",
+        "customer": "Customer",
+        "status": "Status",
+        "placeholder": {
+          "title": "Enter video title",
+          "content": "Enter video description or content",
+          "customer": "Select a customer",
+          "categories": "Select categories",
+          "tags": "Select tags"
+        },
+        "sections": {
+          "basicInformation": "Basic Information",
+          "mediaFiles": "Media Files",
+          "categoriesAndTags": "Categories & Tags",
+          "customerInformation": "Customer Information"
+        }
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete",
+        "play": "Play",
+        "upload": "Upload",
+        "save": "Save",
+        "cancel": "Cancel",
+        "selectVideo": "Select Video",
+        "selectTrailer": "Select Trailer",
+        "uploadImage": "Upload Image",
+        "changeVideo": "Change Video",
+        "changeTrailer": "Change Trailer",
+        "changeImage": "Change Image",
+        "removeImage": "Remove Image",
+        "removeVideo": "Remove Video",
+        "removeTrailer": "Remove Trailer"
+      }
+    },
+    "customer": {
+      "title": "Customer Management",
+      "addNew": "Add New Customer",
+      "edit": "Edit Customer",
+      "addModal": "Add Customer",
+      "editModal": "Edit Customer",
+      "tableTitle": "Customer List",
+      "searchPlaceholder": "Search customers by name or email...",
+      "noData": "No customers found",
+      "columns": {
+        "no": "No",
+        "profile": "Profile",
+        "customer": "Customer",
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "status": "Status",
+        "customer": "Customer",
+        "avatar": "Profile Image",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "sections": {
+          "personalInformation": "Personal Information"
+        },
+        "placeholder": {
+          "name": "Enter name",
+          "surname": "Enter surname",
+          "email": "Enter email address",
+          "phone": "Enter phone number",
+          "address": "Enter address",
+          "password": "Enter password",
+          "confirmPassword": "Confirm password"
+        },
+        "validation": {
+          "nameRequired": "Name is required",
+          "surnameRequired": "Surname is required",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "phoneRequired": "Phone number is required",
+          "addressRequired": "Address is required",
+          "passwordRequired": "Password is required",
+          "confirmPasswordRequired": "Please confirm your password",
+          "passwordMismatch": "Passwords do not match"
+        }
+      }
+    },
+    "category": {
+      "title": "Category Management",
+      "addNew": "Add New Category",
+      "edit": "Edit Category",
+      "tableTitle": "Category List",
+      "searchPlaceholder": "Search categories by name...",
+      "noData": "No categories found",
+      "columns": {
+        "no": "No",
+        "name": "Name",
+        "description": "Description",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Category Name",
+        "description": "Description",
+        "status": "Status",
+        "placeholder": {
+          "name": "Enter category name",
+          "description": "Enter category description"
+        },
+        "validation": {
+          "nameRequired": "Category name is required",
+          "descriptionRequired": "Description is required"
+        }
+      }
+    },
+    "tag": {
+      "title": "Tag Management",
+      "addNew": "Add New Tag",
+      "edit": "Edit Tag",
+      "tableTitle": "Tag List",
+      "searchPlaceholder": "Search tags by name...",
+      "noData": "No tags found",
+      "columns": {
+        "no": "No",
+        "name": "Name",
+        "color": "Color",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Tag Name",
+        "color": "Color",
+        "status": "Status",
+        "placeholder": {
+          "name": "Enter tag name",
+          "color": "Choose tag color"
+        },
+        "validation": {
+          "nameRequired": "Tag name is required",
+          "colorRequired": "Tag color is required"
+        }
+      }
+    },
+    "payment": {
+      "title": "Payment Management",
+      "memberPaymentTitle": "Member Payments",
+      "addNew": "Add New Payment",
+      "addPayment": "Add Payment",
+      "editPayment": "Edit Payment",
+      "tableTitle": "Payment List",
+      "viewPayments": "View Payments",
+      "viewSlip": "View Slip",
+      "searchPlaceholder": "Search payments by member name...",
+      "noData": "No payments found",
+      "columns": {
+        "no": "No",
+        "member": "Member",
+        "package": "Package",
+        "bank": "Bank",
+        "currency": "Currency",
+        "amount": "Amount",
+        "paymentType": "Payment Type",
+        "status": "Status",
+        "slip": "Slip",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "member": "Member",
+        "package": "Package",
+        "bank": "Bank & Currency",
+        "paymentType": "Payment Type",
+        "status": "Status",
+        "slip": "Payment Slip",
+        "selectMember": "Select a member",
+        "selectPackage": "Select a package",
+        "selectBank": "Select bank & currency",
+        "selectPaymentType": "Select payment type",
+        "selectStatus": "Select status",
+        "placeholder": {
+          "member": "Choose a member",
+          "package": "Choose a package",
+          "bank": "Choose bank & currency",
+          "paymentType": "Choose payment type",
+          "status": "Choose status"
+        }
+      },
+      "paymentTypes": {
+        "transfer": "Bank Transfer",
+        "cash": "Cash",
+        "creditCard": "Credit Card"
+      },
+      "paymentDetails": "Payment Details",
+      "paymentInformation": "Payment Information",
+      "memberInformation": "Member Information",
+      "packageInformation": "Package Information",
+      "bankInformation": "Bank Information",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "updateStatus": "Update Status",
+      "filterStatus": "Filter Status",
+      "paymentNotFound": "Payment Not Found",
+      "paymentNotFoundMessage": "The payment you're looking for doesn't exist or has been removed.",
+      "notifications": {
+        "title": "Payment Notifications",
+        "unread": "unread",
+        "markAllRead": "Mark all read",
+        "viewAll": "View all payments",
+        "viewAllPayments": "View All Payments",
+        "settings": "Notification Settings",
+        "sound": "Notification Sound",
+        "testSound": "Test Sound",
+        "noNotifications": "No new notifications",
+        "noPaymentNotifications": "No new payment notifications",
+        "allCaughtUp": "All caught up!",
+        "newPayment": "New Payment",
+        "newPayments": "New Payments",
+        "clickBelowToView": "Click below to view all payments",
+        "paymentId": "Payment ID",
+        "notification": "notification",
+        "notifications": "notifications",
+        "justNow": "Just now",
+        "minutesAgo": "minutes ago",
+        "hoursAgo": "hours ago",
+        "daysAgo": "days ago"
+      }
+    },
+    "member": {
+      "title": "Member Management",
+      "addNew": "Add New Member",
+      "edit": "Edit Member",
+      "tableTitle": "Member List",
+      "searchPlaceholder": "Search members by name or email...",
+      "noData": "No members found",
+      "membersTab": "Members",
+      "columns": {
+        "no": "No",
+        "profile": "Profile",
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "view": {
+        "details": "Details",
+        "backToMembers": "Back to Members",
+        "information": "Information",
+        "profileImage": "Profile Image",
+        "type": "Type",
+        "loadError": "Failed to load member data"
+      }
+    },
+    "banner": {
+      "title": "Banner Management",
+      "addNew": "Add New Banner",
+      "edit": "Edit Banner",
+      "addModal": "Add Banner",
+      "editModal": "Edit Banner",
+      "tableTitle": "Banner List",
+      "searchPlaceholder": "Search banners by title...",
+      "noData": "No banners found",
+      "columns": {
+        "no": "No",
+        "image": "Image",
+        "link": "Link",
+        "order": "Order",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "bannerImage": "Banner Image",
+        "link": "Link",
+        "order": "Order",
+        "placeholder": {
+          "link": "Enter banner link",
+          "order": "Enter order"
+        },
+        "upload": "Upload",
+        "validation": {
+          "imageRequired": "Please upload a banner image",
+          "linkRequired": "Link is required",
+          "orderRequired": "Order is required",
+          "invalidImage": "You can only upload image files!",
+          "imageTooLarge": "Image must be smaller than 5MB!"
+        }
+      }
+    },
+    "package": {
+      "title": "Package Management",
+      "addNew": "Add New Package",
+      "edit": "Edit Package",
+      "editPackage": "Edit Package",
+      "addModal": "Add Package",
+      "editModal": "Edit Package",
+      "tableTitle": "Package List",
+      "searchPlaceholder": "Search packages by name...",
+      "noData": "No packages found",
+      "type": {
+        "1month": "1 Month",
+        "3months": "3 Months",
+        "6months": "6 Months",
+        "1year": "1 Year"
+      },
+      "noContent": "No content",
+      "columns": {
+        "no": "No",
+        "type": "Package Type",
+        "price": "Price",
+        "content": "Content",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "type": "Package Type",
+        "price": "Price",
+        "content": "Content",
+        "sections": {
+          "basicInformation": "Basic Information",
+          "packageDetails": "Package Details"
+        },
+        "placeholder": {
+          "type": "Select package type",
+          "price": "Enter price",
+          "content": "Enter package content"
+        },
+        "validation": {
+          "typeRequired": "Package type is required",
+          "priceRequired": "Price is required",
+          "contentRequired": "Content is required",
+          "invalidPrice": "Please enter a valid price",
+          "priceTooLow": "Price must be greater than 0"
+        },
+        "actions": {
+          "selectType": "Select Package Type",
+          "addContent": "Add Content",
+          "removeContent": "Remove Content"
+        }
+      }
+    },
+    "tax": {
+      "title": "Tax Management",
+      "addNew": "Add New Tax",
+      "edit": "Edit Tax",
+      "tableTitle": "Tax List",
+      "searchPlaceholder": "Search taxes by name...",
+      "noData": "No taxes found",
+      "columns": {
+        "no": "No",
+        "name": "Name",
+        "percentage": "Percentage",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Name",
+        "percentage": "Percentage",
+        "placeholder": "Enter percentage (e.g., 10.5)"
+      }
+    },
+    "bank": {
+      "title": "Bank Management",
+      "addNew": "Add New Bank",
+      "edit": "Edit Bank",
+      "addModal": "Add Bank",
+      "editModal": "Edit Bank",
+      "tableTitle": "Bank List",
+      "searchPlaceholder": "Search banks by name...",
+      "noData": "No banks found",
+      "manageCurrencies": "Manage Bank Currencies",
+      "columns": {
+        "no": "No",
+        "logo": "Logo",
+        "name": "Bank Name",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Bank Name",
+        "logo": "Bank Logo",
+        "placeholder": {
+          "name": "Enter bank name"
+        },
+        "validation": {
+          "nameRequired": "Bank name is required",
+          "logoRequired": "Bank logo is required",
+          "invalidImage": "You can only upload image files!",
+          "imageTooLarge": "Logo must be smaller than 2MB!",
+          "updateError": "Failed to update bank",
+          "loadError": "Failed to load banks",
+          "createError": "Failed to create bank",
+          "deleteError": "Failed to delete bank",
+          "idRequired": "Bank ID is missing"
+        },
+        "upload": "Upload"
+      }
+    },
+    "bankCurrency": {
+      "title": "Bank Currency Management",
+      "addNew": "Add Bank Currency",
+      "actions": {
+        "backToBanks": "Back to Banks",
+        "addBankCurrency": "Add Bank Currency"
+      },
+      "columns": {
+        "no": "No",
+        "currencyName": "Currency Name",
+        "currencyShortName": "Currency Short Name",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "confirmDelete": "Are you sure to delete this bank currency?",
+        "validation": {
+          "title": "Validation Error",
+          "currencyRequired": "Currency is required",
+          "loadError": "Failed to load bank currencies",
+          "createError": "Failed to create bank currency",
+          "deleteError": "Failed to delete bank currency"
+        }
+      },
+      "addForm": {
+        "title": "Add Bank Currency",
+        "currency": "Currency",
+        "placeholder": {
+          "currency": "Select currency"
+        },
+        "validation": {
+          "currencyRequired": "Please select a valid currency",
+          "createError": "Failed to create bank currency"
+        },
+        "actions": {
+          "create": "Create"
+        }
+      }
+    },
+    "currency": {
+      "title": "Currency Management",
+      "addNew": "Add New Currency",
+      "edit": "Edit Currency",
+      "addModal": "Add Currency",
+      "editModal": "Edit Currency",
+      "tableTitle": "Currency List",
+      "searchPlaceholder": "Search currencies by name...",
+      "noData": "No currencies found",
+      "columns": {
+        "no": "No",
+        "name": "Currency Name",
+        "shortName": "Short Name",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Currency Name",
+        "shortName": "Short Name",
+        "placeholder": {
+          "name": "Enter currency name",
+          "shortName": "Enter short name (e.g., USD)"
+        },
+        "validation": {
+          "nameRequired": "Currency name is required",
+          "shortNameRequired": "Currency short name is required",
+          "shortNameTooLong": "Currency short name should be 5 characters or less",
+          "loadError": "Failed to load currencies",
+          "createError": "Failed to create currency",
+          "updateError": "Failed to update currency",
+          "deleteError": "Failed to delete currency"
+        }
+      }
+    },
+    "exchangeRate": {
+      "title": "Exchange Rate Management",
+      "addNew": "Add New Exchange Rate",
+      "edit": "Edit Exchange Rate",
+      "tableTitle": "Exchange Rate List",
+      "searchPlaceholder": "Search exchange rates...",
+      "noData": "No exchange rates found",
+      "columns": {
+        "no": "No",
+        "fromCurrency": "From Currency",
+        "toCurrency": "To Currency",
+        "operator": "Operator",
+        "rate": "Rate",
+        "formula": "Formula",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      }
+    },
+    "permission": {
+      "title": "Permission Management",
+      "tableTitle": "Permission List",
+      "searchPlaceholder": "Search permissions...",
+      "noData": "No permissions found",
+      "columns": {
+        "no": "No",
+        "name": "Name",
+        "displayName": "Display Name",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      }
+    },
+    "role": {
+      "title": "Role Management",
+      "addNew": "Add New Role",
+      "edit": "Edit Role",
+      "tableTitle": "Role List",
+      "searchPlaceholder": "Search roles by name...",
+      "noData": "No roles found",
+      "permissions": "permissions",
+      "deleteConfirm": "Are you sure you want to delete this role?",
+      "deleteSuccess": "Role deleted successfully",
+      "deleteError": "Failed to delete role",
+      "addForm": {
+        "title": "Add New Role",
+        "name": "Name",
+        "displayName": "Display Name",
+        "permissions": "Permissions",
+        "sections": {
+          "basicInformation": "Basic Information",
+          "permissionsSection": "Permissions"
+        },
+        "placeholder": {
+          "name": "Enter role name (e.g., manager)",
+          "displayName": "Enter display name (e.g., Manager)"
+        },
+        "validation": {
+          "nameRequired": "Please enter role name",
+          "nameMinLength": "Name must be at least 2 characters",
+          "displayNameRequired": "Please enter display name",
+          "permissionsRequired": "Please select at least one permission",
+          "loadPermissionsError": "Failed to load permissions",
+          "createError": "Failed to create role"
+        },
+        "actions": {
+          "goBack": "Go Back",
+          "createRole": "Create Role"
+        },
+        "selectedCount": "{count} permission(s) selected"
+      },
+      "editForm": {
+        "title": "Edit Role",
+        "name": "Name",
+        "displayName": "Display Name",
+        "permissions": "Permissions",
+        "sections": {
+          "basicInformation": "Basic Information",
+          "permissionsSection": "Permissions"
+        },
+        "placeholder": {
+          "name": "Enter role name (e.g., manager)",
+          "displayName": "Enter display name (e.g., Manager)"
+        },
+        "validation": {
+          "nameRequired": "Please enter role name",
+          "nameMinLength": "Name must be at least 2 characters",
+          "displayNameRequired": "Please enter display name",
+          "permissionsRequired": "Please select at least one permission",
+          "loadPermissionsError": "Failed to load permissions",
+          "loadRoleError": "Failed to load role",
+          "updateError": "Failed to update role"
+        },
+        "actions": {
+          "goBack": "Go Back",
+          "updateRole": "Update Role"
+        },
+        "selectedCount": "{count} permission(s) selected"
+      },
+      "columns": {
+        "no": "No",
+        "name": "Name",
+        "displayName": "Display Name",
+        "permissions": "Permissions",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      }
+    },
+    "user": {
+      "title": "User Management",
+      "addNew": "Add New User",
+      "edit": "Edit User",
+      "tableTitle": "User List",
+      "searchPlaceholder": "Search users...",
+      "noData": "No users found",
+      "deleteConfirm": "Are you sure you want to delete this user?",
+      "deleteSuccess": "User deleted successfully",
+      "deleteError": "Failed to delete user",
+      "addForm": {
+        "title": "Add New User",
+        "email": "Email",
+        "name": "Name",
+        "surname": "Surname",
+        "telephone": "Telephone",
+        "address": "Address",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "roles": "Roles",
+        "sections": {
+          "basicInformation": "Basic Information",
+          "accountDetails": "Account Details",
+          "profileImage": "Profile Image"
+        },
+        "placeholder": {
+          "email": "Enter email address",
+          "name": "Enter first name",
+          "surname": "Enter surname",
+          "telephone": "Enter telephone number",
+          "address": "Enter address",
+          "password": "Enter password",
+          "confirmPassword": "Confirm password",
+          "roles": "Select roles"
+        },
+        "validation": {
+          "emailRequired": "Please enter email address",
+          "emailInvalid": "Please enter a valid email address",
+          "nameRequired": "Please enter name",
+          "surnameRequired": "Please enter surname",
+          "telephoneRequired": "Please enter telephone number",
+          "addressRequired": "Please enter address",
+          "passwordRequired": "Please enter password",
+          "confirmPasswordRequired": "Please confirm password",
+          "passwordMismatch": "Passwords do not match",
+          "rolesRequired": "Please select at least one role",
+          "createError": "Failed to create user"
+        },
+        "actions": {
+          "goBack": "Go Back",
+          "createUser": "Create User",
+          "upload": "Upload"
+        }
+      },
+      "editForm": {
+        "title": "Update User",
+        "email": "Email",
+        "name": "Name",
+        "surname": "Surname",
+        "telephone": "Telephone",
+        "address": "Address",
+        "roles": "Roles",
+        "permissions": "Permissions",
+        "profileImage": "Profile Image",
+        "loadingUserData": "Loading user data...",
+        "updateSuccess": "User updated successfully",
+        "selectedCount": "{count} permission(s) selected",
+        "sections": {
+          "basicInformation": "Basic Information",
+          "accountDetails": "Account Details",
+          "profileImage": "Profile Image"
+        },
+        "placeholder": {
+          "email": "Enter email address",
+          "name": "Enter first name",
+          "surname": "Enter surname",
+          "telephone": "Enter telephone number",
+          "address": "Enter address",
+          "roles": "Select roles"
+        },
+        "validation": {
+          "emailRequired": "Please enter email address",
+          "emailInvalid": "Please enter a valid email address",
+          "nameRequired": "Please enter name",
+          "surnameRequired": "Please enter surname",
+          "telephoneRequired": "Please enter telephone number",
+          "addressRequired": "Please enter address",
+          "rolesRequired": "Please select at least one role",
+          "loadUserError": "Failed to load user data",
+          "updateError": "Failed to update user",
+          "passwordMinLength": "Password must be at least 6 characters",
+          "passwordMismatch": "Passwords do not match",
+          "permissionsRequired": "Please select at least one permission",
+          "loadRolesError": "Failed to load user roles",
+          "loadRolePermissionsError": "Could not load permissions for role {roleId}",
+          "loadPermissionsError": "Failed to load permissions",
+          "imageFileType": "You can only upload image files!",
+          "imageFileSize": "Image must be smaller than 2MB!",
+          "formError": "Please check the form for errors"
+        },
+        "actions": {
+          "goBack": "Go Back",
+          "updateUser": "Update User",
+          "upload": "Upload"
+        }
+      },
+      "columns": {
+        "no": "No",
+        "profile": "Profile",
+        "email": "Email",
+        "name": "Name",
+        "surname": "Surname",
+        "telephone": "Telephone",
+        "address": "Address",
+        "roles": "Roles",
+        "status": "Status",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "edit": "Edit Profile",
+      "editModal": "Edit Profile",
+      "changePassword": "Change Password",
+      "personalInfo": "Personal Information",
+      "accountSettings": "Account Settings",
+      "loadingUserData": "Loading user data...",
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "Failed to update profile",
+      "columns": {
+        "no": "No",
+        "field": "Field",
+        "value": "Value",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "surname": "Surname",
+        "telephone": "Telephone",
+        "phone": "Phone",
+        "address": "Address",
+        "avatar": "Avatar",
+        "profileImage": "Profile Image",
+        "placeholder": {
+          "name": "Enter your name",
+          "email": "Enter your email",
+          "surname": "Enter surname",
+          "telephone": "Enter telephone number",
+          "phone": "Enter your phone number",
+          "address": "Enter your address"
+        },
+        "validation": {
+          "nameRequired": "Please enter name",
+          "emailRequired": "Please enter email address",
+          "surnameRequired": "Please enter surname",
+          "telephoneRequired": "Please enter telephone number",
+          "emailInvalid": "Please enter a valid email address",
+          "loadUserError": "Failed to load user data",
+          "imageFileType": "You can only upload image files!",
+          "imageFileSize": "Image must be smaller than 2MB!"
+        },
+        "actions": {
+          "upload": "Upload",
+          "updateProfile": "Update Profile",
+          "changePassword": "Change Password"
+        }
+      },
+      "passwordModal": {
+        "title": "Change Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "passwordChangeSuccess": "Password changed successfully!",
+        "passwordChangeError": "Failed to change password",
+        "placeholder": {
+          "newPassword": "Enter new password",
+          "confirmPassword": "Confirm new password"
+        },
+        "validation": {
+          "newPasswordRequired": "Please input new password",
+          "confirmPasswordRequired": "Please confirm your password",
+          "passwordMinLength": "Password must be at least 6 characters",
+          "passwordMismatch": "Passwords do not match"
+        },
+        "actions": {
+          "close": "Close",
+          "changePassword": "Change Password"
+        }
+      }
+    },
+    "qrCode": {
+      "title": "QR Code Management",
+      "editModal": "Edit QR Code",
+      "columns": {
+        "no": "No",
+        "image": "Image",
+        "file": "File Name",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "form": {
+        "currentImage": "Current QR Code",
+        "uploadNewImage": "Upload New QR Code",
+        "noImage": "No Image",
+        "upload": "Upload",
+        "uploadHint": "Supported formats: PNG, JPG, JPEG. Max size: 2MB",
+        "validation": {
+          "loadError": "Failed to load QR codes",
+          "idRequired": "ID is required",
+          "updateError": "Failed to update QR code",
+          "invalidImage": "Only image files are allowed",
+          "imageTooLarge": "Image size must be less than 2MB",
+          "fileRequired": "Please select a file to upload"
+        },
+        "currentFile": "Current File",
+        "fileName": "File Name",
+        "unknown": "Unknown",
+        "updateFile": "Upload new file",
+        "newFile": "New",
+        "selectFile": "Select File",
+        "noFileSelected": "No file selected",
+        "qrCodeFile": "QR Code File",
+        "chooseFile": "Choose File",
+        "clickToBrowse": "Click to browse files",
+        "newFileSelected": "New file selected",
+        "dragOrClick": "Drag & drop file here or click to browse"
+      }
+    }
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "suspended": "Suspended",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "blacklisted": "Blacklisted",
+    "success": "Success",
+    "failed": "Failed"
+  },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "create": "Create",
+    "update": "Update",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "reset": "Reset",
+    "upload": "Upload",
+    "download": "Download",
+    "export": "Export",
+    "import": "Import",
+    "play": "Play",
+    "pause": "Pause",
+    "stop": "Stop",
+    "refresh": "Refresh",
+    "reload": "Reload",
+    "close": "Close",
+    "open": "Open",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "confirm": "Confirm",
+    "approve": "Approve",
+    "reject": "Reject",
+    "remove": "Remove",
+    "restore": "Restore",
+    "change": "Change",
+    "new": "New"
+  },
+  "message": {
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed",
+    "createSuccess": "Created successfully",
+    "updateSuccess": "Updated successfully",
+    "deleteSuccess": "Deleted successfully",
+    "deleteConfirm": "Are you sure to delete this item?",
+    "operationSuccess": "Operation completed successfully",
+    "operationFailed": "Operation failed",
+    "confirmLogout": "Confirm Logout",
+    "logoutConfirmMessage": "Are you sure you want to logout?",
+    "logoutSuccess": "You have been logged out successfully.",
+    "logoutFailed": "Logout failed. Please try again."
+  },
+  "qrCode": {
+    "title": "QR Code Management",
+    "editTitle": "Edit QR Code",
+    "currentImage": "Current QR Code",
+    "uploadNewImage": "Upload New QR Code",
+    "uploadHint": "Supported formats: PNG, JPG, JPEG. Max size: 2MB"
+  }
+}

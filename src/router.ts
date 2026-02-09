@@ -4,7 +4,7 @@ import LoginPage from "./modules/admin/auth/Login.vue";
 import { authGuard } from "./common/guards/auth.guard";
 
 // Website
-import WebsiteHome from "./modules/website/home/Home.vue";
+// import WebsiteHome from "./modules/website/home/Home.vue";
 
 // Dashboard
 import AdminDashboard from "./modules/admin/dashboard/DashBoard.vue";
@@ -14,28 +14,49 @@ import BankPage from "./modules/admin/bank/bank.vue";
 import BankCurrencyPage from "./modules/admin/bank-currency/bank-currency.vue";
 import CategoryPage from "./modules/admin/category/category.vue";
 import RolePage from "./modules/admin/role/role.vue";
-import TaxPage from "./modules/admin/tax/tax.vue";
+import AddRolePage from "./modules/admin/role/components/addRole.vue";
+import UpdateRolePage from "./modules/admin/role/components/updateRole.vue";
 import UserPage from "./modules/admin/user/user.vue";
+import AddUserPage from "./modules/admin/user/components/addUser.vue";
+import UpdateUserPage from "./modules/admin/user/components/updateUser.vue";
 import PermissionPage from "./modules/admin/permission/permission.vue";
 import ProfilePage from "./modules/admin/user/profile/profile.vue";
+import CustomerPage from "./modules/admin/customer/Customer.vue";
+import AddCustomerPage from "./modules/admin/customer/components/AddCustomer.vue";
+import EditCustomerPage from "./modules/admin/customer/components/EditCustomer.vue";
+import ViewCustomerPage from "./modules/admin/customer/components/ViewCustomer.vue";
+
+// Member Module
+import MemberPage from "./modules/admin/member/Member.vue";
+import ViewMemberPage from "./modules/admin/member/components/ViewMember.vue";
 
 // Banner
 import BannerPage from "./modules/admin/banner/banner.vue";
-import TagPage from "./modules/admin/tag/tag.vue";
 import CurrencyPage from "./modules/admin/currency/currency.vue";
-import ExchangeRatePage from "./modules/admin/exchange-rate/ExchangeRate.vue";
 import PackagePage from "./modules/admin/packages/Packages.vue";
+
+// Video Module
+import VideoPage from "./modules/admin/video/video.vue";
+import AddVideoPage from "./modules/admin/video/components/AddVideo.vue";
+import EditVideoPage from "./modules/admin/video/components/EditVideo.vue";
+
+// Payment Module
+import PaymentPage from "./modules/admin/payment/payment.vue";
+import PaymentListPage from "./modules/admin/payment/payment-list.vue";
+
+// QR Code Module
+import QrCodePage from "./modules/admin/qr-code/qr-code.vue";
 
 const routes = [
   // Public Routes
-  {
-    path: "/",
-    name: "website",
-    component: WebsiteHome,
-    meta: {
-      skipAuthCheck: true,
-    },
-  },
+  // {
+  //   path: "/",
+  //   name: "website",
+  //   component: WebsiteHome,
+  //   meta: {
+  //     skipAuthCheck: true,
+  //   },
+  // },
   {
     path: "/login",
     name: "login",
@@ -69,6 +90,48 @@ const routes = [
         name: "user",
         component: UserPage,
       },
+      {
+        path: "/user/add",
+        name: "addUser",
+        component: AddUserPage,
+      },
+      {
+        path: "/user/:id/edit",
+        name: "updateUser",
+        component: UpdateUserPage,
+      },
+      {
+        path: "/customer",
+        name: "customer",
+        component: CustomerPage,
+      },
+      {
+        path: "/customer/add",
+        name: "add-customer",
+        component: AddCustomerPage,
+      },
+      {
+        path: "/customer/edit/:id",
+        name: "edit-customer",
+        component: EditCustomerPage,
+      },
+      {
+        path: "/customer/view/:id",
+        name: "view-customer",
+        component: ViewCustomerPage,
+      },
+
+      // Member Management
+      {
+        path: "/member",
+        name: "member",
+        component: MemberPage,
+      },
+      {
+        path: "/member/view/:id",
+        name: "view-member",
+        component: ViewMemberPage,
+      },
 
       // Content Management
       {
@@ -99,22 +162,47 @@ const routes = [
         name: "currency",
         component: CurrencyPage,
       },
+
+      // Payment Management
       {
-        path: "/exchange-rate",
-        name: "exchange-rate",
-        component: ExchangeRatePage,
+        path: "/payment",
+        name: "payment",
+        component: PaymentListPage,
+      },
+      {
+        path: "/member/:memberId/payments",
+        name: "member-payments",
+        component: PaymentPage,
+      },
+      {
+        path: "/payment/:id",
+        name: "payment-detail",
+        component: () =>
+          import("./modules/admin/payment/components/PaymentDetailView.vue"),
       },
 
+      // QR Code Management
       {
-        path: "/tax",
-        name: "tax",
-        component: TaxPage,
+        path: "/qr-code",
+        name: "qr-code",
+        component: QrCodePage,
       },
 
+      // Video Management
       {
-        path: "/tag",
-        name: "tag",
-        component: TagPage,
+        path: "/video",
+        name: "video",
+        component: VideoPage,
+      },
+      {
+        path: "/video/create",
+        name: "create-video",
+        component: AddVideoPage,
+      },
+      {
+        path: "/video/edit/:id",
+        name: "edit-video",
+        component: EditVideoPage,
       },
 
       // System Management
@@ -122,6 +210,16 @@ const routes = [
         path: "/role",
         name: "role",
         component: RolePage,
+      },
+      {
+        path: "/role/add",
+        name: "addRole",
+        component: AddRolePage,
+      },
+      {
+        path: "/role/:id/edit",
+        name: "updateRole",
+        component: UpdateRolePage,
       },
 
       {

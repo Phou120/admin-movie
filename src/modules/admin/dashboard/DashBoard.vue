@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { Row, Col, Card, Statistic } from "ant-design-vue";
 import {
   UserOutlined,
@@ -8,6 +9,8 @@ import {
   ReadOutlined,
   SolutionOutlined,
 } from "@ant-design/icons-vue";
+
+const { t } = useI18n();
 
 // Define reactive totals
 const totalUsers = ref(0);
@@ -19,31 +22,31 @@ const totalTeachers = ref(0);
 // Computed list of cards with current ref values
 const cards = computed(() => [
   {
-    title: "Total Users",
+    title: t('modules.dashboard.cards.totalUsers'),
     value: totalUsers.value,
     icon: UserOutlined,
     color: "#1890ff",
   },
   {
-    title: "Total Roles",
+    title: t('modules.dashboard.cards.totalRoles'),
     value: totalRoles.value,
     icon: TeamOutlined,
     color: "#52c41a",
   },
   {
-    title: "Total Courses",
+    title: t('modules.dashboard.cards.totalCourses'),
     value: totalCourses.value,
     icon: BookOutlined,
     color: "#faad14",
   },
   {
-    title: "Total Students",
+    title: t('modules.dashboard.cards.totalStudents'),
     value: totalStudents.value,
     icon: ReadOutlined,
     color: "#eb2f96",
   },
   {
-    title: "Total Teachers",
+    title: t('modules.dashboard.cards.totalTeachers'),
     value: totalTeachers.value,
     icon: SolutionOutlined,
     color: "#722ed1",
@@ -65,7 +68,7 @@ onMounted(fetchDashboardStats);
 
 <template>
   <div class="dashboard">
-    <h1 class="title">📊 Dashboard</h1>
+    <h1 class="title">📊 {{ t('modules.dashboard.title') }}</h1>
 
     <a-row gutter="16">
       <a-col

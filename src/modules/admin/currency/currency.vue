@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { CurrencyComposible } from "./composible/index";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
@@ -17,39 +18,51 @@ import AddButton from "../../../components/AddButton.vue";
 
 const { fetchAll, deleteCurrencyById, updateCurrency, createCurrency } =
   CurrencyComposible();
+const { t } = useI18n();
 
-const columns = [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 80 },
+const columns = computed(() => [
   {
-    title: "Currency Name",
+    title: t("modules.currency.columns.no"),
+    dataIndex: "id",
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.currency.columns.name"),
     dataIndex: "name",
     key: "name",
     align: "left",
     width: 200,
   },
   {
-    title: "Short Name",
+    title: t("modules.currency.columns.shortName"),
     dataIndex: "short_name",
     key: "short_name",
     align: "center",
     width: 120,
   },
   {
-    title: "Created At",
+    title: t("modules.currency.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 180,
   },
   {
-    title: "Updated At",
+    title: t("modules.currency.columns.updatedAt"),
     dataIndex: "updated_at",
     key: "updated_at",
     align: "center",
     width: 180,
   },
-  { title: "Action", key: "action", align: "center", width: 120 },
-];
+  {
+    title: t("modules.currency.columns.action"),
+    key: "action",
+    align: "center",
+    width: 120,
+  },
+]);
 
 const data = reactive<ICurrencyList>({
   currencies: [],
@@ -100,7 +113,7 @@ async function loadCurrencies(page = 1, limit = 10) {
     };
   } catch (error) {
     showErrorNotification(
-      "Failed to load currencies:",
+      t("modules.currency.form.validation.loadError"),
       (error as Error).message
     );
     // Reset to safe defaults on error
@@ -147,14 +160,17 @@ async function handleAddSuccess() {
     const formData = addModalRef.value?.formData;
 
     if (!formData?.name?.trim()) {
-      showErrorNotification("Validation Error", "Currency name is required");
+      showErrorNotification(
+        t("common.error"),
+        t("modules.currency.form.validation.nameRequired")
+      );
       return;
     }
 
     if (!formData?.short_name?.trim()) {
       showErrorNotification(
-        "Validation Error",
-        "Currency short name is required"
+        t("common.error"),
+        t("modules.currency.form.validation.shortNameRequired")
       );
       return;
     }
@@ -167,7 +183,7 @@ async function handleAddSuccess() {
     await loadCurrencies();
   } catch (error) {
     showErrorNotification(
-      "Failed to create currency:",
+      t("modules.currency.form.validation.createError"),
       (error as Error).message
     );
   }
@@ -178,14 +194,17 @@ async function handleEditSuccess() {
     const formData = editModalRef.value?.formData;
 
     if (!formData?.name?.trim()) {
-      showErrorNotification("Validation Error", "Currency name is required");
+      showErrorNotification(
+        t("common.error"),
+        t("modules.currency.form.validation.nameRequired")
+      );
       return;
     }
 
     if (!formData?.short_name?.trim()) {
       showErrorNotification(
-        "Validation Error",
-        "Currency short name is required"
+        t("common.error"),
+        t("modules.currency.form.validation.shortNameRequired")
       );
       return;
     }
@@ -199,7 +218,7 @@ async function handleEditSuccess() {
     await loadCurrencies();
   } catch (error) {
     showErrorNotification(
-      "Failed to update currency:",
+      t("modules.currency.form.validation.updateError"),
       (error as Error).message
     );
   }
@@ -212,7 +231,7 @@ async function deleteCurrency(id: number) {
     await loadCurrencies();
   } catch (error) {
     showErrorNotification(
-      "Failed to delete currency:",
+      t("modules.currency.form.validation.deleteError"),
       (error as Error).message
     );
   }
@@ -221,9 +240,9 @@ async function deleteCurrency(id: number) {
 
 <template>
   <div class="currency-header">
-    <h1>Currency Management</h1>
+    <h1>{{ t("modules.currency.title") }}</h1>
     <div>
-      <AddButton label="Add Currency" @click="openAddModal" />
+      <AddButton :label="t('modules.currency.addNew')" @click="openAddModal" />
     </div>
   </div>
 
@@ -265,15 +284,15 @@ async function deleteCurrency(id: number) {
 
         <template v-else-if="column.key === 'action'">
           <div class="action-icons">
-            <a-tooltip title="Edit">
+            <a-tooltip :title="t('actions.edit')">
               <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip>
             <a-popconfirm
-              title="Are you sure to delete this currency?"
+              :title="t('message.deleteConfirm')"
               placement="topRight"
               @confirm="deleteCurrency(record.id)"
             >
-              <a-tooltip title="Delete">
+              <a-tooltip :title="t('actions.delete')">
                 <delete-outlined class="icon delete" />
               </a-tooltip>
             </a-popconfirm>

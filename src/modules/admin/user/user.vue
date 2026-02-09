@@ -1,11 +1,11 @@
 <template>
   <div class="customer-header">
-    <h1>User Management</h1>
+    <h1>{{ t('modules.user.title') }}</h1>
     <div class="right-actions">
       <!-- 🔍 Search Box -->
       <a-input
         v-model:value="search"
-        placeholder="Search User..."
+        :placeholder="t('modules.user.searchPlaceholder')"
         class="search-input"
         allow-clear
         @input="handleSearch"
@@ -23,9 +23,9 @@
         type="primary"
         class="add-btn"
         :icon="h(PlusCircleFilled)"
-        @click="navigateToAddRole"
+        @click="navigateToAddUser"
       >
-        Add Role
+        {{ t('modules.user.addNew') }}
       </a-button>
     </div>
   </div>
@@ -103,21 +103,22 @@
 
         <template v-else-if="column.key === 'action'">
           <span class="action-icons">
-            <a-tooltip title="Edit">
+            <a-tooltip :title="t('actions.edit')">
               <edit-outlined
                 class="icon edit"
-                @click="navigateToEditRole(record.id)"
-                title="Edit"
+                @click="navigateToEditUser(record.id)"
+                :title="t('actions.edit')"
               />
             </a-tooltip>
             <a-popconfirm
-              title="Are you sure you want to delete this user?"
-              ok-text="Yes"
-              cancel-text="No"
+              :title="t('modules.user.deleteConfirm')"
+              :ok-text="t('common.yes')"
+              :cancel-text="t('common.no')"
+              placement="topRight"
               @confirm="handleDelete(record.id)"
             >
-              <a-tooltip title="Delete">
-                <delete-outlined class="icon delete" title="Delete" />
+              <a-tooltip :title="t('actions.delete')">
+                <delete-outlined class="icon delete" :title="t('actions.delete')" />
               </a-tooltip>
             </a-popconfirm>
           </span>
@@ -140,6 +141,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed, h } from "vue";
+import { useI18n } from "vue-i18n";
 // Import the icon
 import { SearchOutlined } from "@ant-design/icons-vue";
 
@@ -165,6 +167,7 @@ const { fetchAll, deleteUser } = useUsers();
 
 const loading = ref(false);
 const router = useRouter();
+const { t } = useI18n();
 const search = ref("");
 
 let searchTimer: number | null = null;
@@ -208,31 +211,30 @@ const pageOffset = computed(() => {
 });
 
 // Table columns
-const columns = [
-  { title: "No", key: "no", align: "center", width: 70 },
-  { title: "Profile", key: "profile", align: "center", width: 80 },
-  { title: "User No", key: "user_no", width: 120, align: "center" },
-  { title: "Full Name", key: "full_name", width: 200, align: "center" },
+const columns = computed(() => [
+  { title: t('modules.user.columns.no'), key: "no", align: "center", width: 70 },
+  { title: t('modules.user.columns.profile'), key: "profile", align: "center", width: 80 },
+  { title: t('modules.user.columns.name'), key: "full_name", width: 200, align: "center" },
   {
-    title: "Email",
+    title: t('modules.user.columns.email'),
     dataIndex: "email",
     key: "email",
     width: 200,
     align: "center",
   },
-  { title: "Tel", dataIndex: "tel", key: "tel", width: 150, align: "center" },
-  { title: "Roles", key: "roles", width: 150, align: "center" },
-  { title: "Permissions", key: "permissions", width: 150 },
-  { title: "Created At", key: "created_at", width: 180 },
-  { title: "Updated At", key: "updated_at", width: 180 },
+  { title: t('modules.user.columns.telephone'), dataIndex: "tel", key: "tel", width: 150, align: "center" },
+  { title: t('modules.user.columns.roles'), key: "roles", width: 150, align: "center" },
+  { title: t('modules.user.columns.status'), key: "permissions", width: 150 },
+  { title: t('modules.user.columns.createdAt'), key: "created_at", width: 180 },
+  { title: t('modules.user.columns.updatedAt'), key: "updated_at", width: 180 },
   {
-    title: "Action",
+    title: t('modules.user.columns.action'),
     key: "action",
     width: 120,
     align: "center",
     fixed: "right",
   },
-];
+]);
 
 // Get initials for avatar
 function getInitials(name: string): string {
@@ -297,22 +299,22 @@ function handleTableChange(pagination: TablePaginationConfig) {
 async function handleDelete(id: number) {
   try {
     await deleteUser(id);
-    showSuccessNotification("User deleted successfully");
+    showSuccessNotification(t('modules.user.deleteSuccess'));
     loadUsers();
   } catch (error: any) {
     console.error("Failed to delete user:", error);
-    showErrorNotification(error.message || "Failed to delete user");
+    showErrorNotification(error.message || t('modules.user.deleteError'));
   }
 }
 
-// Navigate to Add Role page
-function navigateToAddRole() {
-  router.push({ name: "create-user" });
+// Navigate to Add User page
+function navigateToAddUser() {
+  router.push({ name: "addUser" });
 }
 
-// Navigate to Edit Role page
-function navigateToEditRole(id: number) {
-  router.push({ name: "update-user", params: { id } });
+// Navigate to Edit User page
+function navigateToEditUser(id: number) {
+  router.push({ name: "updateUser", params: { id } });
 }
 
 onMounted(() => loadUsers());
