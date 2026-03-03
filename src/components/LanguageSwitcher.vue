@@ -8,12 +8,12 @@
     <template #overlay>
       <a-menu class="lang-menu" @click="onMenuClick">
         <a-menu-item key="en" :class="{ active: currentLocale === 'en' }">
-          <span class="lang-flag">🇬🇧</span>
-          <span class="lang-name">English</span>
+          <span class="lang-flag">🇬🇧 </span>
+          <span class="lang-name"> ອັງກິດ</span>
         </a-menu-item>
         <a-menu-item key="lo" :class="{ active: currentLocale === 'lo' }">
-          <span class="lang-flag">🇱🇦</span>
-          <span class="lang-name">ລາວ</span>
+          <span class="lang-flag">🇱🇦 </span>
+          <span class="lang-name"> ລາວ</span>
         </a-menu-item>
       </a-menu>
     </template>
