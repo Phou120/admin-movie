@@ -8,11 +8,11 @@
     <template #overlay>
       <a-menu class="lang-menu" @click="onMenuClick">
         <a-menu-item key="en" :class="{ active: currentLocale === 'en' }">
-          <span class="lang-flag">🇬🇧 </span>
+          <span class="fi fi-gb"></span>
           <span class="lang-name"> ອັງກິດ</span>
         </a-menu-item>
         <a-menu-item key="lo" :class="{ active: currentLocale === 'lo' }">
-          <span class="lang-flag">🇱🇦 </span>
+          <span class="fi fi-la"></span>
           <span class="lang-name"> ລາວ</span>
         </a-menu-item>
       </a-menu>
@@ -57,6 +57,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "flag-icons/css/flag-icons.min.css";
+
 .lang-button {
   display: inline-flex;
   align-items: center;
@@ -125,7 +127,7 @@ onMounted(() => {
     }
   }
 
-  .lang-flag {
+  .fi {
     font-size: 18px;
   }
 

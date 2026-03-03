@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Start development server
 pnpm dev
 
-# Build for production (runs type check then build)
+# Build for production (type-checks with vue-tsc -b then builds)
 pnpm build
 
 # Preview production build
@@ -75,7 +75,8 @@ const { fetchAll, createVideo } = VideoComposible();
 ### HTTP Client Configuration
 
 The centralized Axios instance at `src/common/configuration/axios.config.ts`:
-- Automatically injects JWT token from localStorage
+- Automatically injects JWT token from localStorage via `Authorization: Bearer {token}`
+- Automatically adds `lang` header from localStorage (defaults to `"lo"` for Lao)
 - Uses `VITE_API_BASE_URL` environment variable
 - Handles global error logging
 
@@ -84,9 +85,10 @@ For file uploads, set `Content-Type: "multipart/form-data"` and use FormData.
 ### Authentication & Authorization
 
 - **JWT-based** with token stored in localStorage
-- **Route guard** at `src/common/guards/auth.guard.ts` protects all routes except login
+- **Route guard** at `src/common/guards/auth.guard.ts` protects all routes except public pages
 - **Role-based access**: `admin`, `super-admin`, `customer` roles
 - **Sidebar navigation** dynamically shows/hides menu items based on user role
+- **Default authenticated landing page**: `/customer` route
 - **Special auth behavior**: Logged-in users accessing `/login` are redirected to `customer` route
 
 ### Routing Structure
@@ -116,9 +118,9 @@ Route patterns:
 ### Real-time Features
 
 - **Socket.io** integration for payment notifications
+- Global socket instance at `src/common/utils/socket.util.ts` connects to `VITE_API_BASE_URL`
 - Sound notifications when payments are received
-- Composable at `src/common/composables/useSocketNotification.ts`
-- Socket utilities at `src/common/utils/socket.util.ts`
+- Composable at `src/common/composables/useSocketNotification.ts` handles notification logic
 
 ### Internationalization
 
@@ -178,10 +180,10 @@ if (formUpdate.category_id && Array.isArray(formUpdate.category_id)) {
 
 **Update pattern for optional file replacement**:
 - `undefined` = skip field (keep existing file)
-- `null` = explicitly remove file
+- `null` = explicitly remove file (send string `"null"` in FormData)
 - `File` object = replace with new file
 
-For updates, use `_method: "PUT"` in FormData when the backend requires it.
+**FormData updates**: Append `_method: "PUT"` when the backend requires method override for POST requests.
 
 ### Pagination Pattern
 
@@ -216,10 +218,11 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 | `dashboard` | Statistics and overview |
 | `video` | Content CRUD with file uploads |
 | `user/role/permission` | User and access management |
-| `customer/member` | User profile management |
-| `bank/currency` | Financial configuration |
+| `customer/member` | User profile and member management |
 | `payment` | Payment processing with real-time notifications |
 | `banner/category/package` | Content and service management |
+| `qr-code` | QR code generation and management |
+| `views` | Page view analytics tracking |
 
 ### Environment Variables
 
@@ -230,3 +233,4 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 - `src/common/utils/format-date.util.ts` - Date formatting with Day.js
 - `src/common/utils/format-number.util.ts` - Number formatting
 - `src/common/utils/notification.util.ts` - User notifications
+- `src/common/utils/socket.util.ts` - Global Socket.io connection instance
