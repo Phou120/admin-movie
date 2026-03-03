@@ -7,6 +7,7 @@ import i18n from "./locales";
 import "./assets/global.css";
 import "./assets/style/global.scss";
 import "quill/dist/quill.snow.css";
+import "flag-icons/css/flag-icons.min.css";
 
 const app = createApp(App);
 app.use(router);

@@ -57,8 +57,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "flag-icons/css/flag-icons.min.css";
-
 .lang-button {
   display: inline-flex;
   align-items: center;
