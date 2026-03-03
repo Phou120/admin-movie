@@ -15,6 +15,8 @@ pnpm build
 pnpm preview
 ```
 
+**Note:** This project does not have a test framework configured.
+
 ## Tech Stack
 
 - **Vue 3.5** with Composition API and `<script setup>` syntax
@@ -24,6 +26,8 @@ pnpm preview
 - **Axios** for HTTP requests
 - **Socket.io-client** for real-time payment notifications
 - **Vue I18n** for internationalization (primary: Lao, secondary: English)
+- **Quill** as the rich text editor
+- **SASS** for styling
 - **Vite** as build tool
 
 ## Architecture Overview
@@ -82,14 +86,18 @@ For file uploads, set `Content-Type: "multipart/form-data"` and use FormData.
 - **JWT-based** with token stored in localStorage
 - **Route guard** at `src/common/guards/auth.guard.ts` protects all routes except login
 - **Role-based access**: `admin`, `super-admin`, `customer` roles
-- The sidebar navigation dynamically shows/hides menu items based on user role
+- **Sidebar navigation** dynamically shows/hides menu items based on user role
+- **Special auth behavior**: Logged-in users accessing `/login` are redirected to `customer` route
 
 ### Routing Structure
 
 Routes are defined in `src/router.ts`:
-- `/login` - Public route (skips auth check)
-- All other routes are nested under the `Layout` component
-- Admin routes require authentication
+
+**Public Routes** (with `skipAuthCheck: true` meta):
+- `/`, `/about-us`, `/contact`, `/register`, `/login` - Website pages and auth
+
+**Protected Routes** (nested under `Layout` component):
+- `/dashboard`, `/user`, `/customer`, `/video`, etc. - Admin pages requiring authentication
 - Lazy loading is used for some components
 
 Route patterns:
@@ -130,7 +138,21 @@ Route patterns:
 **Reusable Components** (`src/components/`):
 - `AddButton.vue` - Standardized add button
 - `LanguageSwitcher.vue` - Language toggle
-- `TextEditor.vue` - Rich text editor component
+- `TextEditor.vue` - Rich text editor component (uses Quill)
+
+**Common Directory** (`src/common/`):
+- `configuration/` - Axios instance and app configuration
+- `guards/` - Route guards (authentication)
+- `composables/` - Shared composables (e.g., socket notifications)
+- `utils/` - Utility functions (date/number formatting, notifications, socket)
+- `interface/` - Shared TypeScript interfaces (e.g., pagination)
+- `enums/` - Shared enums (e.g., status)
+
+### Styling
+
+- **Global styles**: Both `src/assets/global.css` and `src/assets/style/global.scss` are imported in `main.ts`
+- **Ant Design Vue** provides the primary component styling
+- **Quill** rich text editor styles are imported from `quill/dist/quill.snow.css`
 
 ### File Upload Pattern
 
@@ -145,6 +167,20 @@ await apiClient.post("/endpoint", formData, {
 });
 ```
 
+**Array handling in FormData**: When sending arrays (e.g., multiple categories), use bracket notation:
+```typescript
+if (formUpdate.category_id && Array.isArray(formUpdate.category_id)) {
+  formUpdate.category_id.forEach((categoryId: number, index: number) => {
+    formData.append(`category_id[${index}]`, categoryId.toString());
+  });
+}
+```
+
+**Update pattern for optional file replacement**:
+- `undefined` = skip field (keep existing file)
+- `null` = explicitly remove file
+- `File` object = replace with new file
+
 For updates, use `_method: "PUT"` in FormData when the backend requires it.
 
 ### Pagination Pattern
@@ -155,9 +191,14 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
   const response = await apiClient.get("/resource", {
     params: { page, limit, search }
   });
-  return response.data; // Expected: { data: [], total: number }
+  return response.data;
 };
 ```
+
+**Expected API response structure:**
+- List endpoints: `{ data: [], total: number }`
+- Single item/detail endpoints: `{ data: {} }`
+- Use `response.data.data` to access the actual array or object
 
 ### Naming Conventions
 

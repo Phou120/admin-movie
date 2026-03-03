@@ -7,13 +7,18 @@ const apiClient = axios.create({
   },
 });
 
-// Add auth token automatically
+// Add auth token and language automatically
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Add language header from localStorage or default to 'lo'
+    const locale = localStorage.getItem("locale") || "lo";
+    config.headers["lang"] = locale;
+
     return config;
   },
   (error) => Promise.reject(error)

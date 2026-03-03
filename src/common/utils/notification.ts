@@ -1,4 +1,5 @@
 import { notification } from "ant-design-vue";
+import i18n from "../../locales";
 
 // Configuration
 const defaultConfig = {
@@ -9,10 +10,10 @@ const defaultConfig = {
 // Success notification
 export const showSuccessNotification = (
   description: string,
-  message: string = "ສຳເລັດ"
+  message?: string
 ) => {
   notification.success({
-    message,
+    message: message || i18n.global.t("common.success"),
     description,
     ...defaultConfig,
   });
@@ -21,10 +22,10 @@ export const showSuccessNotification = (
 // Error notification
 export const showErrorNotification = (
   description: string,
-  message: string = "ຜິດພາດ"
+  message?: string
 ) => {
   notification.error({
-    message,
+    message: message || i18n.global.t("common.error"),
     description,
     ...defaultConfig,
   });
@@ -33,10 +34,10 @@ export const showErrorNotification = (
 // Warning notification
 export const showWarningNotification = (
   description: string,
-  message: string = "Warning"
+  message?: string
 ) => {
   notification.warning({
-    message,
+    message: message || i18n.global.t("common.warning"),
     description,
     ...defaultConfig,
   });
@@ -45,10 +46,10 @@ export const showWarningNotification = (
 // Info notification
 export const showInfoNotification = (
   description: string,
-  message: string = "Information"
+  message?: string
 ) => {
   notification.info({
-    message,
+    message: message || i18n.global.t("common.info"),
     description,
     ...defaultConfig,
   });
@@ -57,7 +58,7 @@ export const showInfoNotification = (
 // Custom notification with all options
 export const showNotification = (config: {
   type: "success" | "error" | "warning" | "info";
-  message: string;
+  message?: string;
   description: string;
   duration?: number;
   placement?:
@@ -68,8 +69,10 @@ export const showNotification = (config: {
     | "top"
     | "bottom";
 }) => {
-  const { type, ...rest } = config;
+  const { type, message, ...rest } = config;
+
   notification[type]({
+    message: message || i18n.global.t(`common.${type}`),
     ...defaultConfig,
     ...rest,
   });

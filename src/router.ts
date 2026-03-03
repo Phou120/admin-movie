@@ -13,8 +13,6 @@ import Register from "./modules/website/register/Register.vue";
 import AdminDashboard from "./modules/admin/dashboard/DashBoard.vue";
 
 // Available Admin Modules
-import BankPage from "./modules/admin/bank/bank.vue";
-import BankCurrencyPage from "./modules/admin/bank-currency/bank-currency.vue";
 import CategoryPage from "./modules/admin/category/category.vue";
 import RolePage from "./modules/admin/role/role.vue";
 import AddRolePage from "./modules/admin/role/components/addRole.vue";
@@ -35,7 +33,6 @@ import ViewMemberPage from "./modules/admin/member/components/ViewMember.vue";
 
 // Banner
 import BannerPage from "./modules/admin/banner/banner.vue";
-import CurrencyPage from "./modules/admin/currency/currency.vue";
 import PackagePage from "./modules/admin/packages/Packages.vue";
 
 // Video Module
@@ -174,23 +171,6 @@ const routes = [
         path: "/package",
         name: "package",
         component: PackagePage,
-      },
-
-      // Financial Management
-      {
-        path: "/bank",
-        name: "bank",
-        component: BankPage,
-      },
-      {
-        path: "/bank-currency/:id",
-        name: "bank-currency",
-        component: BankCurrencyPage,
-      },
-      {
-        path: "/currency",
-        name: "currency",
-        component: CurrencyPage,
       },
 
       // Payment Management

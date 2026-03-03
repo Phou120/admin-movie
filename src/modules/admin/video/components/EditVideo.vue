@@ -18,19 +18,6 @@
           </a-breadcrumb>
           <h1 class="page-title">{{ t('modules.video.editVideo') }}</h1>
         </div>
-        <div class="header-actions">
-          <a-button class="cancel-btn" @click="handleCancel">
-            {{ t('actions.back') }}
-          </a-button>
-          <a-button
-            class="submit-btn"
-            type="primary"
-            :loading="submitting"
-            @click="handleSubmit"
-          >
-            {{ t('actions.update') }}
-          </a-button>
-        </div>
       </div>
 
       <a-form
@@ -272,6 +259,27 @@
                 </a-col>
               </a-row>
             </a-card>
+          </a-col>
+        </a-row>
+
+        <!-- Form Footer Actions -->
+        <a-row :gutter="24">
+          <a-col :span="24">
+            <div class="form-footer">
+              <a-space>
+                <a-button class="cancel-btn" @click="handleCancel">
+                  {{ t('actions.back') }}
+                </a-button>
+                <a-button
+                  class="submit-btn"
+                  type="primary"
+                  :loading="submitting"
+                  @click="handleSubmit"
+                >
+                  {{ t('actions.update') }}
+                </a-button>
+              </a-space>
+            </div>
           </a-col>
         </a-row>
       </a-form>
@@ -709,16 +717,12 @@ onMounted(async () => {
 }
 
 .page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
   margin-bottom: 24px;
   background: #fff;
   padding: 24px;
+  border-radius: 8px;
 
   .header-content {
-    flex: 1;
-
     .breadcrumb {
       margin-bottom: 16px;
     }
@@ -730,11 +734,26 @@ onMounted(async () => {
       color: #262626;
     }
   }
+}
 
-  .header-actions {
+.video-form {
+  .form-card {
+    margin-bottom: 24px;
+    border-radius: 8px;
+
+    .ant-card-head {
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+
+  .form-footer {
     display: flex;
-    gap: 8px;
-    margin-left: 24px;
+    justify-content: flex-end;
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 24px;
+    border-top: 1px solid #f0f0f0;
 
     .submit-btn {
       background-color: #0d334aff;
@@ -748,17 +767,6 @@ onMounted(async () => {
 
     .cancel-btn:hover {
       border-color: #ff4d4f;
-    }
-  }
-}
-
-.video-form {
-  .form-card {
-    margin-bottom: 24px;
-    border-radius: 8px;
-
-    .ant-card-head {
-      border-bottom: 1px solid #f0f0f0;
     }
   }
 }
@@ -848,14 +856,18 @@ onMounted(async () => {
     padding: 16px;
   }
 
-  .page-header {
+  .form-footer {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 
-    .header-actions {
-      margin-left: 0;
+    .ant-space {
       width: 100%;
-      justify-content: flex-end;
+      display: flex;
+      justify-content: space-between;
+
+      .ant-space-item {
+        flex: 1;
+      }
     }
   }
 }

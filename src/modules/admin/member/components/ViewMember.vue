@@ -1,12 +1,10 @@
 <template>
   <div class="member-view-header">
+    <a-button @click="goBack">
+      <arrow-left-outlined />
+      {{ t('modules.member.view.backToMembers') }}
+    </a-button>
     <h1>{{ getHeaderText() }} {{ t('modules.member.view.details') }}</h1>
-    <div class="go-back">
-      <a-button @click="goBack">
-        <arrow-left-outlined />
-        {{ t('modules.member.view.backToMembers') }}
-      </a-button>
-    </div>
   </div>
 
   <div class="form-container">
@@ -167,29 +165,37 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.go-back {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: #0d334aff;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
 .member-view-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding: 12px;
   margin-bottom: 20px;
   flex-wrap: wrap;
-  gap: 12px;
 
   h1 {
     font-size: 24px;
     margin: 0;
+  }
+
+  .ant-btn {
+    border: none;
+    background: transparent;
+    color: #666;
+    padding: 4px 8px;
+    height: auto;
+
+    &:hover {
+      color: #0d334aff;
+      background: transparent;
+      border: none;
+    }
+
+    &:focus {
+      color: #0d334aff;
+      background: transparent;
+      border: none;
+    }
   }
 }
 

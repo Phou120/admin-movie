@@ -7,11 +7,11 @@
     </a-button>
     <template #overlay>
       <a-menu class="lang-menu" @click="onMenuClick">
-        <a-menu-item key="en" :class="{ 'active': currentLocale === 'en' }">
+        <a-menu-item key="en" :class="{ active: currentLocale === 'en' }">
           <span class="lang-flag">🇬🇧</span>
           <span class="lang-name">English</span>
         </a-menu-item>
-        <a-menu-item key="lo" :class="{ 'active': currentLocale === 'lo' }">
+        <a-menu-item key="lo" :class="{ active: currentLocale === 'lo' }">
           <span class="lang-flag">🇱🇦</span>
           <span class="lang-name">ລາວ</span>
         </a-menu-item>
@@ -23,16 +23,16 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import {
-  GlobalOutlined,
-  DownOutlined,
-} from "@ant-design/icons-vue";
+import { GlobalOutlined, DownOutlined } from "@ant-design/icons-vue";
 
 const { locale } = useI18n();
-const currentLocale = ref("en");
+
+// Initialize from localStorage first, then fall back to i18n locale
+const savedLocale = localStorage.getItem("locale") || locale.value;
+const currentLocale = ref(savedLocale);
 
 const currentLangLabel = computed(() => {
-  return currentLocale.value === 'en' ? 'EN' : 'LA';
+  return currentLocale.value === "en" ? "EN" : "LA";
 });
 
 const changeLanguage = (lang: string) => {
@@ -48,8 +48,11 @@ const onMenuClick = ({ key }: { key: string }) => {
 
 // Initialize with current locale
 onMounted(() => {
-  currentLocale.value = locale.value;
-  document.documentElement.lang = locale.value;
+  // Sync i18n locale with localStorage on mount
+  if (currentLocale.value !== locale.value) {
+    locale.value = currentLocale.value;
+  }
+  document.documentElement.lang = currentLocale.value;
 });
 </script>
 

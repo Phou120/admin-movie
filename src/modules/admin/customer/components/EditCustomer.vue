@@ -1,12 +1,10 @@
 <template>
   <div class="customer-edit-header">
+    <a-button @click="goBack">
+      <arrow-left-outlined />
+      {{ t("actions.back") }}
+    </a-button>
     <h1>{{ t("modules.customer.edit") }}</h1>
-    <div>
-      <a-button @click="goBack">
-        <arrow-left-outlined />
-        {{ t("actions.back") }}
-      </a-button>
-    </div>
   </div>
 
   <div class="form-container">
@@ -71,7 +69,7 @@
                     {
                       required: true,
                       message: t(
-                        'modules.customer.form.validation.nameRequired'
+                        'modules.customer.form.validation.nameRequired',
                       ),
                     },
                   ]"
@@ -91,7 +89,7 @@
                     {
                       required: true,
                       message: t(
-                        'modules.customer.form.validation.surnameRequired'
+                        'modules.customer.form.validation.surnameRequired',
                       ),
                     },
                   ]"
@@ -115,13 +113,13 @@
                     {
                       required: true,
                       message: t(
-                        'modules.customer.form.validation.emailRequired'
+                        'modules.customer.form.validation.emailRequired',
                       ),
                     },
                     {
                       type: 'email',
                       message: t(
-                        'modules.customer.form.validation.emailInvalid'
+                        'modules.customer.form.validation.emailInvalid',
                       ),
                     },
                   ]"
@@ -141,7 +139,7 @@
                     {
                       required: true,
                       message: t(
-                        'modules.customer.form.validation.phoneRequired'
+                        'modules.customer.form.validation.phoneRequired',
                       ),
                     },
                   ]"
@@ -165,10 +163,6 @@
         </a-form-item>
 
         <a-form-item class="form-actions">
-          <a-button @click="goBack" class="cancel-btn">
-            <arrow-left-outlined />
-            {{ t("actions.cancel") }}
-          </a-button>
           <a-button
             type="primary"
             html-type="submit"
@@ -434,16 +428,35 @@ onMounted(() => {
 <style lang="scss" scoped>
 .customer-edit-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding: 12px;
   margin-bottom: 20px;
   flex-wrap: wrap;
-  gap: 12px;
 
   h1 {
     font-size: 24px;
     margin: 0;
+  }
+
+  .ant-btn {
+    border: none;
+    background: transparent;
+    color: #666;
+    padding: 4px 8px;
+    height: auto;
+
+    &:hover {
+      color: #0d334aff;
+      background: transparent;
+      border: none;
+    }
+
+    &:focus {
+      color: #0d334aff;
+      background: transparent;
+      border: none;
+    }
   }
 }
 

@@ -6,8 +6,8 @@
     </div>
 
     <a-menu
+      :selectedKeys="selectedKeys"
       mode="horizontal"
-      :selectedKeys="[currentPage]"
       class="main-menu"
       @click="onMenuClick"
     >
@@ -43,8 +43,16 @@ const { t } = useI18n();
 
 // Compute current page from route name
 const currentPage = computed(() => {
-  return (route.name as string) || "home";
+  const routeName = route.name as string;
+  // Handle both named routes and path-based routes
+  if (routeName === 'home' || route.path === '/') return 'home';
+  if (routeName === 'about-us' || route.path === '/about-us') return 'about-us';
+  if (routeName === 'contact' || route.path === '/contact') return 'contact';
+  return routeName || 'home';
 });
+
+// Selected keys for menu
+const selectedKeys = computed(() => [currentPage.value]);
 
 const onMenuClick = (e: any) => {
   if (e.key === "home") {
@@ -114,20 +122,43 @@ const goToRegister = () => {
   display: none !important;
 }
 
-.main-menu :deep(.ant-menu-item:hover),
-.main-menu :deep(.ant-menu-item-selected) {
-  border-bottom: none !important;
+.main-menu :deep(.ant-menu-item) {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.main-menu :deep(.ant-menu-item:hover) {
+  color: #0d334aff;
+  background: transparent;
 }
 
 .main-menu :deep(.ant-menu-item-selected) {
-  color: #0d334aff;
-  font-weight: 500;
+  color: #0d334aff !important;
+  font-weight: 600;
+  background: transparent !important;
+}
+
+.main-menu :deep(.ant-menu-item-selected)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 3px;
+  background: linear-gradient(135deg, #0d334aff 0%, #1a4d6b 100%);
+  border-radius: 2px;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.main-menu :deep(.ant-menu-item:focus) {
+  color: #0d334aff;
+  background: transparent;
 }
 
 :deep(.language-switcher) {
@@ -210,6 +241,11 @@ const goToRegister = () => {
     gap: 6px;
   }
 
+  .main-menu :deep(.ant-menu-item-selected)::after {
+    width: 25px;
+    height: 2px;
+  }
+
   .login-btn,
   .register-btn {
     height: 30px;
@@ -257,6 +293,11 @@ const goToRegister = () => {
     padding: 0 12px;
   }
 
+  .main-menu :deep(.ant-menu-item-selected)::after {
+    width: 20px;
+    height: 2px;
+  }
+
   .header-actions {
     order: 2;
     margin-left: auto;
@@ -300,6 +341,11 @@ const goToRegister = () => {
   .main-menu :deep(.ant-menu-item) {
     font-size: 13px;
     padding: 0 10px;
+  }
+
+  .main-menu :deep(.ant-menu-item-selected)::after {
+    width: 20px;
+    height: 2px;
   }
 }
 </style>

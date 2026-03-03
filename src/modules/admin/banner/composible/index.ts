@@ -19,12 +19,7 @@ export function useBanner() {
       link: formAdd.link,
       order_by: Number(formAdd.order_by),
     };
-    const response = await apiClient.post("/banners", payload, {
-      headers: {
-        "Content-Type": "application/json",
-        lang: "lo",
-      },
-    });
+    const response = await apiClient.post("/banners", payload);
     return response.data;
   };
 
@@ -42,7 +37,7 @@ export function useBanner() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return response.data.data.imageUrl; // <-- return only the URL

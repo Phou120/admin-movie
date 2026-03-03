@@ -95,24 +95,6 @@
         <span>{{ t("sidebar.member") }}</span>
       </a-menu-item>
 
-      <!-- Financial Submenu - Admin/Super-Admin only -->
-      <a-sub-menu v-if="isAdminOrSuperAdmin" key="sub2">
-        <template #title>
-          <span>
-            <BankOutlined />
-            <span>{{ t("sidebar.financial") }}</span>
-          </span>
-        </template>
-        <a-menu-item key="7" @click="handlerMenu('bank')">
-          <BankOutlined />
-          {{ t("sidebar.bank") }}
-        </a-menu-item>
-        <a-menu-item key="8" @click="handlerMenu('currency')">
-          <DollarOutlined />
-          {{ t("sidebar.currency") }}
-        </a-menu-item>
-      </a-sub-menu>
-
       <!-- System Submenu - Admin/Super-Admin only -->
       <a-sub-menu v-if="isAdminOrSuperAdmin" key="sub3">
         <template #title>
@@ -171,8 +153,6 @@ import {
   CrownOutlined,
   DashboardOutlined,
   PictureOutlined,
-  BankOutlined,
-  DollarOutlined,
   SettingOutlined,
   SafetyOutlined,
   ShoppingOutlined,
@@ -205,8 +185,6 @@ const routeToMenuKey: Record<string, string> = {
   "qr-code": "18",
   customer: "14",
   member: "15",
-  bank: "7",
-  currency: "8",
   permission: "10",
   role: "11",
   user: "12",

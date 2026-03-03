@@ -1,12 +1,12 @@
 <template>
   <div class="customer-header">
     <h1>{{ t("modules.customer.title") }}</h1>
-    <div>
+    <!-- <div>
       <AddButton
         :label="t('modules.customer.addNew')"
         @click="goToAddCustomer"
       />
-    </div>
+    </div> -->
   </div>
 
   <div class="search-container">
@@ -79,15 +79,15 @@
           >
             <a-select-option value="pending">
               <WarningOutlined style="color: #faad14; margin-right: 6px" />
-              <span>{{ getStatusLabel('pending') }}</span>
+              <span>{{ getStatusLabel("pending") }}</span>
             </a-select-option>
             <a-select-option value="approved">
               <CheckCircleOutlined style="color: #52c41a; margin-right: 6px" />
-              <span>{{ getStatusLabel('approved') }}</span>
+              <span>{{ getStatusLabel("approved") }}</span>
             </a-select-option>
             <a-select-option value="blacklisted">
               <CloseCircleOutlined style="color: #ff4d4f; margin-right: 6px" />
-              <span>{{ getStatusLabel('blacklisted') }}</span>
+              <span>{{ getStatusLabel("blacklisted") }}</span>
             </a-select-option>
           </a-select>
         </template>
@@ -147,7 +147,6 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../common/utils/notification";
-import AddButton from "../../../components/AddButton.vue";
 
 const router = useRouter();
 const { fetchAll, deleteCustomerById, updateStatus } = useCustomer();
@@ -252,7 +251,7 @@ const columns = computed(() => [
 async function loadCustomers(
   page = data.pagination.current,
   limit = data.pagination.pageSize,
-  search = searchText.value
+  search = searchText.value,
 ) {
   loading.value = true;
   try {

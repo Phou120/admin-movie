@@ -1,7 +1,7 @@
 <template>
   <div class="update-user-page">
     <div>
-      <h1>{{ t('modules.profile.title') }}</h1>
+      <h1>{{ t("modules.profile.title") }}</h1>
     </div>
 
     <div class="form-container" v-if="!loading">
@@ -12,9 +12,13 @@
         @finish="onFinish"
         @finishFailed="onFinishFailed"
       >
-        <a-row :gutter="24">
-          <a-col :xs="24">
-            <a-form-item :label="t('modules.profile.form.profileImage')" name="image">
+        <a-row :gutter="24" align="top">
+          <!-- Profile Image Column -->
+          <a-col :xs="24" :md="4">
+            <a-form-item
+              :label="t('modules.profile.form.profileImage')"
+              name="image"
+            >
               <a-upload
                 name="image"
                 list-type="picture-card"
@@ -25,7 +29,9 @@
                   <user-outlined
                     :style="{ fontSize: '32px', color: '#8c8c8c' }"
                   />
-                  <div style="margin-top: 8px; color: #8c8c8c">{{ t('modules.profile.form.actions.upload') }}</div>
+                  <div style="margin-top: 8px; color: #8c8c8c">
+                    {{ t("modules.profile.form.actions.upload") }}
+                  </div>
                 </div>
                 <img
                   v-else
@@ -38,45 +44,64 @@
             </a-form-item>
           </a-col>
 
-          <a-col :xs="24" :md="6">
-            <a-form-item :label="t('modules.profile.form.email')" name="email">
-              <a-input
-                v-model:value="formState.email"
-                :placeholder="t('modules.profile.form.placeholder.email')"
-              />
-            </a-form-item>
+          <!-- Form Fields Column -->
+          <a-col :xs="24" :md="20">
+            <a-row :gutter="[16, 16]">
+              <a-col :xs="24" :sm="12">
+                <a-form-item
+                  :label="t('modules.profile.form.email')"
+                  name="email"
+                >
+                  <a-input
+                    v-model:value="formState.email"
+                    :placeholder="t('modules.profile.form.placeholder.email')"
+                  />
+                </a-form-item>
+              </a-col>
+
+              <a-col :xs="24" :sm="12">
+                <a-form-item
+                  :label="t('modules.profile.form.name')"
+                  name="name"
+                >
+                  <a-input
+                    v-model:value="formState.name"
+                    :placeholder="t('modules.profile.form.placeholder.name')"
+                  />
+                </a-form-item>
+              </a-col>
+
+              <a-col :xs="24" :sm="12">
+                <a-form-item
+                  :label="t('modules.profile.form.surname')"
+                  name="surname"
+                >
+                  <a-input
+                    v-model:value="formState.surname"
+                    :placeholder="t('modules.profile.form.placeholder.surname')"
+                  />
+                </a-form-item>
+              </a-col>
+
+              <a-col :xs="24" :sm="12">
+                <a-form-item
+                  :label="t('modules.profile.form.telephone')"
+                  name="tel"
+                >
+                  <a-input
+                    v-model:value="formState.tel"
+                    :placeholder="
+                      t('modules.profile.form.placeholder.telephone')
+                    "
+                  />
+                </a-form-item>
+              </a-col>
+            </a-row>
           </a-col>
 
-          <a-col :xs="24" :md="6">
-            <a-form-item :label="t('modules.profile.form.name')" name="name">
-              <a-input
-                v-model:value="formState.name"
-                :placeholder="t('modules.profile.form.placeholder.name')"
-              />
-            </a-form-item>
+          <a-col :xs="24">
+            <a-divider />
           </a-col>
-
-          <a-col :xs="24" :md="6">
-            <a-form-item :label="t('modules.profile.form.surname')" name="surname">
-              <a-input
-                v-model:value="formState.surname"
-                :placeholder="t('modules.profile.form.placeholder.surname')"
-              />
-            </a-form-item>
-          </a-col>
-
-          <a-col :xs="24" :md="6">
-            <a-form-item :label="t('modules.profile.form.telephone')" name="tel">
-              <a-input
-                v-model:value="formState.tel"
-                :placeholder="t('modules.profile.form.placeholder.telephone')"
-              />
-            </a-form-item>
-          </a-col>
-
-          <a-col :xs="24" :md="6"></a-col>
-
-          <a-divider />
 
           <a-col :xs="24">
             <a-form-item>
@@ -84,7 +109,7 @@
                 <a-space>
                   <a-button class="submit-btn" @click="openPasswordModal">
                     <LockOutlined />
-                    {{ t('modules.profile.form.actions.changePassword') }}
+                    {{ t("modules.profile.form.actions.changePassword") }}
                   </a-button>
                   <a-button
                     type="primary"
@@ -93,7 +118,7 @@
                     :loading="submitting"
                   >
                     <SaveOutlined />
-                    {{ t('modules.profile.form.actions.updateProfile') }}
+                    {{ t("modules.profile.form.actions.updateProfile") }}
                   </a-button>
                 </a-space>
               </div>
@@ -105,7 +130,7 @@
 
     <div v-else class="loading-page">
       <a-spin size="large" />
-      <p>{{ t('modules.profile.loadingUserData') }}</p>
+      <p>{{ t("modules.profile.loadingUserData") }}</p>
     </div>
 
     <a-modal :open="previewVisible" :footer="null" @cancel="handleCancel">
@@ -126,17 +151,27 @@
         layout="vertical"
         ref="passwordFormRef"
       >
-        <a-form-item :label="t('modules.profile.passwordModal.newPassword')" name="new_password">
+        <a-form-item
+          :label="t('modules.profile.passwordModal.newPassword')"
+          name="new_password"
+        >
           <a-input-password
             v-model:value="passwordForm.new_password"
-            :placeholder="t('modules.profile.passwordModal.placeholder.newPassword')"
+            :placeholder="
+              t('modules.profile.passwordModal.placeholder.newPassword')
+            "
           />
         </a-form-item>
 
-        <a-form-item :label="t('modules.profile.passwordModal.confirmPassword')" name="confirm_password">
+        <a-form-item
+          :label="t('modules.profile.passwordModal.confirmPassword')"
+          name="confirm_password"
+        >
           <a-input-password
             v-model:value="passwordForm.confirm_password"
-            :placeholder="t('modules.profile.passwordModal.placeholder.confirmPassword')"
+            :placeholder="
+              t('modules.profile.passwordModal.placeholder.confirmPassword')
+            "
           />
         </a-form-item>
 
@@ -144,7 +179,7 @@
           <div style="display: flex; justify-content: flex-end; gap: 8px">
             <a-button class="custom-cancel-btn" @click="closePasswordModal">
               <CloseOutlined />
-              {{ t('modules.profile.passwordModal.actions.close') }}
+              {{ t("modules.profile.passwordModal.actions.close") }}
             </a-button>
             <a-button
               type="primary"
@@ -153,7 +188,7 @@
               @click="handlePasswordChange"
             >
               <SaveOutlined />
-              {{ t('modules.profile.passwordModal.actions.changePassword') }}
+              {{ t("modules.profile.passwordModal.actions.changePassword") }}
             </a-button>
           </div>
         </a-form-item>
@@ -229,42 +264,70 @@ const hasValidImage = computed(() => {
 // Validation rules - password is optional for update
 const rules = computed(() => ({
   email: [
-    { required: true, message: t('modules.profile.validation.emailRequired'), trigger: "blur" },
+    {
+      required: true,
+      message: t("modules.profile.validation.emailRequired"),
+      trigger: "blur",
+    },
     {
       type: "email",
-      message: t('modules.profile.validation.emailInvalid'),
+      message: t("modules.profile.validation.emailInvalid"),
       trigger: "blur",
     },
   ],
-  name: [{ required: true, message: t('modules.profile.validation.nameRequired'), trigger: "blur" }],
+  name: [
+    {
+      required: true,
+      message: t("modules.profile.validation.nameRequired"),
+      trigger: "blur",
+    },
+  ],
   surname: [
-    { required: true, message: t('modules.profile.validation.surnameRequired'), trigger: "blur" },
+    {
+      required: true,
+      message: t("modules.profile.validation.surnameRequired"),
+      trigger: "blur",
+    },
   ],
   tel: [
-    { required: true, message: t('modules.profile.validation.telephoneRequired'), trigger: "blur" },
+    {
+      required: true,
+      message: t("modules.profile.validation.telephoneRequired"),
+      trigger: "blur",
+    },
   ],
 }));
 
 // Password form validation rules
 const passwordRules = computed(() => ({
   new_password: [
-    { required: true, message: t('modules.profile.passwordModal.validation.newPasswordRequired'), trigger: "blur" },
+    {
+      required: true,
+      message: t(
+        "modules.profile.passwordModal.validation.newPasswordRequired",
+      ),
+      trigger: "blur",
+    },
     {
       min: 6,
-      message: t('modules.profile.passwordModal.validation.passwordMinLength'),
+      message: t("modules.profile.passwordModal.validation.passwordMinLength"),
       trigger: "blur",
     },
   ],
   confirm_password: [
     {
       required: true,
-      message: t('modules.profile.passwordModal.validation.confirmPasswordRequired'),
+      message: t(
+        "modules.profile.passwordModal.validation.confirmPasswordRequired",
+      ),
       trigger: "blur",
     },
     {
       validator: async (_rule: Rule, value: string) => {
         if (value && value !== passwordForm.new_password) {
-          return Promise.reject(t('modules.profile.passwordModal.validation.passwordMismatch'));
+          return Promise.reject(
+            t("modules.profile.passwordModal.validation.passwordMismatch"),
+          );
         }
         return Promise.resolve();
       },
@@ -301,7 +364,7 @@ const loadUserData = async () => {
     }
   } catch (error) {
     console.error("Failed to fetch user:", error);
-    message.error(t('modules.profile.validation.loadUserError'));
+    message.error(t("modules.profile.validation.loadUserError"));
   } finally {
     loading.value = false;
   }
@@ -315,12 +378,12 @@ const handleImageError = () => {
 const beforeUploadAdd = async (file: File): Promise<boolean> => {
   const isImage = file.type.startsWith("image/");
   if (!isImage) {
-    message.error(t('modules.profile.validation.imageFileType'));
+    message.error(t("modules.profile.validation.imageFileType"));
     return false;
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error(t('modules.profile.validation.imageFileSize'));
+    message.error(t("modules.profile.validation.imageFileSize"));
     return false;
   }
 
@@ -369,7 +432,8 @@ const handlePasswordChange = async (): Promise<void> => {
     });
 
     showSuccessNotification(
-      response.message || t('modules.profile.passwordModal.passwordChangeSuccess')
+      response.message ||
+        t("modules.profile.passwordModal.passwordChangeSuccess"),
     );
     closePasswordModal();
   } catch (error: any) {
@@ -379,7 +443,8 @@ const handlePasswordChange = async (): Promise<void> => {
     }
     console.error("Failed to change password:", error);
     const errorMessage =
-      error?.response?.data?.message || t('modules.profile.passwordModal.passwordChangeError');
+      error?.response?.data?.message ||
+      t("modules.profile.passwordModal.passwordChangeError");
     showErrorNotification(errorMessage);
   } finally {
     changingPassword.value = false;
@@ -400,12 +465,14 @@ async function onFinish() {
     };
 
     const response = await updateProfile(updateData);
-    showSuccessNotification(response.message || t('modules.profile.updateSuccess'));
+    showSuccessNotification(
+      response.message || t("modules.profile.updateSuccess"),
+    );
     console.log("User updated:", response);
   } catch (error: any) {
     console.error("Failed to update user:", error);
     const errorMessage =
-      error?.response?.data?.message || t('modules.profile.updateError');
+      error?.response?.data?.message || t("modules.profile.updateError");
     showErrorNotification(errorMessage);
   } finally {
     submitting.value = false;
