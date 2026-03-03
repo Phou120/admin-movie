@@ -292,10 +292,6 @@ function handleSearchChange(e: any) {
 }
 
 // Navigation functions
-function goToAddCustomer() {
-  router.push("/customer/add");
-}
-
 function goToEditCustomer(customer: any) {
   router.push(`/customer/edit/${customer.id}`);
 }
