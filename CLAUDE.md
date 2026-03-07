@@ -20,13 +20,13 @@ pnpm preview
 ## Tech Stack
 
 - **Vue 3.5** with Composition API and `<script setup>` syntax
-- **TypeScript** with strict type checking
+- **TypeScript** with strict type checking (uses project references: `tsconfig.app.json`, `tsconfig.node.json`)
 - **Ant Design Vue 4.x** for UI components
 - **Vue Router 4** for routing
 - **Axios** for HTTP requests
 - **Socket.io-client** for real-time payment notifications
 - **Vue I18n** for internationalization (primary: Lao, secondary: English)
-- **Quill** as the rich text editor
+- **Quill** and **TinyMCE** as rich text editors (`@tinymce/tinymce-vue`)
 - **SASS** for styling
 - **Vite** as build tool
 
@@ -34,8 +34,9 @@ pnpm preview
 
 ### Module Structure
 
-The application follows a feature-based module structure under `src/modules/admin/`:
+The application has two main module areas:
 
+**Admin Panel** (`src/modules/admin/`):
 ```
 src/modules/admin/
 ├── [module-name]/
@@ -45,7 +46,18 @@ src/modules/admin/
 │   └── interface/             # TypeScript interfaces
 ```
 
-Each module is self-contained with its own composible (business logic), components, and interfaces.
+**Public Website** (`src/modules/website/`):
+```
+src/modules/website/
+├── [page-name]/               # Public pages (home, about-us, contact, register)
+│   └── [Page].vue             # Page component
+└── components/                # Website-specific layout components
+    ├── WebsiteLayout.vue      # Main website layout wrapper
+    ├── AppHeader.vue          # Global header with nav and language switcher
+    └── AppFooter.vue          # Global footer
+```
+
+Each admin module is self-contained with its own composible (business logic), components, and interfaces.
 
 ### Composable Pattern
 
@@ -107,6 +119,7 @@ Route patterns:
 - Create: `/[resource]/create` or `/[resource]/add`
 - Edit: `/[resource]/edit/:id`
 - View: `/[resource]/view/:id`
+- Nested resource: `/[parent]/:parentId/[child]` (e.g., `/member/:memberId/payments`)
 
 ### State Management
 
@@ -132,10 +145,15 @@ Route patterns:
 
 ### Component Organization
 
-**Layout Components** (`src/components/layouts/`):
-- `Layout.vue` - Main layout wrapper
+**Admin Layout Components** (`src/components/layouts/`):
+- `Layout.vue` - Main layout wrapper for admin panel
 - `Navbar.vue` - Top navigation bar
 - `Sidebar.vue` - Dynamic sidebar with role-based menu items
+
+**Website Layout Components** (`src/modules/website/components/`):
+- `WebsiteLayout.vue` - Main layout wrapper for public pages (includes AppHeader/AppFooter)
+- `AppHeader.vue` - Global header with logo, navigation, language switcher, auth buttons
+- `AppFooter.vue` - Global footer with copyright
 
 **Reusable Components** (`src/components/`):
 - `AddButton.vue` - Standardized add button
@@ -223,6 +241,14 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 | `banner/category/package` | Content and service management |
 | `qr-code` | QR code generation and management |
 | `views` | Page view analytics tracking |
+
+**Website Modules** (public pages under `src/modules/website/`):
+| Module | Purpose |
+|--------|---------|
+| `home` | Landing page |
+| `about-us` | About information page |
+| `contact` | Contact form page |
+| `register` | User registration page |
 
 ### Environment Variables
 

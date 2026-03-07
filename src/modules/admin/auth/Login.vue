@@ -59,6 +59,7 @@
         size="large"
         class="apply-now-button"
         style="margin-top: 10px"
+        :loading="loading"
       >
         ເຂົ້າສູ່ລະບົບ
       </a-button>
@@ -69,7 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
 import { notification } from "ant-design-vue";
@@ -77,6 +78,8 @@ import { useAuth } from "./composible/auth";
 
 const router = useRouter();
 const { login } = useAuth();
+
+const loading = ref(false);
 
 interface FormState {
   email: string;
@@ -91,6 +94,7 @@ const formState = reactive<FormState>({
 });
 
 const onFinish = async (values: any) => {
+  loading.value = true;
   await login(values.email, values.password)
     .then(() => {
       notification.success({
@@ -107,6 +111,9 @@ const onFinish = async (values: any) => {
         duration: 3,
       });
       console.error("Login failed:", error);
+    })
+    .finally(() => {
+      loading.value = false;
     });
 };
 

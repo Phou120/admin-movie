@@ -167,6 +167,8 @@
         "customer": "Customer",
         "categories": "Categories",
         "tags": "Tags",
+        "totalViews": "Total Views",
+        "totalLikes": "Total Likes",
         "status": "Status",
         "createdAt": "Created At",
         "updatedAt": "Updated At",

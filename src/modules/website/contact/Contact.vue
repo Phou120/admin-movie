@@ -1,524 +1,582 @@
 <template>
   <WebsiteLayout>
-      <!-- Hero Section with animated particles -->
-      <section class="hero-section">
-        <div class="hero-bg-animation"></div>
-        <div class="hero-overlay">
-          <a-typography-title :level="1" class="hero-title">
-            {{ t('website.contact.hero.title') }}
-          </a-typography-title>
-          <a-typography-paragraph class="hero-subtitle">
-            {{ t('website.contact.hero.subtitle') }}
-          </a-typography-paragraph>
-          <a-space size="large" style="margin-top: 32px">
-            <a-button size="large" class="hero-btn" @click="scrollToForm">
-              <MailOutlined />
-              {{ t('website.contact.form.submit') }}
-            </a-button>
-            <a-button
-              size="large"
-              class="hero-btn-call"
-              href="tel:+8562012345678"
-            >
-              <PhoneOutlined />
-              {{ t('website.contact.form.callNow') }}
-            </a-button>
-          </a-space>
-        </div>
-      </section>
+    <!-- Hero Section with animated particles -->
+    <section class="hero-section">
+      <div class="hero-bg-animation"></div>
+      <div class="hero-overlay">
+        <a-typography-title :level="1" class="hero-title">
+          {{ t("website.contact.hero.title") }}
+        </a-typography-title>
+        <a-typography-paragraph class="hero-subtitle">
+          {{ t("website.contact.hero.subtitle") }}
+        </a-typography-paragraph>
+        <a-space size="large" style="margin-top: 32px">
+          <a-button size="large" class="hero-btn" @click="scrollToForm">
+            <MailOutlined />
+            {{ t("website.contact.form.submit") }}
+          </a-button>
+          <a-button
+            size="large"
+            class="hero-btn-call"
+            href="tel:+8562012345678"
+          >
+            <PhoneOutlined />
+            {{ t("website.contact.form.callNow") }}
+          </a-button>
+        </a-space>
+      </div>
+    </section>
 
-      <!-- Stats Section -->
-      <section class="stats-section">
-        <div class="container">
-          <a-row :gutter="[32, 32]">
-            <a-col :xs="12" :sm="6">
-              <div class="stat-item">
-                <div class="stat-icon-wrapper">
-                  <CustomerServiceOutlined class="stat-icon" />
-                </div>
-                <a-typography-title :level="3" class="stat-number">
-                  24/7
-                </a-typography-title>
-                <a-typography-text class="stat-label"
-                  >{{ t('website.contact.stats.support') }}</a-typography-text
-                >
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="container">
+        <a-row :gutter="[32, 32]">
+          <a-col :xs="12" :sm="6">
+            <div class="stat-item">
+              <div class="stat-icon-wrapper">
+                <CustomerServiceOutlined class="stat-icon" />
               </div>
-            </a-col>
-            <a-col :xs="12" :sm="6">
-              <div class="stat-item">
-                <div class="stat-icon-wrapper">
-                  <ClockCircleOutlined class="stat-icon" />
-                </div>
-                <a-typography-title :level="3" class="stat-number">
-                  1hr
-                </a-typography-title>
-                <a-typography-text class="stat-label"
-                  >{{ t('website.contact.form.label') }}</a-typography-text
-                >
+              <a-typography-title :level="3" class="stat-number">
+                24/7
+              </a-typography-title>
+              <a-typography-text class="stat-label">{{
+                t("website.contact.stats.support")
+              }}</a-typography-text>
+            </div>
+          </a-col>
+          <a-col :xs="12" :sm="6">
+            <div class="stat-item">
+              <div class="stat-icon-wrapper">
+                <ClockCircleOutlined class="stat-icon" />
               </div>
-            </a-col>
-            <a-col :xs="12" :sm="6">
-              <div class="stat-item">
-                <div class="stat-icon-wrapper">
-                  <CheckCircleOutlined class="stat-icon" />
-                </div>
-                <a-typography-title :level="3" class="stat-number">
-                  100%
-                </a-typography-title>
-                <a-typography-text class="stat-label"
-                  >{{ t('website.contact.stats.satisfaction') || 'Satisfaction' }}</a-typography-text
-                >
+              <a-typography-title :level="3" class="stat-number">
+                1hr
+              </a-typography-title>
+              <a-typography-text class="stat-label">{{
+                t("website.contact.form.label")
+              }}</a-typography-text>
+            </div>
+          </a-col>
+          <a-col :xs="12" :sm="6">
+            <div class="stat-item">
+              <div class="stat-icon-wrapper">
+                <CheckCircleOutlined class="stat-icon" />
               </div>
-            </a-col>
-            <a-col :xs="12" :sm="6">
-              <div class="stat-item">
-                <div class="stat-icon-wrapper">
-                  <TeamOutlined class="stat-icon" />
-                </div>
-                <a-typography-title :level="3" class="stat-number">
-                  50+
-                </a-typography-title>
-                <a-typography-text class="stat-label"
-                  >{{ t('website.contact.stats.teamMembers') }}</a-typography-text
-                >
+              <a-typography-title :level="3" class="stat-number">
+                100%
+              </a-typography-title>
+              <a-typography-text class="stat-label">{{
+                t("website.contact.stats.satisfaction") || "Satisfaction"
+              }}</a-typography-text>
+            </div>
+          </a-col>
+          <a-col :xs="12" :sm="6">
+            <div class="stat-item">
+              <div class="stat-icon-wrapper">
+                <TeamOutlined class="stat-icon" />
               </div>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
+              <a-typography-title :level="3" class="stat-number">
+                50+
+              </a-typography-title>
+              <a-typography-text class="stat-label">{{
+                t("website.contact.stats.teamMembers")
+              }}</a-typography-text>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
 
-      <!-- Contact Info Cards -->
-      <section class="contact-info-section">
-        <div class="container">
-          <a-typography-title :level="2" class="section-title centered">
-            {{ t('website.contact.sidebar.title') }}
-          </a-typography-title>
-          <a-typography-paragraph class="section-subtitle centered">
-            {{ t('website.contact.sidebar.subtitle') }}
-          </a-typography-paragraph>
-          <a-row :gutter="[24, 32]" style="margin-top: 48px">
-            <a-col :xs="24" :sm="8">
-              <a-card class="info-card" hoverable>
-                <div class="card-icon-wrapper address-icon">
-                  <EnvironmentOutlined class="card-icon" />
-                </div>
-                <a-card-meta>
-                  <template #title>
-                    <span class="card-title">{{ t('website.contact.infoCards.address.title') }}</span>
-                  </template>
-                  <template #description>
-                    <p class="card-description">
-                      {{ t('website.contact.infoCards.address.value') }}
-                    </p>
-                  </template>
-                </a-card-meta>
-                <a-button type="link" class="card-link">
-                  {{ t('website.contact.sidebar.map') }} <ArrowRightOutlined />
-                </a-button>
-              </a-card>
-            </a-col>
-            <a-col :xs="24" :sm="8">
-              <a-card class="info-card" hoverable>
-                <div class="card-icon-wrapper phone-icon">
-                  <PhoneOutlined class="card-icon" />
-                </div>
-                <a-card-meta>
-                  <template #title>
-                    <span class="card-title">{{ t('website.contact.infoCards.phone.title') }}</span>
-                  </template>
-                  <template #description>
-                    <p class="card-description">{{ t('website.contact.infoCards.phone.value') }}</p>
-                    <p class="card-description">{{ t('website.contact.infoCards.hours.value') }}</p>
-                  </template>
-                </a-card-meta>
-                <a-button
-                  type="link"
-                  class="card-link"
-                  href="tel:+8562012345678"
-                >
-                  {{ t('website.contact.form.callNow') }} <ArrowRightOutlined />
-                </a-button>
-              </a-card>
-            </a-col>
-            <a-col :xs="24" :sm="8">
-              <a-card class="info-card" hoverable>
-                <div class="card-icon-wrapper email-icon">
-                  <MailOutlined class="card-icon" />
-                </div>
-                <a-card-meta>
-                  <template #title>
-                    <span class="card-title">{{ t('website.contact.infoCards.email.title') }}</span>
-                  </template>
-                  <template #description>
-                    <p class="card-description">{{ t('website.contact.infoCards.email.value') }}</p>
-                    <p class="card-description">support@savamovie.com</p>
-                  </template>
-                </a-card-meta>
-                <a-button
-                  type="primary"
-                  size="large"
-                  class="card-action-btn"
-                  href="mailto:contact@savamovie.com"
-                  block
-                >
-                  <MailOutlined />
-                  {{ t('website.contact.form.sendEmail') }}
-                </a-button>
-              </a-card>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
-
-      <!-- Contact Form & Map Section -->
-      <section id="contact-form" class="form-section">
-        <div class="container">
-          <a-row :gutter="[48, 48]" align="top">
-            <!-- Contact Form -->
-            <a-col :xs="24" :lg="14">
-              <div class="form-container">
-                <div class="form-header">
-                  <a-typography-title :level="2" class="form-title">
-                    {{ t('website.contact.form.title') }}
-                  </a-typography-title>
-                  <a-typography-paragraph class="form-subtitle">
-                    {{ t('website.contact.sidebar.subtitle') }}
-                  </a-typography-paragraph>
-                </div>
-
-                <a-form
-                  ref="formRef"
-                  :model="formState"
-                  layout="vertical"
-                  @finish="handleSubmit"
-                  class="contact-form"
-                >
-                  <a-row :gutter="16">
-                    <a-col :xs="24" :md="12">
-                      <a-form-item
-                        :label="t('website.contact.form.name')"
-                        name="name"
-                        :rules="[
-                          { required: true, message: t('website.register.validation.firstNameRequired') },
-                        ]"
-                      >
-                        <a-input
-                          v-model:value="formState.name"
-                          size="large"
-                          :placeholder="t('website.register.placeholder.firstName')"
-                          :prefix="h(UserOutlined)"
-                          allow-clear
-                        />
-                      </a-form-item>
-                    </a-col>
-                    <a-col :xs="24" :md="12">
-                      <a-form-item
-                        :label="t('website.contact.form.email')"
-                        name="email"
-                        :rules="[
-                          {
-                            required: true,
-                            message: t('website.register.validation.emailRequired'),
-                          },
-                          { type: 'email', message: t('website.register.validation.emailInvalid') },
-                        ]"
-                      >
-                        <a-input
-                          v-model:value="formState.email"
-                          size="large"
-                          :placeholder="t('website.register.placeholder.email')"
-                          :prefix="h(MailOutlined)"
-                          allow-clear
-                        />
-                      </a-form-item>
-                    </a-col>
-                  </a-row>
-
-                  <a-row :gutter="16">
-                    <a-col :xs="24" :md="12">
-                      <a-form-item :label="t('website.register.form.phone')" name="phone">
-                        <a-input
-                          v-model:value="formState.phone"
-                          size="large"
-                          :placeholder="t('website.register.placeholder.phone')"
-                          :prefix="h(PhoneOutlined)"
-                          allow-clear
-                        />
-                      </a-form-item>
-                    </a-col>
-                    <a-col :xs="24" :md="12">
-                      <a-form-item
-                        :label="t('website.contact.form.subject')"
-                        name="subject"
-                        :rules="[
-                          {
-                            required: true,
-                            message: t('validation.selectOption'),
-                          },
-                        ]"
-                      >
-                        <a-select
-                          v-model:value="formState.subject"
-                          size="large"
-                          :placeholder="t('website.contact.form.subject')"
-                          allow-clear
-                        >
-                          <a-select-option value="general">
-                            <span class="select-option">
-                              <QuestionCircleOutlined />
-                              General Inquiry
-                            </span>
-                          </a-select-option>
-                          <a-select-option value="support">
-                            <span class="select-option">
-                              <CustomerServiceOutlined />
-                              Technical Support
-                            </span>
-                          </a-select-option>
-                          <a-select-option value="billing">
-                            <span class="select-option">
-                              <DollarOutlined />
-                              Billing Question
-                            </span>
-                          </a-select-option>
-                          <a-select-option value="feedback">
-                            <span class="select-option">
-                              <LikeOutlined />
-                              Feedback
-                            </span>
-                          </a-select-option>
-                          <a-select-option value="other">
-                            <span class="select-option">
-                              <MoreOutlined />
-                              Other
-                            </span>
-                          </a-select-option>
-                        </a-select>
-                      </a-form-item>
-                    </a-col>
-                  </a-row>
-
-                  <a-form-item
-                    :label="t('website.contact.form.message')"
-                    name="message"
-                    :rules="[
-                      { required: true, message: t('validation.required') },
-                    ]"
-                  >
-                    <a-textarea
-                      v-model:value="formState.message"
-                      size="large"
-                      :rows="5"
-                      :placeholder="t('website.contact.form.message')"
-                      show-count
-                      :maxlength="500"
-                      allow-clear
-                    />
-                  </a-form-item>
-
-                  <a-form-item>
-                    <a-button
-                      type="primary"
-                      html-type="submit"
-                      size="large"
-                      :loading="loading"
-                      class="submit-button"
-                      block
-                    >
-                      <template #icon>
-                        <SendOutlined />
-                      </template>
-                      {{ loading ? t('common.loading') : t('website.contact.form.submit') }}
-                    </a-button>
-                  </a-form-item>
-                </a-form>
+    <!-- Contact Info Cards -->
+    <section class="contact-info-section">
+      <div class="container">
+        <a-typography-title :level="2" class="section-title centered">
+          {{ t("website.contact.sidebar.title") }}
+        </a-typography-title>
+        <a-typography-paragraph class="section-subtitle centered">
+          {{ t("website.contact.sidebar.subtitle") }}
+        </a-typography-paragraph>
+        <a-row :gutter="[24, 32]" style="margin-top: 48px">
+          <a-col :xs="24" :sm="8">
+            <a-card class="info-card" hoverable>
+              <div class="card-icon-wrapper address-icon">
+                <EnvironmentOutlined class="card-icon" />
               </div>
-            </a-col>
-
-            <!-- Map & Info Sidebar -->
-            <a-col :xs="24" :lg="10">
-              <div class="info-sidebar">
-                <!-- Map Card -->
-                <a-card class="map-card" :bordered="false">
-                  <template #title>
-                    <span class="sidebar-title">
-                      <EnvironmentOutlined />
-                      {{ t('website.contact.infoCards.address.title') }}
-                    </span>
-                  </template>
-                  <div class="map-content">
-                    <div class="map-placeholder">
-                      <EnvironmentOutlined class="map-icon" />
-                      <a-typography-paragraph class="map-text">
-                        {{ t('website.contact.infoCards.address.value') }}
-                      </a-typography-paragraph>
-                      <a-typography-paragraph class="map-subtext">
-                        {{ t('website.contact.sidebar.subtitle') }}
-                      </a-typography-paragraph>
-                      <a-button
-                        type="primary"
-                        href="https://maps.google.com"
-                        target="_blank"
-                        block
-                        size="large"
-                      >
-                        {{ t('website.contact.sidebar.map') }} <ArrowRightOutlined />
-                      </a-button>
-                    </div>
-                  </div>
-                </a-card>
-
-                <!-- Business Hours -->
-                <a-card class="hours-card" :bordered="false">
-                  <template #title>
-                    <span class="sidebar-title">
-                      <ClockCircleOutlined />
-                      {{ t('website.contact.infoCards.hours.title') }}
-                    </span>
-                  </template>
-                  <a-timeline>
-                    <a-timeline-item color="green">
-                      <div class="timeline-item">
-                        <strong>Monday - Friday</strong>
-                        <br />
-                        <span class="timeline-time">9:00 AM - 6:00 PM</span>
-                      </div>
-                    </a-timeline-item>
-                    <a-timeline-item color="blue">
-                      <div class="timeline-item">
-                        <strong>Saturday</strong>
-                        <br />
-                        <span class="timeline-time">9:00 AM - 4:00 PM</span>
-                      </div>
-                    </a-timeline-item>
-                    <a-timeline-item color="red">
-                      <div class="timeline-item">
-                        <strong>Sunday</strong>
-                        <br />
-                        <span class="timeline-time">Closed</span>
-                      </div>
-                    </a-timeline-item>
-                  </a-timeline>
-                </a-card>
-
-                <!-- Social Media -->
-                <a-card class="social-card" :bordered="false">
-                  <template #title>
-                    <span class="sidebar-title">
-                      <TeamOutlined />
-                      {{ t('website.contact.sidebar.social.title') }}
-                    </span>
-                  </template>
-                  <a-row :gutter="[12, 12]">
-                    <a-col :span="12">
-                      <a-button
-                        block
-                        size="large"
-                        class="social-button facebook"
-                        href="https://facebook.com"
-                        target="_blank"
-                      >
-                        <FacebookOutlined />
-                        Facebook
-                      </a-button>
-                    </a-col>
-                    <a-col :span="12">
-                      <a-button
-                        block
-                        size="large"
-                        class="social-button twitter"
-                        href="https://twitter.com"
-                        target="_blank"
-                      >
-                        <TwitterOutlined />
-                        Twitter
-                      </a-button>
-                    </a-col>
-                    <a-col :span="12">
-                      <a-button
-                        block
-                        size="large"
-                        class="social-button instagram"
-                        href="https://instagram.com"
-                        target="_blank"
-                      >
-                        <InstagramOutlined />
-                        Instagram
-                      </a-button>
-                    </a-col>
-                    <a-col :span="12">
-                      <a-button
-                        block
-                        size="large"
-                        class="social-button youtube"
-                        href="https://youtube.com"
-                        target="_blank"
-                      >
-                        <YoutubeOutlined />
-                        YouTube
-                      </a-button>
-                    </a-col>
-                  </a-row>
-                </a-card>
-              </div>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
-
-      <!-- FAQ Section with Accordion -->
-      <section class="faq-section">
-        <div class="container">
-          <a-typography-title :level="2" class="section-title centered">
-            {{ t('website.contact.faq.title') }}
-          </a-typography-title>
-          <a-typography-paragraph class="section-subtitle centered">
-            {{ t('website.contact.sidebar.subtitle') }}
-          </a-typography-paragraph>
-
-          <a-row :gutter="[32, 32]" justify="center" style="margin-top: 48px">
-            <a-col :xs="24" :lg="16">
-              <a-collapse
-                v-model:activeKey="activeKey"
-                accordion
-                class="faq-collapse"
+              <a-card-meta>
+                <template #title>
+                  <span class="card-title">{{
+                    t("website.contact.infoCards.address.title")
+                  }}</span>
+                </template>
+                <template #description>
+                  <p class="card-description">
+                    {{ t("website.contact.infoCards.address.value") }}
+                  </p>
+                </template>
+              </a-card-meta>
+              <a-button
+                type="link"
+                class="card-link"
+                href="https://www.google.com/maps/place/Soutsaka+Institute+of+Technology/@17.9889633,102.6286179,947m/data=!3m2!1e3!4b1!4m6!3m5!1s0x312467e7bd8e66a5:0xf85c9af1fa1bea14!8m2!3d17.9889582!4d102.6311928!16s%2Fg%2F1hc6tgsvn?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
               >
-                <a-collapse-panel key="1" :header="t('website.contact.faq.q1.question')">
-                  <p class="faq-content">
-                    {{ t('website.contact.faq.q1.answer') }}
+                {{ t("website.contact.sidebar.map") }} <ArrowRightOutlined />
+              </a-button>
+            </a-card>
+          </a-col>
+          <a-col :xs="24" :sm="8">
+            <a-card class="info-card" hoverable>
+              <div class="card-icon-wrapper phone-icon">
+                <PhoneOutlined class="card-icon" />
+              </div>
+              <a-card-meta>
+                <template #title>
+                  <span class="card-title">{{
+                    t("website.contact.infoCards.phone.title")
+                  }}</span>
+                </template>
+                <template #description>
+                  <p class="card-description">
+                    {{ t("website.contact.infoCards.phone.value") }}
                   </p>
-                </a-collapse-panel>
-                <a-collapse-panel
-                  key="2"
-                  :header="t('website.contact.faq.q2.question')"
+                  <p class="card-description">
+                    {{ t("website.contact.infoCards.hours.value") }}
+                  </p>
+                </template>
+              </a-card-meta>
+              <a-button type="link" class="card-link" href="tel:+8562012345678">
+                {{ t("website.contact.form.callNow") }} <ArrowRightOutlined />
+              </a-button>
+            </a-card>
+          </a-col>
+          <a-col :xs="24" :sm="8">
+            <a-card class="info-card" hoverable>
+              <div class="card-icon-wrapper email-icon">
+                <MailOutlined class="card-icon" />
+              </div>
+              <a-card-meta>
+                <template #title>
+                  <span class="card-title">{{
+                    t("website.contact.infoCards.email.title")
+                  }}</span>
+                </template>
+                <template #description>
+                  <p class="card-description">
+                    {{ t("website.contact.infoCards.email.value") }}
+                  </p>
+                  <p class="card-description">support@savamovie.com</p>
+                </template>
+              </a-card-meta>
+              <a-button
+                type="primary"
+                size="large"
+                class="card-action-btn"
+                href="mailto:contact@savamovie.com"
+                block
+              >
+                <MailOutlined />
+                {{ t("website.contact.form.sendEmail") }}
+              </a-button>
+            </a-card>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
+
+    <!-- Contact Form & Map Section -->
+    <section id="contact-form" class="form-section">
+      <div class="container">
+        <a-row :gutter="[48, 48]" align="top">
+          <!-- Contact Form -->
+          <a-col :xs="24" :lg="14">
+            <div class="form-container">
+              <div class="form-header">
+                <a-typography-title :level="2" class="form-title">
+                  {{ t("website.contact.form.title") }}
+                </a-typography-title>
+                <a-typography-paragraph class="form-subtitle">
+                  {{ t("website.contact.sidebar.subtitle") }}
+                </a-typography-paragraph>
+              </div>
+
+              <a-form
+                ref="formRef"
+                :model="formState"
+                layout="vertical"
+                @finish="handleSubmit"
+                class="contact-form"
+              >
+                <a-row :gutter="16">
+                  <a-col :xs="24" :md="12">
+                    <a-form-item
+                      :label="t('website.contact.form.name')"
+                      name="name"
+                      :rules="[
+                        {
+                          required: true,
+                          message: t(
+                            'website.register.validation.firstNameRequired',
+                          ),
+                        },
+                      ]"
+                    >
+                      <a-input
+                        v-model:value="formState.name"
+                        size="large"
+                        :placeholder="
+                          t('website.register.placeholder.firstName')
+                        "
+                        :prefix="h(UserOutlined)"
+                        allow-clear
+                      />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :xs="24" :md="12">
+                    <a-form-item
+                      :label="t('website.contact.form.email')"
+                      name="email"
+                      :rules="[
+                        {
+                          required: true,
+                          message: t(
+                            'website.register.validation.emailRequired',
+                          ),
+                        },
+                        {
+                          type: 'email',
+                          message: t(
+                            'website.register.validation.emailInvalid',
+                          ),
+                        },
+                      ]"
+                    >
+                      <a-input
+                        v-model:value="formState.email"
+                        size="large"
+                        :placeholder="t('website.register.placeholder.email')"
+                        :prefix="h(MailOutlined)"
+                        allow-clear
+                      />
+                    </a-form-item>
+                  </a-col>
+                </a-row>
+
+                <a-row :gutter="16">
+                  <a-col :xs="24" :md="12">
+                    <a-form-item
+                      :label="t('website.register.form.phone')"
+                      name="phone"
+                    >
+                      <a-input
+                        v-model:value="formState.phone"
+                        size="large"
+                        :placeholder="t('website.register.placeholder.phone')"
+                        :prefix="h(PhoneOutlined)"
+                        allow-clear
+                      />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :xs="24" :md="12">
+                    <a-form-item
+                      :label="t('website.contact.form.subject')"
+                      name="subject"
+                      :rules="[
+                        {
+                          required: true,
+                          message: t('validation.selectOption'),
+                        },
+                      ]"
+                    >
+                      <a-select
+                        v-model:value="formState.subject"
+                        size="large"
+                        :placeholder="t('website.contact.form.subject')"
+                        allow-clear
+                      >
+                        <a-select-option value="general">
+                          <span class="select-option">
+                            <QuestionCircleOutlined />
+                            General Inquiry
+                          </span>
+                        </a-select-option>
+                        <a-select-option value="support">
+                          <span class="select-option">
+                            <CustomerServiceOutlined />
+                            Technical Support
+                          </span>
+                        </a-select-option>
+                        <a-select-option value="billing">
+                          <span class="select-option">
+                            <DollarOutlined />
+                            Billing Question
+                          </span>
+                        </a-select-option>
+                        <a-select-option value="feedback">
+                          <span class="select-option">
+                            <LikeOutlined />
+                            Feedback
+                          </span>
+                        </a-select-option>
+                        <a-select-option value="other">
+                          <span class="select-option">
+                            <MoreOutlined />
+                            Other
+                          </span>
+                        </a-select-option>
+                      </a-select>
+                    </a-form-item>
+                  </a-col>
+                </a-row>
+
+                <a-form-item
+                  :label="t('website.contact.form.message')"
+                  name="message"
+                  :rules="[
+                    { required: true, message: t('validation.required') },
+                  ]"
                 >
-                  <p class="faq-content">
-                    {{ t('website.contact.faq.q2.answer') }}
-                  </p>
-                </a-collapse-panel>
-                <a-collapse-panel
-                  key="3"
-                  :header="t('website.contact.faq.q3.question')"
-                >
-                  <p class="faq-content">
-                    {{ t('website.contact.faq.q3.answer') }}
-                  </p>
-                </a-collapse-panel>
-                <a-collapse-panel key="4" :header="t('website.contact.faq.q3.question')">
-                  <p class="faq-content">
-                    {{ t('website.contact.faq.q3.answer') }}
-                  </p>
-                </a-collapse-panel>
-              </a-collapse>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
+                  <a-textarea
+                    v-model:value="formState.message"
+                    size="large"
+                    :rows="5"
+                    :placeholder="t('website.contact.form.message')"
+                    show-count
+                    :maxlength="500"
+                    allow-clear
+                  />
+                </a-form-item>
+
+                <a-form-item>
+                  <a-button
+                    type="primary"
+                    html-type="submit"
+                    size="large"
+                    :loading="loading"
+                    class="submit-button"
+                    block
+                  >
+                    <template #icon>
+                      <SendOutlined />
+                    </template>
+                    {{
+                      loading
+                        ? t("common.loading")
+                        : t("website.contact.form.submit")
+                    }}
+                  </a-button>
+                </a-form-item>
+              </a-form>
+            </div>
+          </a-col>
+
+          <!-- Map & Info Sidebar -->
+          <a-col :xs="24" :lg="10">
+            <div class="info-sidebar">
+              <!-- Map Card -->
+              <a-card class="map-card" :bordered="false" hoverable>
+                <template #title>
+                  <span class="sidebar-title">
+                    <EnvironmentOutlined />
+                    {{ t("website.contact.infoCards.address.title") }}
+                  </span>
+                </template>
+                <div class="map-content">
+                  <!-- Map Mode Switcher -->
+                  <div class="map-mode-switcher">
+                    <a-button
+                      v-for="(config, mode) in mapConfig"
+                      :key="mode"
+                      :type="mapMode === mode ? 'primary' : 'default'"
+                      size="small"
+                      @click="changeMapMode(mode)"
+                      class="map-mode-btn"
+                    >
+                      <component :is="config.icon" />
+                      {{ config.name }}
+                    </a-button>
+                  </div>
+                  <div class="map-wrapper">
+                    <iframe
+                      :src="currentMapUrl"
+                      width="100%"
+                      height="400"
+                      style="border: 0; border-radius: 8px"
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
+                  <a-button
+                    type="primary"
+                    href="https://www.google.com/maps/place/Soutsaka+Institute+of+Technology/@17.9889633,102.6286179,947m/data=!3m2!1e3!4b1!4m6!3m5!1s0x312467e7bd8e66a5:0xf85c9af1fa1bea14!8m2!3d17.9889582!4d102.6311928!16s%2Fg%2F1hc6tgsvn?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    block
+                    size="large"
+                    style="margin-top: 12px; width: 100%"
+                  >
+                    {{ t("website.contact.sidebar.map") }}
+                    <ArrowRightOutlined />
+                  </a-button>
+                </div>
+              </a-card>
+
+              <!-- Business Hours -->
+              <a-card class="hours-card" :bordered="false">
+                <template #title>
+                  <span class="sidebar-title">
+                    <ClockCircleOutlined />
+                    {{ t("website.contact.infoCards.hours.title") }}
+                  </span>
+                </template>
+                <a-timeline>
+                  <a-timeline-item color="green">
+                    <div class="timeline-item">
+                      <strong>Monday - Friday</strong>
+                      <br />
+                      <span class="timeline-time">9:00 AM - 6:00 PM</span>
+                    </div>
+                  </a-timeline-item>
+                  <a-timeline-item color="blue">
+                    <div class="timeline-item">
+                      <strong>Saturday</strong>
+                      <br />
+                      <span class="timeline-time">9:00 AM - 4:00 PM</span>
+                    </div>
+                  </a-timeline-item>
+                  <a-timeline-item color="red">
+                    <div class="timeline-item">
+                      <strong>Sunday</strong>
+                      <br />
+                      <span class="timeline-time">Closed</span>
+                    </div>
+                  </a-timeline-item>
+                </a-timeline>
+              </a-card>
+
+              <!-- Social Media -->
+              <a-card class="social-card" :bordered="false">
+                <template #title>
+                  <span class="sidebar-title">
+                    <TeamOutlined />
+                    {{ t("website.contact.sidebar.social.title") }}
+                  </span>
+                </template>
+                <a-row :gutter="[12, 12]">
+                  <a-col :span="12">
+                    <a-button
+                      block
+                      size="large"
+                      class="social-button facebook"
+                      href="https://facebook.com"
+                      target="_blank"
+                    >
+                      <FacebookOutlined />
+                      Facebook
+                    </a-button>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-button
+                      block
+                      size="large"
+                      class="social-button twitter"
+                      href="https://twitter.com"
+                      target="_blank"
+                    >
+                      <TwitterOutlined />
+                      Twitter
+                    </a-button>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-button
+                      block
+                      size="large"
+                      class="social-button instagram"
+                      href="https://instagram.com"
+                      target="_blank"
+                    >
+                      <InstagramOutlined />
+                      Instagram
+                    </a-button>
+                  </a-col>
+                  <a-col :span="12">
+                    <a-button
+                      block
+                      size="large"
+                      class="social-button youtube"
+                      href="https://youtube.com"
+                      target="_blank"
+                    >
+                      <YoutubeOutlined />
+                      YouTube
+                    </a-button>
+                  </a-col>
+                </a-row>
+              </a-card>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
+
+    <!-- FAQ Section with Accordion -->
+    <section class="faq-section">
+      <div class="container">
+        <a-typography-title :level="2" class="section-title centered">
+          {{ t("website.contact.faq.title") }}
+        </a-typography-title>
+        <a-typography-paragraph class="section-subtitle centered">
+          {{ t("website.contact.sidebar.subtitle") }}
+        </a-typography-paragraph>
+
+        <a-row :gutter="[32, 32]" justify="center" style="margin-top: 48px">
+          <a-col :xs="24" :lg="16">
+            <a-collapse
+              v-model:activeKey="activeKey"
+              accordion
+              class="faq-collapse"
+            >
+              <a-collapse-panel
+                key="1"
+                :header="t('website.contact.faq.q1.question')"
+              >
+                <p class="faq-content">
+                  {{ t("website.contact.faq.q1.answer") }}
+                </p>
+              </a-collapse-panel>
+              <a-collapse-panel
+                key="2"
+                :header="t('website.contact.faq.q2.question')"
+              >
+                <p class="faq-content">
+                  {{ t("website.contact.faq.q2.answer") }}
+                </p>
+              </a-collapse-panel>
+              <a-collapse-panel
+                key="3"
+                :header="t('website.contact.faq.q3.question')"
+              >
+                <p class="faq-content">
+                  {{ t("website.contact.faq.q3.answer") }}
+                </p>
+              </a-collapse-panel>
+              <a-collapse-panel
+                key="4"
+                :header="t('website.contact.faq.q3.question')"
+              >
+                <p class="faq-content">
+                  {{ t("website.contact.faq.q3.answer") }}
+                </p>
+              </a-collapse-panel>
+            </a-collapse>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
   </WebsiteLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, h } from "vue";
+import { ref, reactive, h, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { message } from "ant-design-vue";
 import {
@@ -540,6 +598,9 @@ import {
   DollarOutlined,
   LikeOutlined,
   MoreOutlined,
+  FullscreenOutlined,
+  GlobalOutlined,
+  EnvironmentTwoTone,
 } from "@ant-design/icons-vue";
 import WebsiteLayout from "../components/WebsiteLayout.vue";
 
@@ -558,6 +619,47 @@ const formState = reactive({
   message: "",
 });
 
+// Map modes
+type MapMode = "standard" | "satellite" | "hybrid" | "terrain" | "osm";
+const mapMode = ref<MapMode>("standard");
+
+// Map mode configurations
+const mapConfig = {
+  standard: {
+    name: "Standard",
+    icon: GlobalOutlined,
+    url: "https://maps.google.com/maps?q=17.9889633,102.6286179&z=15&output=embed",
+  },
+  satellite: {
+    name: "Satellite",
+    icon: EnvironmentTwoTone,
+    url: "https://maps.google.com/maps?q=17.9889633,102.6286179&z=15&t=k&output=embed",
+  },
+  hybrid: {
+    name: "Hybrid",
+    icon: FullscreenOutlined,
+    url: "https://maps.google.com/maps?q=17.9889633,102.6286179&z=15&t=h&output=embed",
+  },
+  terrain: {
+    name: "Terrain",
+    icon: EnvironmentOutlined,
+    url: "https://maps.google.com/maps?q=17.9889633,102.6286179&z=15&t=p&output=embed",
+  },
+  osm: {
+    name: "OpenStreet",
+    icon: EnvironmentOutlined,
+    url: "https://www.openstreetmap.org/export/embed.html?bbox=102.618,17.978,102.639,17.998&layer=mapnik&marker=17.9889633,102.6286179",
+  },
+};
+
+// Current map URL
+const currentMapUrl = computed(() => mapConfig[mapMode.value].url);
+
+// Change map mode
+const changeMapMode = (mode: string) => {
+  mapMode.value = mode as MapMode;
+};
+
 // Scroll to form
 const scrollToForm = () => {
   const element = document.getElementById("contact-form");
@@ -574,7 +676,7 @@ const handleSubmit = async () => {
   setTimeout(() => {
     loading.value = false;
     message.success(
-      `${t('common.success')}! ${t('website.contact.sidebar.subtitle')}`,
+      `${t("common.success")}! ${t("website.contact.sidebar.subtitle")}`,
     );
 
     // Reset form
@@ -1125,6 +1227,28 @@ const handleSubmit = async () => {
   padding: 0;
 }
 
+/* Map Mode Switcher */
+.map-mode-switcher {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.map-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.map-mode-btn:hover {
+  transform: translateY(-1px);
+}
+
 .map-placeholder {
   background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
   padding: 40px;
@@ -1152,6 +1276,40 @@ const handleSubmit = async () => {
 .map-subtext {
   color: #666;
   margin-bottom: 24px;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.map-wrapper:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(13, 51, 74, 0.2);
+}
+
+.map-wrapper:active {
+  transform: scale(0.98);
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
 }
 
 .timeline-item {

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { h, onMounted, reactive, ref, computed } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { VideoComposible } from "./composible/index";
 import { useI18n } from "vue-i18n";
 import {
   EditOutlined,
   DeleteOutlined,
-  PlusCircleFilled,
   PlayCircleOutlined,
   SearchOutlined,
   ClearOutlined,
+  EyeOutlined,
+  HeartOutlined,
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IVideoForm, IVideoList } from "./interface/video.interface";
@@ -111,6 +112,18 @@ const columns = computed(() => [
     key: "category_id",
     align: "center",
     width: 150,
+  },
+  {
+    title: t("modules.video.columns.totalViews"),
+    key: "total_views",
+    align: "center",
+    width: 115,
+  },
+  {
+    title: t("modules.video.columns.totalLikes"),
+    key: "total_likes",
+    align: "center",
+    width: 115,
   },
   {
     title: t("modules.video.columns.status"),
@@ -381,10 +394,6 @@ const closeVideoModal = () => {
 };
 
 // Navigation handlers
-function openAddPage() {
-  router.push({ name: "create-video" });
-}
-
 function openEditPage(id: number) {
   router.push({ name: "edit-video", params: { id } });
 }
@@ -431,7 +440,7 @@ function handleStatusChange(id: number, checked: boolean) {
       <div class="header-left">
         <h1>{{ t("modules.video.title") }}</h1>
       </div>
-      <div class="header-right">
+      <!-- <div class="header-right">
         <a-button
           type="primary"
           class="add-btn"
@@ -440,7 +449,7 @@ function handleStatusChange(id: number, checked: boolean) {
         >
           {{ t("modules.video.addNew") }}
         </a-button>
-      </div>
+      </div> -->
     </div>
 
     <!-- Search and Filter Section -->
@@ -613,6 +622,24 @@ function handleStatusChange(id: number, checked: boolean) {
                 </a-tag>
               </template>
               <span v-else class="no-data">No Categories</span>
+            </div>
+          </template>
+
+          <template v-else-if="column.key === 'total_views'">
+            <div class="stats-display">
+              <a-tag color="blue" class="stat-tag">
+                <EyeOutlined class="stat-icon" />
+                {{ record.total_views || 0 }}
+              </a-tag>
+            </div>
+          </template>
+
+          <template v-else-if="column.key === 'total_likes'">
+            <div class="stats-display">
+              <a-tag color="red" class="stat-tag">
+                <HeartOutlined class="stat-icon" />
+                {{ record.total_likes || 0 }}
+              </a-tag>
             </div>
           </template>
 
@@ -957,6 +984,27 @@ function handleStatusChange(id: number, checked: boolean) {
     background-color: #f6ffed;
     border-color: #b7eb8f;
     color: #52c41a;
+  }
+}
+
+.stats-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .stat-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0;
+
+    .stat-icon {
+      font-size: 14px;
+    }
   }
 }
 

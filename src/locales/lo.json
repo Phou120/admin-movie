@@ -167,6 +167,8 @@
         "customer": "ລູກຄ້າ",
         "categories": "ໝວດໝູ່",
         "tags": "ແທັກ",
+        "totalViews": "ຈຳນວນເຂົ້າຊົມ",
+        "totalLikes": "ຈຳນວນຖືກໃຈ",
         "status": "ສະຖານະ",
         "createdAt": "ສ້າງເມື່ອ",
         "updatedAt": "ອັບເດດເມື່ອ",
@@ -1173,19 +1175,19 @@
       "infoCards": {
         "address": {
           "title": "ທີ່ຢູ່ຂອງພວກເຮົາ",
-          "value": "123 ຖະໜົນ Movie, ນະຄອນຫຼວງພະບາງ, ລາວ"
+          "value": "ນະຄອນຫຼວງວຽງຈັນ, ລາວ"
         },
         "phone": {
           "title": "ໂທລະສັບ",
-          "value": "+856 20 1234 5678"
+          "value": "+856 20 99077006"
         },
         "email": {
           "title": "ອີເມວລ໌",
-          "value": "contact@savamovie.com"
+          "value": "phou991@gmail.com"
         },
         "hours": {
           "title": "ເວລາເຮັດວຽກ",
-          "value": "ຈັນ - ສຸກ: 9:00 - 18:00"
+          "value": "ຈັນ - ສຸກ: 9:00 - 17:00"
         }
       },
       "form": {
