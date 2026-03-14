@@ -45,10 +45,11 @@
     "success": "ສຳເລັດ",
     "error": "ຜິດພາດ",
     "warning": "ຄຳເຕືອນ",
-    "info": "ຂໍ້ມູນ"
+    "info": "ຂໍ້ມູນ",
+    "retry": "ລອງໃຝີອີຄຣູດ"
   },
   "auth": {
-    "login": "ເ�ົ້າສູ່ລະບົບ",
+    "login": "ເຂົ້າສູ່ລະບົບ",
     "logout": "ອອກຈາກລະບົບ",
     "email": "ອີເມວ",
     "password": "ລະຫັດຜ່ານ",
@@ -57,13 +58,64 @@
     "rememberMe": "ຈື່ຂ້າພວກ້າ"
   },
   "dashboard": {
-    "title": "ແຜັງຄວາມ",
+    "hero": {
+      "title": "ຍີນດີຕ້ອນຮັບົບ! ນີ່ກັນປະນານັງຫນວິດີໂອໃໝ່",
+      "subtitle": "ຕິຕຕາມານຊີ້ນຂໍ້, ເປີນກວດການການນີ່, ແລີເເງືນລະບົບທຸກລະ."
+    },
     "cards": {
-      "totalUsers": "ຜູ້ໃຊ້ນທັງຫຼົ",
-      "totalRoles": "ບົດບາດທັງຫຼົ",
-      "totalCourses": "ຫຼັກສອນາທັງຫຼົ",
-      "totalStudents": "ນັກສຶກທັງຫຼົ",
-      "totalTeachers": "ອາຈາຍສອນາທັງຫຼົ"
+      "totalUsers": "ຍິງຜູ້ຊ້ນທັງຫຼົ",
+      "totalRoles": "ຍິງບົດບາດທັງຫຼົ",
+      "totalCourses": "ຍິງຄອາສທັງຫຼົ",
+      "totalStudents": "ຍິງນັກສາຍທັງຫຼົ",
+      "totalTeachers": "ຍິງອານາຈາກທັງຫຼົ"
+    },
+    "charts": {
+      "revenue": "ແພັດກວດລາຍໄືນ",
+      "categoryDistribution": "ການແຂະຫຼາກໝວດ",
+      "userGrowth": "ການຜູ້ຊ້ນເຕະຫຼນ",
+      "series": {
+        "value": "ມານ"
+      }
+    },
+    "filters": {
+      "timeRange": {
+        "title": "ຊົວະມິດ",
+        "options": {
+          "today": "ມານນຳໃ",
+          "week": "7 ວົ່ວາງທັນຫຽັນ",
+          "month": "30 ວົ່ວາງທັນຫຽັນ",
+          "year": "ປີນນຳ",
+          "custom": "ການຳ"
+        },
+        "category": {
+          "title": "ກັງບວດໝູ",
+          "all": "ທັງຫຼົ",
+          "users": "ຜູ້ຊ້ນທັງຫຼົ",
+          "content": "ເນື້ອຫາ",
+          "payments": "ການຊຳລະ",
+          "system": "ລະບົບ"
+        }
+      }
+    },
+    "activity": {
+      "title": "ກິນການຂ່າງດານງຫຼົ",
+      "empty": "ບໍ່ກິນການຂ່າງດານງຫຼົ",
+      "filters": {
+        "all": "ທັງຫຼົ",
+        "users": "ຜູ້ຊ້ນທັງຫຼົ",
+        "payments": "ການຊຳລະ",
+        "content": "ເນື້ອຫາ",
+        "system": "ລະບົບ"
+      }
+    },
+    "export": {
+      "title": "ສົ່ງດານການອີຕ້ອນ",
+      "formats": {
+        "csv": "CSV",
+        "png": "ພາງ PNG",
+        "pdf": "PDF",
+        "excel": "Excel"
+      }
     }
   },
   "video": {
@@ -147,6 +199,15 @@
     "selectOption": "ກະລຸນາເລືອກຕົວເລືອກ"
   },
   "modules": {
+    "dashboard": {
+      "cards": {
+        "totalUsers": "ຍິງຜູ້ຊ້ນທັງຫຼົ",
+        "totalRoles": "ຍິງບົດບາດທັງຫຼົ",
+        "totalCourses": "ຍິງຄອາສທັງຫຼົ",
+        "totalStudents": "ຍິງນັກສາຍທັງຫຼົ",
+        "totalTeachers": "ຍິງອານາຈາກທັງຫຼົ"
+      }
+    },
     "video": {
       "title": "ການຈັດການວິດີໂອ",
       "addNew": "ເພີ່ມວິດີໂອໃໝ່",
@@ -1023,6 +1084,7 @@
   },
   "actions": {
     "view": "ເບິ່ງ",
+    "viewDetails": "ເບິ່ງລາຍລະອຽດ",
     "edit": "ແກ້ໄຂ",
     "delete": "ລຶບ",
     "add": "ເພີ່ມ",
@@ -1167,10 +1229,16 @@
         "subtitle": "ພວກເຮົາມີຄວາມຍິນດີທີ່ຈະໄດ້ຍິນຈາກທ່ານ. ສົ່ງຂໍ້ຄວາມຫາພວກເຮົາ ແລະ ພວກເຮົາຈະຕອບກັບໄວທີ່ສຸດ."
       },
       "stats": {
-        "happyCustomers": "ລູກຄ້າທີ່ພໍໃຈ",
-        "projectsCompleted": "ໂຄງການທີ່ສຳເລັດແລ້ວ",
-        "yearsExperience": "ປີປະສົບການ",
+        "support": "ສະໜັບສະໜູນ",
+        "responseTime": "ເວລາຕອບ",
+        "satisfaction": "ພໍໃຈ",
         "teamMembers": "ສະມາຊິກທີມ"
+      },
+      "statsValues": {
+        "support247": "24/7",
+        "responseTime1hr": "1 ຊົ່ວໂມງ",
+        "satisfaction100": "100%",
+        "team50plus": "50+"
       },
       "infoCards": {
         "address": {

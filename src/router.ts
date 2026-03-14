@@ -9,6 +9,11 @@ import AboutUs from "./modules/website/about-us/AboutUs.vue";
 import Contact from "./modules/website/contact/Contact.vue";
 import Register from "./modules/website/register/Register.vue";
 
+// Auth Pages
+import ForgotPassword from "./modules/admin/auth/components/forgotPassword.vue";
+import VerifyOTP from "./modules/admin/auth/components/verifyOTP.vue";
+import ResetPassword from "./modules/admin/auth/components/resetPassword.vue";
+
 // Dashboard
 import AdminDashboard from "./modules/admin/dashboard/DashBoard.vue";
 
@@ -88,6 +93,30 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginPage,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
+  {
+    path: "/forgot-password",
+    name: "forgot-password",
+    component: ForgotPassword,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
+  {
+    path: "/verify-otp",
+    name: "verifyOTP",
+    component: VerifyOTP,
+    meta: {
+      skipAuthCheck: true,
+    },
+  },
+  {
+    path: "/reset-password",
+    name: "reset-password",
+    component: ResetPassword,
     meta: {
       skipAuthCheck: true,
     },

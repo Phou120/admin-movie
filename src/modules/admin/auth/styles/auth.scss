@@ -1,0 +1,326 @@
+// Auth Module Shared Styles
+// Modern Gradient + Glassmorphism Design
+
+// ====================
+// CSS Custom Properties
+// ====================
+
+:root {
+  // Colors
+  --auth-primary: #0d334a;
+  --auth-primary-light: #2d6991;
+  --auth-primary-dark: #082838;
+  --auth-accent: #ffd700;
+  --auth-error: #e04b4b;
+  --auth-success: #52c41a;
+  --auth-warning: #faad14;
+
+  // Spacing
+  --auth-space-xs: 4px;
+  --auth-space-sm: 8px;
+  --auth-space-md: 16px;
+  --auth-space-lg: 24px;
+  --auth-space-xl: 32px;
+  --auth-space-2xl: 48px;
+
+  // Typography
+  --auth-font-heading:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --auth-font-body:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  // Card
+  --auth-card-background: rgba(255, 255, 255, 0.95);
+  --auth-card-border: 1px solid rgba(255, 255, 255, 0.2);
+  --auth-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --auth-card-radius: 16px;
+}
+
+// ====================
+// Background Animation
+// ====================
+
+.auth-background {
+  background: linear-gradient(135deg, #0d334a 0%, #2d6991 50%, #0d334a 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--auth-space-md);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// ====================
+// Glass-morphism Card
+// ====================
+
+.auth-card {
+  background: var(--auth-card-background);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--auth-card-radius);
+  box-shadow: var(--auth-card-shadow);
+  border: var(--auth-card-border);
+  width: 100%;
+  max-width: 520px;
+  padding: var(--auth-space-xl);
+  transition: all 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+// ====================
+// Typography
+// ====================
+
+.auth-heading {
+  font-family: var(--auth-font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--auth-primary);
+  margin: 0 0 var(--auth-space-sm) 0;
+  text-align: center;
+}
+
+.auth-subtitle {
+  font-family: var(--auth-font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: #555;
+  margin: 0 0 var(--auth-space-lg) 0;
+  text-align: center;
+}
+
+.auth-label {
+  font-family: var(--auth-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: var(--auth-space-xs);
+  display: block;
+}
+
+.auth-link {
+  font-family: var(--auth-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--auth-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.auth-link:hover {
+  color: var(--auth-primary-light);
+  text-decoration: underline;
+}
+
+// ====================
+// Form Elements
+// ====================
+
+.auth-input {
+  width: 100%;
+  height: 44px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.auth-input:focus,
+.auth-input-focused {
+  border-color: var(--auth-primary);
+  box-shadow: 0 0 0 3px rgba(13, 51, 74, 0.1);
+}
+
+// ====================
+// Button Styles
+// ====================
+
+.auth-button {
+  width: 100%;
+  height: 44px;
+  background-color: var(--auth-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--auth-font-body);
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-button:hover {
+  background-color: var(--auth-primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 51, 74, 0.3);
+}
+
+.auth-button:active {
+  transform: translateY(0);
+}
+
+.auth-button:disabled {
+  background-color: #a0b0b9;
+  cursor: not-allowed;
+  transform: none;
+}
+
+// ====================
+// Logo Section
+// ====================
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: var(--auth-space-lg);
+}
+
+.auth-logo img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+// ====================
+// Page Transitions
+// ====================
+
+.fade-enter-active,
+.fade-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+// ====================
+// Responsive Breakpoints
+// ====================
+
+// Mobile (< 768px)
+@media (max-width: 767px) {
+  .auth-card {
+    max-width: 90%;
+    padding: var(--auth-space-md);
+  }
+
+  .auth-heading {
+    font-size: 24px;
+  }
+
+  .auth-background {
+    padding: var(--auth-space-sm);
+  }
+}
+
+// Tablet (768px - 1024px)
+@media (min-width: 768px) and (max-width: 1024px) {
+  .auth-card {
+    max-width: 480px;
+    padding: var(--auth-space-lg);
+  }
+}
+
+// Desktop (> 1024px)
+@media (min-width: 1025px) {
+  .auth-card {
+    max-width: 520px;
+    padding: var(--auth-space-xl);
+  }
+}
+
+// ====================
+// OTP Input Styles
+// ====================
+
+.otp-input-container {
+  display: flex;
+  gap: var(--auth-space-md);
+  justify-content: center;
+  margin-bottom: var(--auth-space-lg);
+}
+
+.otp-digit-input {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.otp-digit-input:focus {
+  border-color: var(--auth-primary);
+  box-shadow: 0 0 0 3px rgba(13, 51, 74, 0.1);
+}
+
+// ====================
+// Password Strength Styles
+// ====================
+
+.password-strength {
+  margin-bottom: var(--auth-space-md);
+}
+
+.password-strength-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--auth-space-xs);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.password-strength-weak {
+  color: var(--auth-error);
+}
+.password-strength-medium {
+  color: var(--auth-warning);
+}
+.password-strength-strong {
+  color: var(--auth-success);
+}
+
+// ====================
+// Helper Classes
+// ====================
+
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.mt-sm {
+  margin-top: var(--auth-space-sm);
+}
+.mt-md {
+  margin-top: var(--auth-space-md);
+}
+.mb-sm {
+  margin-bottom: var(--auth-space-sm);
+}
+.mb-md {
+  margin-bottom: var(--auth-space-md);
+}

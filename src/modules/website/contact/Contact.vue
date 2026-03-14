@@ -37,7 +37,7 @@
                 <CustomerServiceOutlined class="stat-icon" />
               </div>
               <a-typography-title :level="3" class="stat-number">
-                24/7
+                {{ t("website.contact.statsValues.support247") }}
               </a-typography-title>
               <a-typography-text class="stat-label">{{
                 t("website.contact.stats.support")
@@ -50,10 +50,10 @@
                 <ClockCircleOutlined class="stat-icon" />
               </div>
               <a-typography-title :level="3" class="stat-number">
-                1hr
+                {{ t("website.contact.statsValues.responseTime1hr") }}
               </a-typography-title>
               <a-typography-text class="stat-label">{{
-                t("website.contact.form.label")
+                t("website.contact.stats.responseTime")
               }}</a-typography-text>
             </div>
           </a-col>
@@ -63,10 +63,10 @@
                 <CheckCircleOutlined class="stat-icon" />
               </div>
               <a-typography-title :level="3" class="stat-number">
-                100%
+                {{ t("website.contact.statsValues.satisfaction100") }}
               </a-typography-title>
               <a-typography-text class="stat-label">{{
-                t("website.contact.stats.satisfaction") || "Satisfaction"
+                t("website.contact.stats.satisfaction")
               }}</a-typography-text>
             </div>
           </a-col>
@@ -76,7 +76,7 @@
                 <TeamOutlined class="stat-icon" />
               </div>
               <a-typography-title :level="3" class="stat-number">
-                50+
+                {{ t("website.contact.statsValues.team50plus") }}
               </a-typography-title>
               <a-typography-text class="stat-label">{{
                 t("website.contact.stats.teamMembers")

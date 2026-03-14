@@ -73,7 +73,7 @@
         <template v-else-if="column.key === 'status'">
           <a-select
             :value="record.status"
-            @change="(value: string) => handleStatusChange(record.id, value)"
+            @change="handleStatusChange(record.id, $event)"
             :loading="record.statusLoading"
             :class="['status-select', `status-${record.status}`]"
           >
@@ -102,10 +102,10 @@
 
         <template v-else-if="column.key === 'action'">
           <span class="action-icons">
-            <a-tooltip :title="t('actions.edit')">
-              <edit-outlined
-                class="icon edit"
-                @click="goToEditCustomer(record)"
+            <a-tooltip :title="t('actions.viewDetails')">
+              <eye-outlined
+                class="icon view"
+                @click="goToViewCustomer(record)"
               />
             </a-tooltip>
             <a-popconfirm
@@ -132,8 +132,8 @@ import { ref, reactive, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import {
-  EditOutlined,
   DeleteOutlined,
+  EyeOutlined,
   UserOutlined,
   WarningOutlined,
   CheckCircleOutlined,
@@ -167,7 +167,7 @@ const data = reactive<ICustomer>({
   },
 });
 
-// Computed property to get the starting number for the current page
+// Computed property to get the starting number for current page
 const pageOffset = computed(() => {
   const current = data.pagination.current ?? 1;
   const pageSize = data.pagination.pageSize ?? 10;
@@ -257,7 +257,6 @@ async function loadCustomers(
   try {
     const res = await fetchAll(page, limit, search);
     data.customers = res.data || [];
-
     const paginate = res.pagination || {};
 
     data.pagination = {
@@ -291,10 +290,15 @@ function handleSearchChange(e: any) {
   }
 }
 
-// Navigation functions
-function goToEditCustomer(customer: any) {
-  router.push(`/customer/edit/${customer.id}`);
-}
+// View Customer Details
+const goToViewCustomer = (customer: any) => {
+  router.push(`/customer/view/${customer.id}`);
+};
+
+// Handle status change
+const handleStatusChange = (id: number, status: string) => {
+  updateCustomerStatus(id, status);
+};
 
 // Delete Customer
 async function deleteCustomer(id: number) {
@@ -325,11 +329,6 @@ const getStatusLabel = (status: string) => {
   const statusKey = status?.toLowerCase();
   return t(`status.${statusKey}`, status?.toUpperCase() || "");
 };
-
-// Handle status change with switch
-function handleStatusChange(id: number, status: string) {
-  updateCustomerStatus(id, status);
-}
 
 onMounted(() => loadCustomers());
 </script>
@@ -364,6 +363,41 @@ onMounted(() => loadCustomers());
 
 .customer-avatar {
   border: 2px solid #f0f0f0;
+}
+
+.action-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .icon {
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 4px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      transform: scale(1.1);
+    }
+
+    &.view {
+      color: #1890ff;
+
+      &:hover {
+        background-color: rgba(24, 144, 255, 0.1);
+      }
+    }
+
+    &.delete {
+      color: #ff4d4f;
+
+      &:hover {
+        background-color: rgba(255, 77, 79, 0.1);
+      }
+    }
+  }
 }
 
 .clear-btn {

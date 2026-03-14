@@ -1,224 +1,177 @@
 <template>
-  <div class="reset-container">
-    <!-- Box container at the top -->
-    <div class="box-container"></div>
-
-    <div class="card">
-      <h2 class="title">Forgot Password</h2>
-      <p class="subtitle">
-        Enter your email and we'll send you a One-Time Password (OTP).
-      </p>
-
-      <form @submit.prevent="handleOtpRequest" novalidate>
-        <!-- EMAIL INPUT -->
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input
-            id="email"
-            v-model.trim="email"
-            type="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-            :disabled="isLoading"
-            aria-invalid="!!emailError"
-            aria-describedby="email-error"
-          />
-          <!-- VALIDATION ERROR -->
-          <small
-            v-if="emailError"
-            id="email-error"
-            class="error message-role"
-            >{{ emailError }}</small
-          >
-          <!-- BACKEND ERROR -->
-          <small v-if="serverError" class="error">{{ serverError }}</small>
+  <div class="auth-background">
+    <transition name="fade" appear>
+      <a-card class="auth-card">
+        <!-- Logo/Branding Section -->
+        <div class="auth-logo">
+          <img src="../../../../assets/images/logo.png" alt="Logo" />
         </div>
 
-        <!-- SUBMIT BUTTON -->
-        <button
-          class="submit-btn"
-          type="submit"
-          :disabled="isLoading || !!emailError"
-        >
-          <span v-if="isLoading">Checking...</span>
-          <span v-else>Send OTP</span>
-        </button>
-      </form>
+        <!-- Title -->
+        <h1 class="auth-heading">ລືມລະຫັດຜ່ານ?</h1>
+        <p class="auth-subtitle">ປ້ອນອີເມວລຂອງທ່ານ ແພາເນີສົ່ງລະຫັດ OTP ໄັດ</p>
 
-      <router-link class="back-link" to="/login">← Back to Login</router-link>
-    </div>
+        <!-- Forgot Password Form -->
+        <a-form
+          :model="formState"
+          name="forgot-password"
+          autocomplete="off"
+          @finish="handleOtpRequest"
+          @finishFailed="onFinishFailed"
+        >
+          <!-- Email Input -->
+          <a-form-item label="ທີ່ຢອີເມວລ" name="email" :rules="emailRules">
+            <a-input
+              v-model:value="formState.email"
+              size="large"
+              class="auth-input"
+              placeholder="ປ້ອນອີເມວລຂອງທ່ານ"
+              :disabled="isLoading"
+              aria-label="Email address"
+            >
+              <template #prefix>
+                <MailOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
+
+          <!-- Submit Button -->
+          <a-form-item>
+            <a-button
+              type="primary"
+              html-type="submit"
+              size="large"
+              class="auth-button"
+              :loading="isLoading"
+            >
+              {{ isLoading ? "ກຳລັງດຳເນີນ..." : "ສົ່ງ OTP" }}
+            </a-button>
+          </a-form-item>
+
+          <!-- Error Alert -->
+          <a-alert
+            v-if="errorMessage"
+            type="error"
+            :message="errorMessage"
+            show-icon
+            closable
+            @close="errorMessage = ''"
+            class="mt-md"
+          />
+        </a-form>
+
+        <!-- Back to Login Link -->
+        <div class="text-center mt-md">
+          <router-link :to="{ name: 'login' }" class="auth-link">
+            ← ກັບໄປໂນໜານເຂົ້າສູ່ລະບົບ
+          </router-link>
+        </div>
+      </a-card>
+    </transition>
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
+<script lang="ts" setup>
+import { reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { showErrorNotification } from "../../../../common/utils/notification";
+import { MailOutlined } from "@ant-design/icons-vue";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../../../../common/utils/notification";
 import { useAuth } from "../composible/auth";
+import "../styles/auth.scss";
 
 const { forgotPassword } = useAuth();
 const router = useRouter();
 
-const email = ref("");
 const isLoading = ref(false);
-const serverError = ref("");
+const errorMessage = ref("");
 
-// Email validation
-const emailError = computed(() => {
-  if (!email.value) return "Email is required.";
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return pattern.test(email.value) ? "" : "Invalid email format.";
+interface FormState {
+  email: string;
+}
+
+const formState = reactive<FormState>({
+  email: "",
 });
+
+const emailRules = computed(() => [
+  { required: true, message: "ອີເມວລບໍ່ຄວນໄວ່" },
+  { type: "email", message: "ຮູບແບບອີເມວລບໍ່ຖືກຕ້ອງ" },
+]);
 
 // Handle OTP request
 const handleOtpRequest = async () => {
-  if (emailError.value) return;
-
   isLoading.value = true;
-  serverError.value = "";
+  errorMessage.value = "";
 
   try {
-    // Replace with your API call
-    const response = await forgotPassword(email.value);
+    const response = await forgotPassword(formState.email);
     console.log("forgotPassword response:", response);
+
     if (response?.status_code === 200 || response?.status_code === 201) {
+      // Store email for resend functionality
+      localStorage.setItem("forgot_password_email", formState.email);
+
+      showSuccessNotification("OTP ໄັສົ່ງສຳເລັດແລັວ! ກວດອີເມວລຂອງທ່ານ.");
       router.push({ name: "verifyOTP" });
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error("forgotPassword error:", err);
-    showErrorNotification(err?.response?.data?.message || "Error occurred");
+    errorMessage.value =
+      err?.response?.data?.message || "ເກີດຂຶ້ນໃຫຍກຳລັງກວນສື່ກັນໃຫ້ລູກອີກ.";
+    showErrorNotification(errorMessage.value);
   } finally {
     isLoading.value = false;
   }
 };
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log("Validation failed:", errorInfo);
+};
 </script>
 
 <style scoped lang="scss">
-/* Define color variables for easy theme adjustments */
-:root {
-  --primary-color: #0d334a;
-  --error-color: #e04b4b;
-  --background-color: #f6f8fa;
-  --card-background: #fff;
-  --border-color: #dcdde1;
-  --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+.auth-background {
+  @extend .auth-background;
 }
 
-.reset-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column; /* stack vertically */
-  justify-content: start; /* align to top */
-  align-items: center;
-  padding: 20px;
-  // background-color: var(--background-color);
-  font-family: var(--font-family);
+.auth-card {
+  @extend .auth-card;
 }
 
-/* Box container at the top, used for spacing or additional content */
-.box-container {
-  width: 100%;
-  max-width: 1200px; /* optional for larger screens */
-  height: 50px; /* adjust height as needed */
-  background-color: transparent; /* or any color if needed */
-  margin-bottom: 20px; /* space between box and card */
+.auth-heading {
+  @extend .auth-heading;
 }
 
-/* Styling for the card */
-.card {
-  width: 100%;
-  max-width: 420px;
-  background: var(--card-background);
-  padding: 30px 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  transition: box-shadow 0.3s ease;
+.auth-subtitle {
+  @extend .auth-subtitle;
 }
 
-.card:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+.auth-logo {
+  @extend .auth-logo;
 }
 
-.title {
-  font-size: 24px;
-  margin-bottom: 10px;
-  font-weight: 700;
-  text-align: center;
-  color: var(--primary-color);
+.auth-input {
+  @extend .auth-input;
 }
 
-.subtitle {
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #555;
-  text-align: center;
+.auth-button {
+  @extend .auth-button;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-  width: 100%;
+.auth-link {
+  @extend .auth-link;
 }
 
-label {
-  margin-bottom: 6px;
+// Override Ant Design styles
+:deep(.ant-form-item-label > label) {
   font-weight: 600;
-  font-size: 14px;
   color: #333;
 }
 
-input {
-  padding: 12px 14px;
-  border: 1px solid var(--border-color);
+:deep(.ant-input-affix-wrapper) {
   border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-}
-
-input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 4px rgba(13, 51, 74, 0.3);
-}
-
-.error {
-  color: var(--error-color);
-  font-size: 13px;
-  margin-top: 6px;
-  line-height: 1.2;
-  min-height: 18px;
-}
-
-.message-role {
-  color: red;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: #084a64;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 20px;
-  text-align: center;
-  color: var(--primary-color);
-  font-size: 14px;
-  transition: color 0.2s;
-}
-
-.back-link:hover {
-  color: #084a64;
 }
 </style>

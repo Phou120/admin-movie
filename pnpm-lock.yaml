@@ -23,6 +23,12 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.19
+      echarts:
+        specifier: ^6.0.0
+        version: 6.0.0
+      echarts-for-vue:
+        specifier: ^1.4.1
+        version: 1.4.1(echarts@6.0.0)(vue@3.5.24(typescript@5.8.3))
       flag-icons:
         specifier: ^7.5.0
         version: 7.5.0
@@ -489,8 +495,15 @@ packages:
       tinymce:
         optional: true
 
+  '@types/echarts@4.9.22':
+    resolution: {integrity: sha512-7Fo6XdWpoi8jxkwP7BARUOM7riq8bMhmsCtSG8gzUcJmFhLo387tihoBYS/y5j7jl3PENT5RxeWZdN9RiwO7HQ==}
+
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
+
+  '@types/zrender@5.0.0':
+    resolution: {integrity: sha512-70NLuJssk1cp5+8l18zk/z6kpcxKw4/vTbeFKh0R1TIv7/XF7+U7wkGvUOCEzIJv3Px3L1HaUM5ASP0mqKJPKQ==}
+    deprecated: This is a stub types definition. zrender provides its own type definitions, so you do not need this installed.
 
   '@vitejs/plugin-vue@6.0.1':
     resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
@@ -662,6 +675,15 @@ packages:
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
+
+  echarts-for-vue@1.4.1:
+    resolution: {integrity: sha512-o1VKvX5lCo5Nb8B5EEr6ztt+hRi4W9RnKn7wIk+l3fZ0S2yVXanqZckgBfO7v8vSS+xOJq/Df5flrNUQIRhn/Q==}
+    peerDependencies:
+      echarts: '>=3'
+      vue: '>=2'
+
+  echarts@6.0.0:
+    resolution: {integrity: sha512-Tte/grDQRiETQP4xz3iZWSvoHrkCQtwqd6hs+mifXcjrCuo2iKWbajFObuLJVBlDIJlOzgQPd1hsaKt/3+OMkQ==}
 
   engine.io-client@6.6.3:
     resolution: {integrity: sha512-T0iLjnyNWahNyv/lcjS2y4oE358tVS/SYQNxYXGAJ9/GLgH4VCvOQ/mhTjqU88mLZCQgiG8RIegFHYCdVC+j5w==}
@@ -1058,6 +1080,9 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
+  tslib@2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -1161,6 +1186,9 @@ packages:
   xmlhttprequest-ssl@2.1.2:
     resolution: {integrity: sha512-TEU+nJVUUnA4CYJFLvK5X9AOeH4KvDvhIfm0vV1GaQRtchnG0hgK5p8hw/xjv8cunWYCsiPCSDzObPyhEwq3KQ==}
     engines: {node: '>=0.4.0'}
+
+  zrender@6.0.0:
+    resolution: {integrity: sha512-41dFXEEXuJpNecuUQq6JlbybmnHaqqpGlbH1yxnA5V9MMP4SbohSVZsJIwz+zdjQXSSlR1Vc34EgH1zxyTDvhg==}
 
 snapshots:
 
@@ -1431,7 +1459,15 @@ snapshots:
     dependencies:
       vue: 3.5.24(typescript@5.8.3)
 
+  '@types/echarts@4.9.22':
+    dependencies:
+      '@types/zrender': 5.0.0
+
   '@types/estree@1.0.8': {}
+
+  '@types/zrender@5.0.0':
+    dependencies:
+      zrender: 6.0.0
 
   '@vitejs/plugin-vue@6.0.1(vite@7.2.2(sass-embedded@1.93.3)(sass@1.93.3))(vue@3.5.24(typescript@5.8.3))':
     dependencies:
@@ -1633,6 +1669,17 @@ snapshots:
       call-bind-apply-helpers: 1.0.2
       es-errors: 1.3.0
       gopd: 1.2.0
+
+  echarts-for-vue@1.4.1(echarts@6.0.0)(vue@3.5.24(typescript@5.8.3)):
+    dependencies:
+      '@types/echarts': 4.9.22
+      echarts: 6.0.0
+      vue: 3.5.24(typescript@5.8.3)
+
+  echarts@6.0.0:
+    dependencies:
+      tslib: 2.3.0
+      zrender: 6.0.0
 
   engine.io-client@6.6.3:
     dependencies:
@@ -2038,6 +2085,8 @@ snapshots:
       is-number: 7.0.0
     optional: true
 
+  tslib@2.3.0: {}
+
   tslib@2.8.1: {}
 
   typescript@5.8.3: {}
@@ -2099,3 +2148,7 @@ snapshots:
   ws@8.17.1: {}
 
   xmlhttprequest-ssl@2.1.2: {}
+
+  zrender@6.0.0:
+    dependencies:
+      tslib: 2.3.0

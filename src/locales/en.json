@@ -45,7 +45,8 @@
     "success": "Success",
     "error": "Error",
     "warning": "Warning",
-    "info": "Information"
+    "info": "Information",
+    "retry": "Retry"
   },
   "auth": {
     "login": "Login",
@@ -57,13 +58,64 @@
     "rememberMe": "Remember Me"
   },
   "dashboard": {
-    "title": "Dashboard",
+    "hero": {
+      "title": "Welcome back, Admin! Here's what's happening today...",
+      "subtitle": "Track your metrics, monitor activity, and stay on top of your business."
+    },
     "cards": {
       "totalUsers": "Total Users",
       "totalRoles": "Total Roles",
       "totalCourses": "Total Courses",
       "totalStudents": "Total Students",
       "totalTeachers": "Total Teachers"
+    },
+    "charts": {
+      "revenue": "Revenue Trends",
+      "categoryDistribution": "Category Distribution",
+      "userGrowth": "User Growth",
+      "series": {
+        "value": "Value"
+      }
+    },
+    "filters": {
+      "timeRange": {
+        "title": "Time Range",
+        "options": {
+          "today": "Today",
+          "week": "Last 7 Days",
+          "month": "Last 30 Days",
+          "year": "This Year",
+          "custom": "Custom"
+        },
+        "category": {
+          "title": "Filter by Category",
+          "all": "All",
+          "users": "Users",
+          "content": "Content",
+          "payments": "Payments",
+          "system": "System"
+        }
+      }
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "empty": "No recent activities",
+      "filters": {
+        "all": "All",
+        "users": "Users",
+        "payments": "Payments",
+        "content": "Content",
+        "system": "System"
+      }
+    },
+    "export": {
+      "title": "Export Dashboard",
+      "formats": {
+        "csv": "CSV",
+        "png": "PNG Image",
+        "pdf": "PDF",
+        "excel": "Excel"
+      }
     }
   },
   "video": {
@@ -147,6 +199,15 @@
     "selectOption": "Please select an option"
   },
   "modules": {
+    "dashboard": {
+      "cards": {
+        "totalUsers": "Total Users",
+        "totalRoles": "Total Roles",
+        "totalCourses": "Total Courses",
+        "totalStudents": "Total Students",
+        "totalTeachers": "Total Teachers"
+      }
+    },
     "video": {
       "title": "Video Management",
       "addNew": "Add New Video",
@@ -1030,6 +1091,7 @@
   },
   "actions": {
     "view": "View",
+    "viewDetails": "View Details",
     "edit": "Edit",
     "delete": "Delete",
     "add": "Add",
@@ -1174,10 +1236,16 @@
         "subtitle": "We'd love to hear from you. Send us a message and we'll respond as soon as possible."
       },
       "stats": {
-        "happyCustomers": "Happy Customers",
-        "projectsCompleted": "Projects Completed",
-        "yearsExperience": "Years of Experience",
+        "support": "Support",
+        "responseTime": "Response Time",
+        "satisfaction": "Satisfaction",
         "teamMembers": "Team Members"
+      },
+      "statsValues": {
+        "support247": "24/7",
+        "responseTime1hr": "1hr",
+        "satisfaction100": "100%",
+        "team50plus": "50+"
       },
       "infoCards": {
         "address": {

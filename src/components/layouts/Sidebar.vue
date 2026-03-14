@@ -13,7 +13,7 @@
       <a-menu-item
         v-if="isAdminOrSuperAdmin"
         key="1"
-        @click="handlerMenu('bashBoard')"
+        @click="handlerMenu('dashboard')"
       >
         <DashboardOutlined />
         <span>{{ t("sidebar.dashboard") }}</span>

@@ -1,190 +1,230 @@
 <template>
-  <div class="reset-password-container">
-    <h1>Reset Password</h1>
-    <!-- Removed @submit and disabled attribute from button -->
-    <form novalidate>
-      <!-- Password Input -->
-      <div class="form-group">
-        <label for="password">New Password</label>
-        <input
-          id="password"
-          type="password"
-          v-model.trim="password"
-          placeholder="Enter new password"
-          :disabled="isLoading"
-        />
-        <small v-if="passwordError" class="error">{{ passwordError }}</small>
-      </div>
+  <div class="auth-background">
+    <transition name="fade" appear>
+      <a-card class="auth-card">
+        <!-- Logo/Branding Section -->
+        <div class="auth-logo">
+          <img src="../../../../assets/images/logo.png" alt="Logo" />
+        </div>
 
-      <!-- Confirm Password Input -->
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          v-model.trim="confirmPassword"
-          placeholder="Confirm new password"
-          :disabled="isLoading"
-        />
-        <small v-if="confirmPasswordError" class="error">{{
-          confirmPasswordError
-        }}</small>
-      </div>
+        <!-- Title -->
+        <h1 class="auth-heading">ປ່ຽນລະຫັດຜ່ານໃໝ່</h1>
+        <p class="auth-subtitle">ສ້າງລະຫັດຜ່ານໃໝ່</p>
 
-      <!-- Reset Password Button -->
-      <button type="button" @click="handleResetPassword">
-        <span v-if="isLoading">Resetting...</span>
-        <span v-else>Reset Password</span>
-      </button>
-    </form>
+        <!-- Reset Password Form -->
+        <a-form
+          :model="formState"
+          name="reset-password"
+          autocomplete="off"
+          @finish="handleResetPassword"
+          @finishFailed="onFinishFailed"
+        >
+          <!-- New Password Input -->
+          <a-form-item
+            label="ລະຫັດຜ່ານໃໝ່"
+            name="password"
+            :rules="passwordRules"
+          >
+            <a-input-password
+              v-model:value="formState.password"
+              size="large"
+              class="auth-input"
+              placeholder="ປ້ອນລະຫັດຜ່ານໃໝ່"
+              :disabled="isLoading"
+              aria-label="New password"
+            >
+              <template #prefix>
+                <LockOutlined />
+              </template>
+            </a-input-password>
+          </a-form-item>
+
+          <!-- Confirm Password Input -->
+          <a-form-item
+            label="ຢັ້ງລະຫັດຜ່ານ"
+            name="confirmPassword"
+            :rules="confirmPasswordRules"
+          >
+            <a-input-password
+              v-model:value="formState.confirmPassword"
+              size="large"
+              class="auth-input"
+              placeholder="ປ້ອນລະຫັດຜ່ານອີກ"
+              :disabled="isLoading"
+              aria-label="Confirm password"
+            >
+              <template #prefix>
+                <LockOutlined />
+              </template>
+            </a-input-password>
+          </a-form-item>
+
+          <!-- Submit Button -->
+          <a-form-item>
+            <a-button
+              type="primary"
+              html-type="submit"
+              size="large"
+              class="auth-button"
+              :loading="isLoading"
+            >
+              {{ isLoading ? "ກຳລັງດຳເນີນ..." : "ປ່ຽນລະຫັດຜ່ານ" }}
+            </a-button>
+          </a-form-item>
+
+          <!-- Error Alert -->
+          <a-alert
+            v-if="errorMessage"
+            type="error"
+            :message="errorMessage"
+            show-icon
+            closable
+            @close="errorMessage = ''"
+            class="mt-md"
+          />
+        </a-form>
+
+        <!-- Back to Login Link -->
+        <div class="text-center mt-md">
+          <router-link :to="{ name: 'login' }" class="auth-link">
+            ← ກັບໄປໜ້າເຂົ້າສູ່ລະບົບ
+          </router-link>
+        </div>
+      </a-card>
+    </transition>
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
+<script lang="ts" setup>
+import { reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { LockOutlined } from "@ant-design/icons-vue";
 import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../../common/utils/notification";
 import { useAuth } from "../composible/auth";
+import "../styles/auth.scss";
+
+const { resetPassword } = useAuth();
+const router = useRouter();
+
+const isLoading = ref(false);
+const errorMessage = ref("");
 
 // Get user ID from local storage
 const userId = localStorage.getItem("verify_user_id");
 
-// Reactive state
-const password = ref("");
-const confirmPassword = ref("");
-const isLoading = ref(false);
-const serverError = ref("");
+interface FormState {
+  password: string;
+  confirmPassword: string;
+}
 
-// Validation error messages
-const passwordError = computed(() => {
-  if (!password.value) return "Password is required.";
-  if (password.value.length < 6)
-    return "Password must be at least 6 characters.";
-  return "";
+const formState = reactive<FormState>({
+  password: "",
+  confirmPassword: "",
 });
 
-const confirmPasswordError = computed(() => {
-  if (!confirmPassword.value) return "Please confirm your password.";
-  if (confirmPassword.value !== password.value)
-    return "Passwords do not match.";
-  return "";
-});
+const passwordRules = computed(() => [
+  { required: true, message: "ລະຫັດຜ່ານບໍ່ຄວນໄວ່" },
+  { min: 6, message: "ລະຫັດຜ່ານຕ້ອງມີຢ່າງຫຼື້ນ 6 ຕົວອັກສອນ" },
+]);
 
-const hasErrors = computed(() => {
-  return passwordError.value || confirmPasswordError.value;
-});
-
-// Use auth composable
-const { resetPassword } = useAuth();
-const router = useRouter();
+const confirmPasswordRules = computed(() => [
+  { required: true, message: "ກະລຸນາຢັ້ນລະຫັດຜ່ານອີກ" },
+  {
+    validator: (_rule: any, value: string) => {
+      if (value !== formState.password) {
+        return Promise.reject("ລະຫັດຜ່ານບໍ່ຕົງກັນ");
+      }
+      return Promise.resolve();
+    },
+  },
+]);
 
 // Handle reset password
 const handleResetPassword = async () => {
-  console.log("handleResetPassword called");
-
-  if (hasErrors.value) {
-    console.log("Validation errors present");
-    return;
-  }
-
   if (!userId) {
-    showErrorNotification("User ID not found. Please restart the process.");
+    showErrorNotification("ບໍ່ພົບ ID ຜູ່ຄົນ. ກະລຸນາເລີກກວນຈາກົງໃຫ້.");
+    router.push({ name: "forgot-password" });
     return;
   }
 
   isLoading.value = true;
-  serverError.value = "";
+  errorMessage.value = "";
 
   try {
-    console.log("Calling resetPassword with:", userId, password.value);
     const response = await resetPassword(
-      userId,
-      password.value,
-      confirmPassword.value
+      parseInt(userId),
+      formState.password,
+      formState.confirmPassword,
     );
     console.log("Response from resetPassword:", response);
 
-    showSuccessNotification(response.message || "Password reset successful!");
+    showSuccessNotification(response.message || "ຕັ້ງລຳລະຫັດຜ່ານສຳເລັດ!");
+
+    // Clear verify_user_id from localStorage
+    localStorage.removeItem("verify_user_id");
 
     if (response.status_code === 200 || response.status_code === 201) {
-      router.push({ name: "login" });
+      setTimeout(() => {
+        router.push({ name: "login" });
+      }, 1500);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error("Reset password error:", err);
-    showErrorNotification(err.message || "Failed to reset password.");
+    errorMessage.value = err.message || "ບໍ່ສາມາຕັ້ງລຳລະຫັດຜ່ານ.";
+    showErrorNotification(errorMessage.value);
   } finally {
     isLoading.value = false;
   }
 };
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log("Validation failed:", errorInfo);
+};
 </script>
 
 <style scoped lang="scss">
-.reset-password-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.auth-background {
+  @extend .auth-background;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #0d334a;
+.auth-card {
+  @extend .auth-card;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
+.auth-heading {
+  @extend .auth-heading;
 }
 
-label {
-  margin-bottom: 6px;
+.auth-subtitle {
+  @extend .auth-subtitle;
+}
+
+.auth-logo {
+  @extend .auth-logo;
+}
+
+.auth-input {
+  @extend .auth-input;
+}
+
+.auth-button {
+  @extend .auth-button;
+}
+
+.auth-link {
+  @extend .auth-link;
+}
+
+// Override Ant Design styles
+:deep(.ant-form-item-label > label) {
   font-weight: 600;
-  font-size: 14px;
   color: #333;
 }
 
-input {
-  padding: 12px;
-  border: 1px solid #dcdde1;
+:deep(.ant-input-affix-wrapper) {
   border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:focus {
-  border-color: #0d334a;
-  box-shadow: 0 0 4px rgba(13, 51, 74, 0.3);
-}
-
-.error {
-  color: #e04b4b;
-  font-size: 13px;
-  margin-top: 6px;
-  min-height: 18px;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  background-color: #084a64;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.2s;
-}
-
-button:disabled {
-  background-color: #a0b0b9;
-  cursor: not-allowed;
 }
 </style>

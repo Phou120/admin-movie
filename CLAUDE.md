@@ -108,7 +108,8 @@ For file uploads, set `Content-Type: "multipart/form-data"` and use FormData.
 Routes are defined in `src/router.ts`:
 
 **Public Routes** (with `skipAuthCheck: true` meta):
-- `/`, `/about-us`, `/contact`, `/register`, `/login` - Website pages and auth
+- `/`, `/about-us`, `/contact`, `/register` - Website pages
+- `/login`, `/forgot-password`, `/verify-otp`, `/reset-password` - Authentication pages
 
 **Protected Routes** (nested under `Layout` component):
 - `/dashboard`, `/user`, `/customer`, `/video`, etc. - Admin pages requiring authentication

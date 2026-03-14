@@ -1,72 +1,103 @@
 <template>
-  <a-form
-    :model="formState"
-    name="basic"
-    :label-col="{ span: 24 }"
-    :wrapper-col="{ span: 24 }"
-    autocomplete="off"
-    @finish="onFinish"
-    @finishFailed="onFinishFailed"
-    class="login-form"
-  >
-    <h2 class="title">ຍີນດີຕ້ອນຮັບ ເຂົ້າສູ່ລະບົບ</h2>
+  <div class="auth-background">
+    <transition name="fade" appear>
+      <a-card class="auth-card">
+        <!-- Logo/Branding Section -->
+        <div class="auth-logo">
+          <img src="../../../../src/assets/images/logo.png" alt="Logo" />
+        </div>
 
-    <a-form-item
-      label="email"
-      name="email"
-      :rules="[{ required: true, message: 'Please input your email!' }]"
-    >
-      <a-input
-        v-model:value="formState.email"
-        size="large"
-        placeholder="Enter your email"
-      >
-        <template #prefix>
-          <UserOutlined class="site-form-item-icon" />
-        </template>
-      </a-input>
-    </a-form-item>
+        <!-- Title -->
+        <h1 class="auth-heading">ຍີນດີຕ້ອນຮັບ ເຂົ້າສູ່ລະບົບ</h1>
+        <br />
+        <br />
 
-    <a-form-item
-      label="Password"
-      name="password"
-      :rules="[{ required: true, message: 'Please input your password!' }]"
-    >
-      <a-input-password
-        v-model:value="formState.password"
-        size="large"
-        placeholder="Enter your password"
-      >
-        <template #prefix>
-          <LockOutlined class="site-form-item-icon" />
-        </template>
-      </a-input-password>
-    </a-form-item>
+        <!-- Login Form -->
+        <a-form
+          :model="formState"
+          name="login"
+          autocomplete="off"
+          @finish="onFinish"
+          @finishFailed="onFinishFailed"
+        >
+          <!-- Email Input -->
+          <a-form-item
+            label="ອີເມວ"
+            class="auth-email"
+            name="email"
+            :rules="emailRules"
+          >
+            <a-input
+              v-model:value="formState.email"
+              size="large"
+              class="auth-input"
+              placeholder="ປ້ອນອີເມວລຂອງທ່ານ"
+              aria-label="Email address"
+            >
+              <template #prefix>
+                <UserOutlined />
+              </template>
+            </a-input>
+          </a-form-item>
 
-    <a-form-item>
-      <div class="forgot-password-wrapper">
-        <router-link to="/forgot-password" class="forgot-password-link">
-          ລືມລະຫັດຜ່ານ?
-        </router-link>
-      </div>
-    </a-form-item>
+          <!-- Password Input -->
+          <a-form-item label="ລະຫັດຜ່ານ" name="password" :rules="passwordRules">
+            <a-input-password
+              v-model:value="formState.password"
+              size="large"
+              class="auth-input"
+              placeholder="ປ້ອນລະຫັດຜ່ານ"
+              aria-label="Password"
+            >
+              <template #prefix>
+                <LockOutlined />
+              </template>
+            </a-input-password>
+          </a-form-item>
 
-    <a-form-item>
-      <a-button
-        type="primary"
-        html-type="submit"
-        block
-        size="large"
-        class="apply-now-button"
-        style="margin-top: 10px"
-        :loading="loading"
-      >
-        ເຂົ້າສູ່ລະບົບ
-      </a-button>
-    </a-form-item>
+          <!-- Remember Me & Forgot Password -->
+          <div class="form-actions">
+            <a-checkbox v-model:checked="formState.rememberMe">
+              ຈຳໄວ້
+            </a-checkbox>
+            <router-link :to="{ name: 'forgot-password' }" class="auth-link">
+              ລືມລະຫັດຜ່ານ?
+            </router-link>
+          </div>
 
-    <p v-if="formState.error" style="color: red">{{ formState.error }}</p>
-  </a-form>
+          <!-- Submit Button -->
+          <a-form-item>
+            <a-button
+              type="primary"
+              html-type="submit"
+              size="large"
+              class="auth-button"
+              :loading="loading"
+            >
+              {{ loading ? "ກຳລັງດຳເນີນ..." : "ເຂົ້າສູ່ລະບົບ" }}
+            </a-button>
+          </a-form-item>
+
+          <!-- Error Alert -->
+          <a-alert
+            v-if="errorMessage"
+            type="error"
+            :message="errorMessage"
+            show-icon
+            closable
+            @close="errorMessage = ''"
+            class="mt-md"
+          />
+        </a-form>
+
+        <!-- Sign Up Link -->
+        <div class="text-center mt-md">
+          <span class="text-muted">ບໍ່ມີບັນຊີບ? </span>
+          <router-link to="/register" class="auth-link"> ລົງທະບຽນ </router-link>
+        </div>
+      </a-card>
+    </transition>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -75,109 +106,142 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
 import { notification } from "ant-design-vue";
 import { useAuth } from "./composible/auth";
+import "./styles/auth.scss";
 
 const router = useRouter();
 const { login } = useAuth();
 
 const loading = ref(false);
+const errorMessage = ref("");
 
 interface FormState {
   email: string;
   password: string;
-  error: string;
+  offer: string;
+  rememberMe: boolean;
 }
 
 const formState = reactive<FormState>({
   email: "",
   password: "",
-  error: "",
+  offer: "",
+  rememberMe: false,
 });
+
+const emailRules = [
+  { required: true, message: "ອີເມວລບໍ່ຄວນຫວ່າງ" },
+  { type: "email", message: "ຮູບແບບອີເມວບໍ່ຖືກຕ້ອງ" },
+];
+
+const passwordRules = [
+  { required: true, message: "ລະຫັດຜ່ານບໍ່ຄວນຫວ່າງ" },
+  { min: 6, message: "ລະຫັດຜ່ານຕ້ອງມີຢ່າງນ້ອຍ 6 ຕົວອັກສອນ" },
+];
 
 const onFinish = async (values: any) => {
   loading.value = true;
-  await login(values.email, values.password)
-    .then(() => {
-      notification.success({
-        message: "Login Successful",
-        description: "Welcome back!",
-        duration: 2,
-      });
-      router.push({ name: "profile" });
-    })
-    .catch((error) => {
-      notification.error({
-        message: "Login Failed",
-        description: "Incorrect email or password!",
-        duration: 3,
-      });
-      console.error("Login failed:", error);
-    })
-    .finally(() => {
-      loading.value = false;
+  errorMessage.value = "";
+
+  try {
+    await login(values.email, values.password);
+
+    notification.success({
+      message: "ເຂົ້າສູ່ລະບົບສຳເລັດ",
+      description: "ຍີນດີຕ້ອນຮັບກັບມາ!",
+      duration: 2,
     });
+
+    // Redirect based on role
+    const userRoles = localStorage.getItem("user_roles");
+    if (userRoles?.includes("customer")) {
+      router.push({ name: "customer" });
+    } else {
+      router.push({ name: "dashboard" });
+    }
+  } catch (error: any) {
+    console.error("Login failed:", error);
+    errorMessage.value =
+      error.response?.data?.message || "ອີເມວລຫຼືລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ";
+
+    notification.error({
+      message: "ເຂົ້າສູ່ລະບົບບໍ່ສໍາເລັດ",
+      description: "ກວດອີເມວລແລະຫັດຜ່ານຂອງທ່ານອີກ",
+      duration: 3,
+    });
+  } finally {
+    loading.value = false;
+  }
 };
 
 const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
+  console.log("Validation failed:", errorInfo);
 };
 </script>
 
-<style scoped>
-.login-form {
-  max-width: 400px;
-  margin: 100px auto;
-  padding: 20px;
-  border: 1px solid #e7e4e4;
+<style scoped lang="scss">
+.auth-email {
+  margin-left: 28px;
+}
+.auth-background {
+  @extend .auth-background;
+}
+
+.auth-card {
+  @extend .auth-card;
+}
+
+.auth-heading {
+  @extend .auth-heading;
+}
+
+.auth-subtitle {
+  @extend .auth-subtitle;
+}
+
+.auth-logo {
+  @extend .auth-logo;
+}
+
+.auth-input {
+  @extend .auth-input;
+}
+
+.auth-button {
+  @extend .auth-button;
+}
+
+.auth-link {
+  @extend .auth-link;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.text-muted {
+  color: #666;
+  font-size: 14px;
+}
+
+// Override Ant Design styles
+:deep(.ant-form-item-label > label) {
+  font-weight: 600;
+  color: #333;
+}
+
+:deep(.ant-input-affix-wrapper) {
   border-radius: 8px;
 }
 
-.forgot-password-wrapper {
-  text-align: right;
-  margin-top: -10px;
-  margin-bottom: 0;
+:deep(.ant-checkbox-wrapper) {
+  color: #666;
 }
 
-.forgot-password-link {
-  color: #0d334aff;
-  font-size: 14px;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.forgot-password-link:hover {
-  color: #2d6991ff;
-  text-decoration: underline;
-}
-
-.apply-now-button {
-  background-color: #0d334aff;
-  color: #fff;
-  border: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 12px 24px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  border-radius: 4px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.apply-now-button:hover {
-  background-color: #2d6991ff;
-  color: #ffd700;
-  cursor: pointer;
-}
-
-.title {
-  margin: 0;
-  font-size: 22px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-  text-align: center;
-  justify-content: center;
+:deep(.ant-checkbox-checked .ant-checkbox-inner) {
+  background-color: var(--auth-primary);
+  border-color: var(--auth-primary);
 }
 </style>

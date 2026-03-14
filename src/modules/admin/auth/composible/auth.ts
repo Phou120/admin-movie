@@ -35,6 +35,7 @@ export function useAuth() {
     const response = await apiClient.post("/users/verify-otp", {
       otp: otp,
     });
+    console.log("otp", otp);
     if (response.status === 201 || response.status === 200) {
       localStorage.setItem("verify_user_id", response.data.data.id);
     }
@@ -44,7 +45,7 @@ export function useAuth() {
   const resetPassword = async (
     id: number,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
   ) => {
     console.log("password", password);
     const payload = {
@@ -53,7 +54,7 @@ export function useAuth() {
     };
     const response = await apiClient.put(
       `/users/reset-password/${id}`,
-      payload
+      payload,
     );
 
     return response.data;

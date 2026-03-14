@@ -3,6 +3,10 @@
   font-family: "Noto Sans Lao", sans-serif !important;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
 /* Add this to global.css as well */
 .ant-input,
 .ant-input-affix-wrapper,
