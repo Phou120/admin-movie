@@ -24,7 +24,8 @@
       "video": "Video Report",
       "member": "Member Report"
     },
-    "qrCode": "QR Code"
+    "qrCode": "QR Code",
+    "view": "Setting View"
   },
   "common": {
     "search": "Search",
@@ -46,7 +47,8 @@
     "error": "Error",
     "warning": "Warning",
     "info": "Information",
-    "retry": "Retry"
+    "retry": "Retry",
+    "update": "Update"
   },
   "auth": {
     "login": "Login",
@@ -1075,6 +1077,32 @@
         "clickToBrowse": "Click to browse files",
         "newFileSelected": "New file selected",
         "dragOrClick": "Drag & drop file here or click to browse"
+      }
+    },
+    "views": {
+      "title": "Setting Views",
+      "columns": {
+        "no": "No",
+        "quantity": "Quantity",
+        "price": "Price",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "action": "Action"
+      },
+      "editModal": "Update View",
+      "form": {
+        "quantity": "Quantity",
+        "price": "Price",
+        "note": "Quantity is fixed at 1 view per pricing tier",
+        "validation": {
+          "exactlyOne": "Exactly one view is required",
+          "fixedAtOne": "Fixed at one view",
+          "priceGreaterThanZero": "Price must be greater than zero"
+        },
+        "placeholder": {
+          "fixed": "Fixed",
+          "price": "Enter price"
+        }
       }
     }
   },

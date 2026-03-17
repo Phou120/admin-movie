@@ -10,7 +10,11 @@
   </div>
 
   <div class="form-container">
-    <a-card title="Customer Information" class="customer-view-card" v-if="!loading">
+    <a-card
+      title="Customer Information"
+      class="customer-view-card"
+      v-if="!loading"
+    >
       <a-descriptions :column="2" bordered>
         <!-- Profile Image -->
         <a-descriptions-item label="Profile Image" :span="2">
@@ -28,40 +32,37 @@
 
         <!-- Basic Information -->
         <a-descriptions-item label="Name">
-          {{ customer.name || '-' }}
+          {{ customer.name || "-" }}
         </a-descriptions-item>
         <a-descriptions-item label="Surname">
-          {{ customer.surname || '-' }}
+          {{ customer.surname || "-" }}
         </a-descriptions-item>
         <a-descriptions-item label="Email">
-          <a :href="`mailto:${customer.email}`">{{ customer.email || '-' }}</a>
+          <a :href="`mailto:${customer.email}`">{{ customer.email || "-" }}</a>
         </a-descriptions-item>
         <a-descriptions-item label="Telephone">
-          <a :href="`tel:${customer.tel}`">{{ customer.tel || '-' }}</a>
+          <a :href="`tel:${customer.tel}`">{{ customer.tel || "-" }}</a>
         </a-descriptions-item>
         <a-descriptions-item label="Type" :span="2">
           <a-tag :color="getTypeColor(customer.type)" class="type-badge">
-            {{ customer.type?.toUpperCase() || '-' }}
+            {{ customer.type?.toUpperCase() || "-" }}
           </a-tag>
         </a-descriptions-item>
         <a-descriptions-item label="Status" :span="2">
           <a-tag :color="getStatusColor(customer.status)" class="status-badge">
-            {{ customer.status?.toUpperCase() || '-' }}
+            {{ customer.status?.toUpperCase() || "-" }}
           </a-tag>
         </a-descriptions-item>
         <a-descriptions-item label="Address" :span="2">
-          {{ customer.address || '-' }}
+          {{ customer.address || "-" }}
         </a-descriptions-item>
 
         <!-- System Information -->
-        <a-descriptions-item label="Customer ID">
-          {{ customer.id || '-' }}
+        <a-descriptions-item label="bank account name">
+          {{ customer.bank_account_name || "-" }}
         </a-descriptions-item>
-        <a-descriptions-item label="User ID">
-          {{ customer.user_id || '-' }}
-        </a-descriptions-item>
-        <a-descriptions-item label="User Number">
-          {{ customer.user?.user_no || '-' }}
+        <a-descriptions-item label="bank account number">
+          {{ customer.bank_account_number || "-" }}
         </a-descriptions-item>
         <a-descriptions-item label="Created At">
           {{ formatDate(customer.created_at) }}
@@ -186,7 +187,8 @@ onMounted(() => {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.status-badge, .type-badge {
+.status-badge,
+.type-badge {
   font-weight: 600;
   text-transform: uppercase;
   font-size: 12px;

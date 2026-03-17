@@ -16,30 +16,43 @@ const { fetchAll, updateView } = ViewsComposible();
 const { t } = useI18n();
 
 const columns = computed(() => [
-  { title: "No", dataIndex: "id", key: "no", align: "center", width: 70 },
   {
-    title: "Quantity",
+    title: t("modules.views.columns.no"),
+    dataIndex: "id",
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.views.columns.quantity"),
     dataIndex: "qty",
     key: "qty",
     align: "center",
     width: 100,
   },
   {
-    title: "Price",
+    title: t("modules.views.columns.price"),
     dataIndex: "price",
     key: "price",
     align: "center",
     width: 150,
   },
   {
-    title: "Created At",
+    title: t("modules.views.columns.createdAt"),
     dataIndex: "created_at",
     key: "created_at",
     align: "center",
     width: 200,
   },
   {
-    title: "Action",
+    title: t("modules.views.columns.updatedAt"),
+    dataIndex: "updated_at",
+    key: "updated_at",
+    align: "center",
+    width: 200,
+  },
+  {
+    title: t("modules.views.columns.action"),
     key: "action",
     align: "center",
     width: 100,
@@ -75,7 +88,7 @@ function getRowNumber(index: number): number {
 // Function to load views with pagination
 async function loadViews(
   page = data.pagination.current,
-  limit = data.pagination.pageSize
+  limit = data.pagination.pageSize,
 ) {
   loading.value = true;
   try {
@@ -134,15 +147,15 @@ async function submitUpdate(form: IViewsForm) {
   }
 }
 
-// Format price to display with commas
+// Format price to display with commas using current locale
 function formatPrice(price: number): string {
-  return new Intl.NumberFormat("en-US").format(price);
+  return new Intl.NumberFormat().format(price);
 }
 </script>
 
 <template>
   <div class="customer-header">
-    <h1>Views</h1>
+    <h1>{{ t("modules.views.title") }}</h1>
   </div>
 
   <a-table
@@ -162,6 +175,9 @@ function formatPrice(price: number): string {
       </template>
       <template v-else-if="column.key === 'created_at'">
         {{ formatDate(record.created_at) }}
+      </template>
+      <template v-else-if="column.key === 'updated_at'">
+        {{ formatDate(record.updated_at) }}
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">

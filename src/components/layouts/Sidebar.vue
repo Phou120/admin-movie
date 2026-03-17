@@ -39,6 +39,15 @@
         <span>{{ t("sidebar.category") }}</span>
       </a-menu-item>
 
+      <a-menu-item
+        v-if="isAdminOrSuperAdmin"
+        key="19"
+        @click="handlerMenu('view')"
+      >
+        <AppstoreOutlined />
+        <span>{{ t("sidebar.view") }}</span>
+      </a-menu-item>
+
       <!-- Video - All roles -->
       <a-menu-item key="16" @click="handlerMenu('video')">
         <VideoCameraOutlined />
@@ -189,6 +198,7 @@ const routeToMenuKey: Record<string, string> = {
   role: "11",
   user: "12",
   profile: "13",
+  view: "19",
   // "video-report": "14",
   // "member-report": "15",
 };

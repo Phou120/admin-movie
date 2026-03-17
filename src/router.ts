@@ -31,6 +31,7 @@ import CustomerPage from "./modules/admin/customer/Customer.vue";
 import AddCustomerPage from "./modules/admin/customer/components/AddCustomer.vue";
 import EditCustomerPage from "./modules/admin/customer/components/EditCustomer.vue";
 import ViewCustomerPage from "./modules/admin/customer/components/ViewCustomer.vue";
+import ViewPage from "./modules/admin/views/Views.vue";
 
 // Member Module
 import MemberPage from "./modules/admin/member/Member.vue";
@@ -232,6 +233,11 @@ const routes = [
         path: "/video",
         name: "video",
         component: VideoPage,
+      },
+      {
+        path: "/view",
+        name: "view",
+        component: ViewPage,
       },
       {
         path: "/video/create",

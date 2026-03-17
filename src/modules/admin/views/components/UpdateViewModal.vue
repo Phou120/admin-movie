@@ -3,6 +3,7 @@ import { ref, watch, computed } from "vue";
 import { CloseOutlined, SaveOutlined } from "@ant-design/icons-vue";
 import type { IViewsForm } from "../interface/views.interface";
 import { formatInputNumber, parseFormattedNumber } from "../../../../common/utils/format-number.util";
+import { useI18n } from "vue-i18n";
 
 interface Props {
   visible: boolean;
@@ -16,6 +17,7 @@ interface Emits {
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
+const { t } = useI18n();
 
 const formUpdate = ref<IViewsForm>({
   id: 0,
@@ -99,16 +101,16 @@ const isFormValid = computed(() => {
 <template>
   <a-modal
     :open="visible"
-    title="Edit View"
+    :title="t('modules.views.editModal')"
     :footer="null"
     @cancel="handleCancel"
   >
     <a-form layout="vertical">
       <a-form-item
-        label="Quantity"
+        :label="t('modules.views.form.quantity')"
         :validate-status="formUpdate.qty === 1 ? 'success' : 'error'"
         :help="
-          formUpdate.qty !== 1 ? 'Quantity must be exactly 1' : 'Fixed at 1'
+          formUpdate.qty !== 1 ? t('modules.views.form.validation.exactlyOne') : t('modules.views.form.validation.fixedAtOne')
         "
       >
         <a-input-number
@@ -116,26 +118,26 @@ const isFormValid = computed(() => {
           :min="1"
           :max="1"
           :step="1"
-          placeholder="1 (fixed)"
+          :placeholder="t('modules.views.form.placeholder.fixed')"
           style="width: 100%"
           :disabled="true"
         />
         <div style="color: #666; font-size: 12px; margin-top: 4px">
-          Quantity is fixed at 1
+          {{ t('modules.views.form.note') }}
         </div>
       </a-form-item>
 
       <a-form-item
-        label="Price"
+        :label="t('modules.views.form.price')"
         :validate-status="formUpdate.price > 0 ? 'success' : 'error'"
-        :help="formUpdate.price <= 0 ? 'Price must be greater than 0' : ''"
+        :help="formUpdate.price <= 0 ? t('modules.views.form.validation.priceGreaterThanZero') : ''"
       >
         <a-input
           :value="formattedPrice"
           type="text"
           inputmode="numeric"
           pattern="[0-9]*"
-          placeholder="Enter price"
+          :placeholder="t('modules.views.form.placeholder.price')"
           style="width: 100%"
           @input="handlePriceInput"
           @keypress="handlePriceKeyPress"
@@ -146,7 +148,7 @@ const isFormValid = computed(() => {
 
     <div class="modal-footer">
       <a-button class="custom-cancel-btn" @click="handleCancel">
-        <CloseOutlined />Close
+        <CloseOutlined />{{ t('common.cancel') }}
       </a-button>
       <a-button
         type="primary"
@@ -155,7 +157,7 @@ const isFormValid = computed(() => {
         :disabled="!isFormValid"
       >
         <SaveOutlined />
-        Update
+        {{ t('common.update') }}
       </a-button>
     </div>
   </a-modal>

@@ -5,27 +5,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ```bash
+# Install dependencies (project uses pnpm)
+pnpm install
+
 # Start development server
 pnpm dev
 
 # Build for production (type-checks with vue-tsc -b then builds)
+# The -b flag is the build mode for incremental type checking
 pnpm build
 
 # Preview production build
 pnpm preview
 ```
 
-**Note:** This project does not have a test framework configured.
+**Note:** This project uses **pnpm** as the package manager. This project does not have a test framework configured.
 
 ## Tech Stack
 
 - **Vue 3.5** with Composition API and `<script setup>` syntax
 - **TypeScript** with strict type checking (uses project references: `tsconfig.app.json`, `tsconfig.node.json`)
 - **Ant Design Vue 4.x** for UI components
+
 - **Vue Router 4** for routing
 - **Axios** for HTTP requests
 - **Socket.io-client** for real-time payment notifications
 - **Vue I18n** for internationalization (primary: Lao, secondary: English)
+- **ECharts** with echarts-for-vue for dashboard visualization
 - **Quill** and **TinyMCE** as rich text editors (`@tinymce/tinymce-vue`)
 - **SASS** for styling
 - **Vite** as build tool
@@ -96,12 +102,14 @@ For file uploads, set `Content-Type: "multipart/form-data"` and use FormData.
 
 ### Authentication & Authorization
 
-- **JWT-based** with token stored in localStorage
+- **JWT-based** with token stored in localStorage as `token`
 - **Route guard** at `src/common/guards/auth.guard.ts` protects all routes except public pages
 - **Role-based access**: `admin`, `super-admin`, `customer` roles
-- **Sidebar navigation** dynamically shows/hides menu items based on user role
+- **User roles** stored in localStorage as `user_roles` key - can be JSON array or comma-separated string
+- **Sidebar navigation** dynamically shows/hides menu items based on user role via `isAdminOrSuperAdmin` computed property
 - **Default authenticated landing page**: `/customer` route
 - **Special auth behavior**: Logged-in users accessing `/login` are redirected to `customer` route
+- **Route-to-menu mapping**: Sidebar uses `routeToMenuKey` mapping object to highlight active menu item based on current route name
 
 ### Routing Structure
 
@@ -132,33 +140,44 @@ Route patterns:
 ### Real-time Features
 
 - **Socket.io** integration for payment notifications
-- Global socket instance at `src/common/utils/socket.util.ts` connects to `VITE_API_BASE_URL`
-- Sound notifications when payments are received
-- Composable at `src/common/composables/useSocketNotification.ts` handles notification logic
+- Global socket instance at `src/common/utils/socket.util.ts` connects to `VITE_API_BASE_URL` using WebSocket transport
+- **useSocketNotification composable** at `src/common/composables/useSocketNotification.ts`:
+  - Auto-connects on first import (singleton pattern)
+  - Listens to `payment_notification` events from backend
+  - Maintains notifications list (max 50, prevents duplicates)
+  - Provides reactive `unreadCount` and `recentNotifications` computed properties
+  - Emits `payment_notification` custom window event for component listening
+- **Audio notifications**: `playPaymentSound()` in `src/common/utils/notification.util.ts`
+  - Pre-loads notification audio file from `src/assets/sounds/`
+  - Handles browser autoplay restrictions with automatic unlock on user interaction
+  - Audio is "unlocked" on first click, keypress, touch, or mousedown event
 
 ### Internationalization
 
-- **Primary language**: Lao
-- **Secondary**: English
-- Locale files in `src/locales/`
-- Language switcher component available
-- API calls include `lang: "lo"` header for multi-language support
+- **Primary language**: Lao (`"lo"`)
+- **Secondary**: English (`"en"`)
+- Locale files in `src/locales/` (`en.json`, `lo.json`, `index.ts`)
+- Locale preference persisted in localStorage as `locale` key (defaults to `"lo"`)
+- Vue I18n configured in Composition API mode (`legacy: false`)
+- Language switcher component available in AppHeader
+- API calls include `lang: "lo"` header from localStorage for multi-language support
+- Fallback locale is set to `"lo"`
 
 ### Component Organization
 
 **Admin Layout Components** (`src/components/layouts/`):
-- `Layout.vue` - Main layout wrapper for admin panel
-- `Navbar.vue` - Top navigation bar
-- `Sidebar.vue` - Dynamic sidebar with role-based menu items
+- `Layout.vue` - Main layout wrapper for admin panel (sidebar + navbar + content area)
+- `Navbar.vue` - Top navigation bar with user menu, notifications, logout
+- `Sidebar.vue` - Dynamic sidebar with role-based menu items, route-to-menu-key mapping for active state
 
 **Website Layout Components** (`src/modules/website/components/`):
-- `WebsiteLayout.vue` - Main layout wrapper for public pages (includes AppHeader/AppFooter)
-- `AppHeader.vue` - Global header with logo, navigation, language switcher, auth buttons
-- `AppFooter.vue` - Global footer with copyright
+- `WebsiteLayout.vue` - Main layout wrapper for public pages, wraps AppHeader/AppFooter around content
+- `AppHeader.vue` - Global header with logo, public navigation links, language switcher, auth buttons
+- `AppFooter.vue` - Global footer with copyright information
 
 **Reusable Components** (`src/components/`):
-- `AddButton.vue` - Standardized add button
-- `LanguageSwitcher.vue` - Language toggle
+- `AddButton.vue` - Standardized add button for list pages
+- `LanguageSwitcher.vue` - Language toggle (en/lo)
 - `TextEditor.vue` - Rich text editor component (uses Quill)
 
 **Common Directory** (`src/common/`):
@@ -253,7 +272,17 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 
 ### Environment Variables
 
-- `VITE_API_BASE_URL` - Backend API base URL
+- `VITE_API_BASE_URL` - Backend API base URL (e.g., `http://localhost:8000/api/`)
+
+### TypeScript Configuration
+
+- Uses TypeScript project references with `tsconfig.json`, `tsconfig.app.json`, and `tsconfig.node.json`
+- Strict mode enabled with additional linting rules:
+  - `noUnusedLocals` - Flags unused local variables
+  - `noUnusedParameters` - Flags unused function parameters
+  - `noFallthroughCasesInSwitch` - Requires explicit break/return in all switch cases
+  - `erasableSyntaxOnly` - Only allows TypeScript syntax that can be erased
+- Build command `pnpm build` runs `vue-tsc -b` for type checking before building
 
 ### Common Utilities
 
