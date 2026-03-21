@@ -22,7 +22,9 @@
     "reports": "ລາຍງານ",
     "report": {
       "video": "ລາຍງານວິດີໂອ",
-      "member": "ລາຍງານສະມາຊິກ"
+      "user": "ລາຍງານຜູ້ໃຊ້ລະບົບ",
+      "package": "ລາຍງານແພັກເກັດ",
+      "payment": "ລາຍງານການຊຳລະ"
     },
     "qrCode": "ຄຄິວຣາໂຄດ",
     "view": "ຕັ້ງຄ່າວິວ"
@@ -39,6 +41,7 @@
     "submit": "ສົ່ງ",
     "back": "ກັບຄືນ",
     "loading": "ກຳລັງໂຫຼດ...",
+    "updating": "ກຳລັງອັບເດດ...",
     "confirm": "ຢືນຢັນ",
     "yes": "ແມ່ນ",
     "no": "ບໍ່",
@@ -282,6 +285,11 @@
       "tableTitle": "ລາຍການລູກຄ້າ",
       "searchPlaceholder": "ຄົ້ນຫາລູກຄ້າຕາມຊື່ ຫຼື ອີເມວ...",
       "noData": "ບໍ່ພົບລູກຄ້າ",
+      "viewDetails": "ລາຍລະອຽດລູກຄ້າ",
+      "backToCustomers": "ກັບຄືນຫາລູກຄ້າ",
+      "pleaseSelectStatus": "ກະລຸນາເລືອກສະຖາະ",
+      "changeStatus": "ປ່ຽນສະຖາະ",
+      "selectHint": "ຄລິກເພື້ອນເລືອກສະຖາະ",
       "columns": {
         "no": "ລຳດັບ",
         "profile": "ໂປຣໄຟລ໌",
@@ -301,20 +309,30 @@
         "surname": "ນາມສະກຸນ",
         "email": "ອີເມວ",
         "phone": "ເບີໂທ",
+        "telephone": "ໂທລະຟອນ",
         "address": "ທີ່ຢູ່",
         "status": "ສະຖານະ",
         "customer": "ລູກຄ້າ",
+        "type": "ປະເພດ",
         "avatar": "ຮູບໂປຣໄຟລ໌",
+        "profileImage": "ຮູບໂປຣໄຟລ໌",
+        "customerInformation": "ຂໍ້ມູນລູກຄ້າ",
         "password": "ລະຫັດຜ່ານ",
         "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
+        "bankAccountName": "ຊື່ບັນຊີທະນາຄານ",
+        "bankAccountNumber": "ເລກບັນຊີທະນາຄານ",
         "sections": {
           "personalInformation": "ຂໍ້ມູນສ່ວນຕົວ"
+        },
+        "error": {
+          "loadFailed": "ບໍ່ສາມາດໂຫຼດຂໍ້ມູນລູກຄ້າ"
         },
         "placeholder": {
           "name": "ປ້ອນຊື່",
           "surname": "ປ້ອນນາມສະກຸນ",
           "email": "ປ້ອນທີ່ຢູ່ອີເມວ",
           "phone": "ປ້ອນເບີໂທ",
+          "telephone": "ປ້ອນໂທລະຟອນ",
           "address": "ປ້ອນທີ່ຢູ່",
           "password": "ປ້ອນລະຫັດຜ່ານ",
           "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ"
@@ -1102,11 +1120,14 @@
   "status": {
     "active": "ໃຊ້ງານ",
     "inactive": "ບໍ່ໃຊ້ງານ",
-    "pending": "ລໍຖ້າອະນຸມັດ",
+    "pending": "ລໍຖ້າການອະນຸມັດ",
+    "pendingDescription": "",
     "suspended": "ຖືກລົບກວງ",
-    "approved": "ອະນຸມັດ",
+    "approved": "ອະນຸມັດສໍາເລັດ",
+    "approvedDescription": "",
     "rejected": "ປະຕິເສດ",
-    "blacklisted": "ເຂົ້າບັນຊີດຳ",
+    "blacklisted": "ຖືກບລັອກ",
+    "blacklistedDescription": "",
     "success": "ສຳເລັດ",
     "failed": "ລົບເຫຼວ"
   },

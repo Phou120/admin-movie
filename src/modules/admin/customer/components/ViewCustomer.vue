@@ -1,23 +1,23 @@
 <template>
   <div class="customer-view-header">
-    <h1>Customer Details</h1>
+    <h1>{{ t('modules.customer.viewDetails') }}</h1>
     <div>
       <a-button @click="goBack">
         <arrow-left-outlined />
-        Back to Customers
+        {{ t('modules.customer.backToCustomers') }}
       </a-button>
     </div>
   </div>
 
   <div class="form-container">
     <a-card
-      title="Customer Information"
+      :title="t('modules.customer.form.customerInformation')"
       class="customer-view-card"
       v-if="!loading"
     >
       <a-descriptions :column="2" bordered>
         <!-- Profile Image -->
-        <a-descriptions-item label="Profile Image" :span="2">
+        <a-descriptions-item :label="t('modules.customer.form.profileImage')" :span="2">
           <a-avatar
             :src="customer.user?.profile?.image_url"
             :size="100"
@@ -31,43 +31,43 @@
         </a-descriptions-item>
 
         <!-- Basic Information -->
-        <a-descriptions-item label="Name">
+        <a-descriptions-item :label="t('modules.customer.columns.name')">
           {{ customer.name || "-" }}
         </a-descriptions-item>
-        <a-descriptions-item label="Surname">
+        <a-descriptions-item :label="t('modules.customer.columns.surname')">
           {{ customer.surname || "-" }}
         </a-descriptions-item>
-        <a-descriptions-item label="Email">
+        <a-descriptions-item :label="t('modules.customer.columns.email')">
           <a :href="`mailto:${customer.email}`">{{ customer.email || "-" }}</a>
         </a-descriptions-item>
-        <a-descriptions-item label="Telephone">
+        <a-descriptions-item :label="t('modules.customer.form.telephone')">
           <a :href="`tel:${customer.tel}`">{{ customer.tel || "-" }}</a>
         </a-descriptions-item>
-        <a-descriptions-item label="Type" :span="2">
+        <a-descriptions-item :label="t('modules.customer.form.type')" :span="2">
           <a-tag :color="getTypeColor(customer.type)" class="type-badge">
             {{ customer.type?.toUpperCase() || "-" }}
           </a-tag>
         </a-descriptions-item>
-        <a-descriptions-item label="Status" :span="2">
+        <a-descriptions-item :label="t('modules.customer.columns.status')" :span="2">
           <a-tag :color="getStatusColor(customer.status)" class="status-badge">
             {{ customer.status?.toUpperCase() || "-" }}
           </a-tag>
         </a-descriptions-item>
-        <a-descriptions-item label="Address" :span="2">
+        <a-descriptions-item :label="t('modules.customer.columns.address')" :span="2">
           {{ customer.address || "-" }}
         </a-descriptions-item>
 
         <!-- System Information -->
-        <a-descriptions-item label="bank account name">
+        <a-descriptions-item :label="t('modules.customer.form.bankAccountName')">
           {{ customer.bank_account_name || "-" }}
         </a-descriptions-item>
-        <a-descriptions-item label="bank account number">
+        <a-descriptions-item :label="t('modules.customer.form.bankAccountNumber')">
           {{ customer.bank_account_number || "-" }}
         </a-descriptions-item>
-        <a-descriptions-item label="Created At">
+        <a-descriptions-item :label="t('modules.customer.columns.createdAt')">
           {{ formatDate(customer.created_at) }}
         </a-descriptions-item>
-        <a-descriptions-item label="Updated At">
+        <a-descriptions-item :label="t('modules.customer.columns.updatedAt')">
           {{ formatDate(customer.updated_at) }}
         </a-descriptions-item>
       </a-descriptions>
@@ -86,10 +86,12 @@ import { useRouter, useRoute } from "vue-router";
 import { ArrowLeftOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 import { useCustomer } from "../composible/index";
+import { useI18n } from "vue-i18n";
 import formatDate from "../../../../common/utils/format-date.util";
 
 const router = useRouter();
 const route = useRoute();
+const { t } = useI18n();
 const { getById } = useCustomer();
 
 const loading = ref(false);
@@ -108,7 +110,7 @@ const loadCustomerData = async () => {
     console.log("Customer data loaded:", customer.value);
   } catch (error) {
     console.error("Error loading customer data:", error);
-    message.error("Failed to load customer data");
+    message.error(t('modules.customer.error.loadFailed'));
     router.push("/customer");
   } finally {
     loading.value = false;

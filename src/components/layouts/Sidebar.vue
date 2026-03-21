@@ -139,13 +139,21 @@
             <span>{{ t("sidebar.reports") }}</span>
           </span>
         </template>
-        <a-menu-item key="14" @click="handlerMenu('video-report')">
+        <a-menu-item key="20" @click="handlerMenu('report-video')">
           <VideoCameraOutlined />
           {{ t("sidebar.report.video") }}
         </a-menu-item>
-        <a-menu-item key="15" @click="handlerMenu('member-report')">
+        <a-menu-item key="21" @click="handlerMenu('report-user')">
           <UserOutlined />
-          {{ t("sidebar.report.member") }}
+          {{ t("sidebar.report.user") }}
+        </a-menu-item>
+        <a-menu-item key="22" @click="handlerMenu('report-package')">
+          <ShoppingOutlined />
+          {{ t("sidebar.report.package") }}
+        </a-menu-item>
+        <a-menu-item key="23" @click="handlerMenu('report-payment')">
+          <WalletOutlined />
+          {{ t("sidebar.report.payment") }}
         </a-menu-item>
       </a-sub-menu>
     </a-menu>
@@ -199,8 +207,10 @@ const routeToMenuKey: Record<string, string> = {
   user: "12",
   profile: "13",
   view: "19",
-  // "video-report": "14",
-  // "member-report": "15",
+  "report-video": "20",
+  "report-user": "21",
+  "report-package": "22",
+  "report-payment": "23",
 };
 
 // Watch route changes and update selected menu item

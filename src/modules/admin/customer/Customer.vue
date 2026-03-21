@@ -71,25 +71,41 @@
         </template>
 
         <template v-else-if="column.key === 'status'">
-          <a-select
-            :value="record.status"
-            @change="handleStatusChange(record.id, $event)"
-            :loading="record.statusLoading"
-            :class="['status-select', `status-${record.status}`]"
-          >
-            <a-select-option value="pending">
-              <WarningOutlined style="color: #faad14; margin-right: 6px" />
-              <span>{{ getStatusLabel("pending") }}</span>
-            </a-select-option>
-            <a-select-option value="approved">
-              <CheckCircleOutlined style="color: #52c41a; margin-right: 6px" />
-              <span>{{ getStatusLabel("approved") }}</span>
-            </a-select-option>
-            <a-select-option value="blacklisted">
-              <CloseCircleOutlined style="color: #ff4d4f; margin-right: 6px" />
-              <span>{{ getStatusLabel("blacklisted") }}</span>
-            </a-select-option>
-          </a-select>
+          <a-dropdown :trigger="['click']" placement="bottomLeft">
+            <a-tag
+              :color="getStatusColor(record.status)"
+              class="status-badge clickable"
+              style="cursor: pointer"
+            >
+              <loading-outlined
+                v-if="customerStatusLoading[record.id]"
+                style="margin-right: 4px"
+              />
+              {{ getStatusLabel(record.status) }}
+              <down-outlined
+                v-if="!customerStatusLoading[record.id]"
+                style="margin-left: 4px; font-size: 10px"
+              />
+            </a-tag>
+            <template #overlay>
+              <a-menu class="status-dropdown-menu">
+                <a-menu-item
+                  v-for="status in getAvailableStatuses(record.status)"
+                  :key="status.value"
+                  @click="handleStatusChange(record.id, status.value)"
+                  :disabled="customerStatusLoading[record.id]"
+                >
+                  <a-tag
+                    :color="getStatusColor(status.value)"
+                    size="small"
+                    style="margin-right: 8px"
+                  >
+                    {{ status.label }}
+                  </a-tag>
+                </a-menu-item>
+              </a-menu>
+            </template>
+          </a-dropdown>
         </template>
 
         <template v-else-if="column.key === 'created_at'">
@@ -135,9 +151,8 @@ import {
   DeleteOutlined,
   EyeOutlined,
   UserOutlined,
-  WarningOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
+  DownOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { ICustomer } from "./interface/customer.interface";
@@ -155,6 +170,7 @@ const { t } = useI18n();
 // State
 const loading = ref(false);
 const searchText = ref("");
+const customerStatusLoading = ref<Record<number, boolean>>({});
 
 // Table Data
 const data = reactive<ICustomer>({
@@ -223,7 +239,7 @@ const columns = computed(() => [
     title: t("modules.customer.columns.status"),
     dataIndex: "status",
     key: "status",
-    width: 180,
+    width: 250,
     align: "center",
   },
   {
@@ -296,8 +312,36 @@ const goToViewCustomer = (customer: any) => {
 };
 
 // Handle status change
-const handleStatusChange = (id: number, status: string) => {
-  updateCustomerStatus(id, status);
+const handleStatusChange = async (id: number, status: string) => {
+  await updateCustomerStatus(id, status);
+};
+
+// Get status color for badges
+const getStatusColor = (status: string) => {
+  switch (status?.toLowerCase()) {
+    case "approved":
+      return "success"; // Green
+    case "pending":
+      return "warning"; // Orange/Yellow
+    case "blacklisted":
+      return "error"; // Red
+    default:
+      return "default"; // Gray
+  }
+};
+
+// Get available statuses based on current status
+const getAvailableStatuses = (currentStatus: string) => {
+  const allStatuses = [
+    { label: t("status.pending"), value: "pending" },
+    { label: t("status.approved"), value: "approved" },
+    { label: t("status.blacklisted"), value: "blacklisted" },
+  ];
+
+  // Filter out the current status
+  return allStatuses.filter(
+    (status) => status.value !== currentStatus?.toLowerCase(),
+  );
 };
 
 // Delete Customer
@@ -314,13 +358,21 @@ async function deleteCustomer(id: number) {
 
 // Update Customer Status
 async function updateCustomerStatus(id: number, status: string) {
+  // Set loading state for this specific customer
+  customerStatusLoading.value[id] = true;
+
   try {
     const response = await updateStatus(id, status);
     showSuccessNotification(response.message);
-    loadCustomers();
+
+    // Reload data after successful update
+    await loadCustomers();
   } catch (error: any) {
     const message = error.response?.data?.message || error.message;
     showErrorNotification(message);
+  } finally {
+    // Clear loading state for this customer
+    customerStatusLoading.value[id] = false;
   }
 }
 
@@ -363,6 +415,38 @@ onMounted(() => loadCustomers());
 
 .customer-avatar {
   border: 2px solid #f0f0f0;
+}
+
+.status-badge {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  min-width: 150px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+
+  &.clickable:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+  }
+}
+
+.status-dropdown-menu {
+  min-width: 160px;
+
+  .ant-menu-item {
+    padding: 8px 16px;
+    min-width: 260px;
+  }
+
+  .anticon {
+    margin-right: 8px;
+  }
 }
 
 .action-icons {
@@ -436,82 +520,9 @@ onMounted(() => loadCustomers());
   color: #ff4d4f;
 }
 
-// Status Select Styling
-.status-select {
-  min-width: 150px;
-  width: auto;
-
-  :deep(.ant-select-selector) {
-    font-weight: 500;
-    text-transform: capitalize;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    padding: 4px 12px !important;
-    min-height: 32px;
-    white-space: nowrap;
-  }
-
-  &.status-pending {
-    :deep(.ant-select-selector) {
-      background-color: #faad14 !important;
-      border-color: #faad14 !important;
-      color: #fff !important;
-    }
-    :deep(.ant-select-arrow) {
-      color: #fff;
-    }
-  }
-
-  &.status-approved {
-    :deep(.ant-select-selector) {
-      background-color: #52c41a !important;
-      border-color: #52c41a !important;
-      color: #fff !important;
-    }
-    :deep(.ant-select-arrow) {
-      color: #fff;
-    }
-  }
-
-  &.status-blacklisted {
-    :deep(.ant-select-selector) {
-      background-color: #ff4d4f !important;
-      border-color: #ff4d4f !important;
-      color: #fff !important;
-    }
-    :deep(.ant-select-arrow) {
-      color: #fff;
-    }
-  }
-
-  // Dropdown options styling
-  :deep(.ant-select-item) {
-    display: flex;
-    align-items: center;
-
-    .anticon {
-      font-size: 14px;
-    }
-
-    span {
-      font-weight: 500;
-    }
-  }
-}
-
 .text-muted {
   color: #999;
   font-style: italic;
-}
-
-.status-badge {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 12px;
-  letter-spacing: 0.5px;
 }
 
 // Responsive styles

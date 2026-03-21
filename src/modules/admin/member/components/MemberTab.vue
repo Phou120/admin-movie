@@ -61,43 +61,41 @@
           </template>
 
           <template v-else-if="column.key === 'status'">
-            <template v-if="record.status?.toLowerCase() === 'approved'">
+            <a-dropdown :trigger="['click']" placement="bottomLeft">
               <a-tag
                 :color="getStatusColor(record.status)"
-                class="status-badge"
+                class="status-badge clickable"
+                style="cursor: pointer"
               >
+                <loading-outlined
+                  v-if="memberStatusLoading[record.id]"
+                  style="margin-right: 4px"
+                />
                 {{ getStatusLabel(record.status) }}
+                <down-outlined
+                  v-if="!memberStatusLoading[record.id]"
+                  style="margin-left: 4px; font-size: 10px"
+                />
               </a-tag>
-            </template>
-            <template v-else>
-              <a-dropdown :trigger="['click']" placement="bottomLeft">
-                <a-tag
-                  :color="getStatusColor(record.status)"
-                  class="status-badge clickable"
-                  style="cursor: pointer"
-                >
-                  {{ getStatusLabel(record.status) }}
-                  <down-outlined style="margin-left: 4px; font-size: 10px" />
-                </a-tag>
-                <template #overlay>
-                  <a-menu>
-                    <a-menu-item
-                      v-for="status in getAvailableStatuses(record.status)"
-                      :key="status.value"
-                      @click="updateMemberStatus(record.id, status.value)"
+              <template #overlay>
+                <a-menu class="status-dropdown-menu">
+                  <a-menu-item
+                    v-for="status in getAvailableStatuses(record.status)"
+                    :key="status.value"
+                    @click="updateMemberStatus(record.id, status.value)"
+                    :disabled="memberStatusLoading[record.id]"
+                  >
+                    <a-tag
+                      :color="getStatusColor(status.value)"
+                      size="small"
+                      style="margin-right: 8px"
                     >
-                      <a-tag
-                        :color="getStatusColor(status.value)"
-                        size="small"
-                        style="margin-right: 8px"
-                      >
-                        {{ status.label }}
-                      </a-tag>
-                    </a-menu-item>
-                  </a-menu>
-                </template>
-              </a-dropdown>
-            </template>
+                      {{ status.label }}
+                    </a-tag>
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
           </template>
 
           <template v-else-if="column.key === 'created_at'">
@@ -148,6 +146,7 @@ import {
   UserOutlined,
   DownOutlined,
   CreditCardOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IMemberMembers } from "../interface/member.interface";
@@ -180,6 +179,7 @@ const { t } = useI18n();
 
 // Local state
 const memberSearchText = ref("");
+const memberStatusLoading = ref<Record<number, boolean>>({});
 
 // Computed offset for numbering
 const pageOffset = computed(() => {
@@ -237,7 +237,7 @@ const columns = computed(() => [
     title: t("modules.member.columns.status"),
     dataIndex: "status",
     key: "status",
-    width: 120,
+    width: 250,
     align: "center",
   },
   {
@@ -303,7 +303,7 @@ const getStatusColor = (status: string) => {
       return "success"; // Green
     case "pending":
       return "warning"; // Orange/Yellow
-    case "rejected":
+    case "blacklisted":
       return "error"; // Red
     case "active":
       return "processing"; // Blue
@@ -316,14 +316,16 @@ const getStatusColor = (status: string) => {
 
 // Get available statuses based on current status
 const getAvailableStatuses = (currentStatus: string) => {
-  switch (currentStatus?.toLowerCase()) {
-    case "approved":
-      return [{ label: t("status.pending"), value: "pending" }];
-    case "pending":
-      return [{ label: t("status.approved"), value: "approved" }];
-    default:
-      return [];
-  }
+  const allStatuses = [
+    { label: t("status.pending"), value: "pending" },
+    { label: t("status.approved"), value: "approved" },
+    { label: t("status.blacklisted"), value: "blacklisted" },
+  ];
+
+  // Filter out the current status
+  return allStatuses.filter(
+    (status) => status.value !== currentStatus?.toLowerCase(),
+  );
 };
 
 // Delete member
@@ -333,6 +335,9 @@ async function deleteMember(id: number) {
 
 // Update status
 async function updateMemberStatus(id: number, newStatus: string) {
+  // Set loading state for this specific member
+  memberStatusLoading.value[id] = true;
+
   try {
     const response = await updateStatus(id, newStatus);
     showSuccessNotification(response.message || "Status updated successfully");
@@ -342,11 +347,14 @@ async function updateMemberStatus(id: number, newStatus: string) {
       "load-members",
       props.members.pagination.current,
       props.members.pagination.pageSize,
-      memberSearchText.value
+      memberSearchText.value,
     );
   } catch (error: any) {
     const errorMessage = error.response?.data?.message || error.message;
     showErrorNotification(errorMessage);
+  } finally {
+    // Clear loading state for this member
+    memberStatusLoading.value[id] = false;
   }
 }
 </script>
@@ -380,14 +388,31 @@ async function updateMemberStatus(id: number, newStatus: string) {
   font-weight: 600;
   text-transform: uppercase;
   font-size: 12px;
-  padding: 2px 8px;
+  padding: 4px 12px;
   border-radius: 12px;
   letter-spacing: 0.5px;
+  min-width: 150px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
 
   &.clickable:hover {
     opacity: 0.8;
     transform: scale(1.05);
     transition: all 0.2s ease;
+  }
+}
+
+.status-dropdown-menu {
+  min-width: 160px;
+
+  .ant-menu-item {
+    padding: 8px 16px;
+    min-width: 260px;
+  }
+
+  .anticon {
+    margin-right: 8px;
   }
 }
 

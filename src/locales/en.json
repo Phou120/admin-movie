@@ -21,8 +21,10 @@
     "profile": "Profile",
     "reports": "Report",
     "report": {
-      "video": "Video Report",
-      "member": "Member Report"
+      "video": "Report Video",
+      "user": "Report User",
+      "package": "Report Package",
+      "payment": "Report Payment"
     },
     "qrCode": "QR Code",
     "view": "Setting View"
@@ -39,6 +41,7 @@
     "submit": "Submit",
     "back": "Back",
     "loading": "Loading...",
+    "updating": "Updating...",
     "confirm": "Confirm",
     "yes": "Yes",
     "no": "No",
@@ -289,6 +292,11 @@
       "tableTitle": "Customer List",
       "searchPlaceholder": "Search customers by name or email...",
       "noData": "No customers found",
+      "viewDetails": "Customer Details",
+      "backToCustomers": "Back to Customers",
+      "pleaseSelectStatus": "Please select status",
+      "changeStatus": "Change Status",
+      "selectHint": "Click to select a status",
       "columns": {
         "no": "No",
         "profile": "Profile",
@@ -308,20 +316,30 @@
         "surname": "Surname",
         "email": "Email",
         "phone": "Phone",
+        "telephone": "Telephone",
         "address": "Address",
         "status": "Status",
         "customer": "Customer",
+        "type": "Type",
         "avatar": "Profile Image",
+        "profileImage": "Profile Image",
+        "customerInformation": "Customer Information",
         "password": "Password",
         "confirmPassword": "Confirm Password",
+        "bankAccountName": "Bank Account Name",
+        "bankAccountNumber": "Bank Account Number",
         "sections": {
           "personalInformation": "Personal Information"
+        },
+        "error": {
+          "loadFailed": "Failed to load customer data"
         },
         "placeholder": {
           "name": "Enter name",
           "surname": "Enter surname",
           "email": "Enter email address",
           "phone": "Enter phone number",
+          "telephone": "Enter telephone",
           "address": "Enter address",
           "password": "Enter password",
           "confirmPassword": "Confirm password"
@@ -1110,10 +1128,13 @@
     "active": "Active",
     "inactive": "Inactive",
     "pending": "Pending",
+    "pendingDescription": "",
     "suspended": "Suspended",
     "approved": "Approved",
+    "approvedDescription": "",
     "rejected": "Rejected",
-    "blacklisted": "Blacklisted",
+    "blacklisted": "Blocked",
+    "blacklistedDescription": "",
     "success": "Success",
     "failed": "Failed"
   },
