@@ -33,6 +33,7 @@
     "search": "Search",
     "filter": "Filter",
     "clear": "Clear",
+    "reset": "Reset",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
@@ -51,7 +52,13 @@
     "warning": "Warning",
     "info": "Information",
     "retry": "Retry",
-    "update": "Update"
+    "update": "Update",
+    "export": "Export",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "noCustomer": "No Customer",
+    "noImage": "No Image",
+    "viewImage": "View Image"
   },
   "auth": {
     "login": "Login",
@@ -1121,6 +1128,146 @@
           "fixed": "Fixed",
           "price": "Enter price"
         }
+      }
+    },
+    "reportVideo": {
+      "title": "Video Report",
+      "searchPlaceholder": "Search videos by title...",
+      "selectCategory": "Select Category",
+      "selectCustomer": "Select Customer",
+      "selectStatus": "Select Status",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "play": "Play",
+      "export": "Export",
+      "noData": "No video report data found",
+      "metrics": {
+        "totalViews": "Total Views",
+        "totalLikes": "Total Likes",
+        "activeVideos": "Active Videos",
+        "totalVideos": "Total Videos"
+      },
+      "charts": {
+        "viewsTrend": "Views Trend",
+        "categoryDistribution": "Category Distribution"
+      },
+      "columns": {
+        "no": "No",
+        "image": "Image",
+        "title": "Title",
+        "customer": "Customer",
+        "categories": "Categories",
+        "video": "Video",
+        "trailer": "Trailer",
+        "totalViews": "Total Views",
+        "totalLikes": "Total Likes",
+        "status": "Status",
+        "createdAt": "Created At"
+      }
+    },
+    "reportUser": {
+      "title": "User Report",
+      "searchPlaceholder": "Search users by name or email...",
+      "selectRole": "Select Role",
+      "selectStatus": "Select Status",
+      "dateRange": "Date Range",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "roleAdmin": "Admin",
+      "roleSuperAdmin": "Super Admin",
+      "roleCustomer": "Customer",
+      "export": "Export",
+      "noData": "No user report data found",
+      "metrics": {
+        "totalUsers": "Total Users",
+        "activeUsers": "Active Users",
+        "newRegistrations": "New Registrations",
+        "roleBreakdown": "Role Breakdown"
+      },
+      "charts": {
+        "registrationTrend": "Registration Trend",
+        "roleDistribution": "Role Distribution",
+        "activityHeatmap": "Activity Heatmap"
+      },
+      "columns": {
+        "no": "No",
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "registrationDate": "Registration Date",
+        "lastLogin": "Last Login",
+        "loginCount": "Login Count"
+      }
+    },
+    "reportPackage": {
+      "title": "Package Report",
+      "searchPlaceholder": "Search packages by name or content...",
+      "selectType": "Select Package Type",
+      "selectStatus": "Select Status",
+      "dateRange": "Date Range",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
+      "export": "Export",
+      "noData": "No package report data found",
+      "metrics": {
+        "totalPackages": "Total Packages",
+        "activePackages": "Active Packages",
+        "totalRevenue": "Total Revenue",
+        "totalSubscriptions": "Total Subscriptions"
+      },
+      "charts": {
+        "revenueTrend": "Revenue Trend",
+        "salesComparison": "Sales Comparison",
+        "typeDistribution": "Type Distribution"
+      },
+      "columns": {
+        "no": "No",
+        "name": "Package Name",
+        "type": "Type",
+        "price": "Price",
+        "totalSales": "Total Sales",
+        "totalRevenue": "Total Revenue",
+        "activeSubscriptions": "Active Subscriptions",
+        "status": "Status",
+        "createdAt": "Created At"
+      }
+    },
+    "reportPayment": {
+      "title": "Payment Report",
+      "searchPlaceholder": "Search by transaction ID or member name...",
+      "selectStatus": "Select Status",
+      "selectPaymentType": "Select Payment Type",
+      "selectMember": "Select Member",
+      "dateRange": "Date Range",
+      "statusPending": "Pending",
+      "statusApproved": "Approved",
+      "statusRejected": "Rejected",
+      "viewSlip": "View Slip",
+      "export": "Export",
+      "noData": "No payment report data found",
+      "metrics": {
+        "totalRevenue": "Total Revenue",
+        "pendingPayments": "Pending Payments",
+        "approvedPayments": "Approved Payments",
+        "rejectedPayments": "Rejected Payments",
+        "transactionCount": "Transaction Count"
+      },
+      "charts": {
+        "revenueTrend": "Revenue Trend",
+        "statusDistribution": "Status Distribution",
+        "paymentTypeComparison": "Payment Type Comparison"
+      },
+      "columns": {
+        "no": "No",
+        "transactionId": "Transaction ID",
+        "member": "Member",
+        "packageName": "Package",
+        "amount": "Amount",
+        "paymentType": "Payment Type",
+        "status": "Status",
+        "slip": "Slip",
+        "paymentDate": "Payment Date"
       }
     }
   },

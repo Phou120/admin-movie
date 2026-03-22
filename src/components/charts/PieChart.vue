@@ -18,9 +18,12 @@ const props = withDefaults(defineProps<Props>(), {
 const chartOption = computed<EChartsCoreOption>(() => ({
   tooltip: {
     trigger: "item",
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: "rgba(255,255,255,0.95)",
+    borderColor: "#ccc",
+    borderWidth: 1,
     textStyle: {
-      color: "#fff",
+      color: "#333",
+      fontSize: 14,
     },
     formatter: (params: any) => {
       const value = params.value;
@@ -34,7 +37,9 @@ const chartOption = computed<EChartsCoreOption>(() => ({
     top: "center",
     textStyle: {
       color: "#666",
+      fontSize: 13,
     },
+    itemGap: 12,
   },
   series: [
     {
@@ -43,7 +48,7 @@ const chartOption = computed<EChartsCoreOption>(() => ({
       radius: props.donut ? ["40%", "70%"] : [0, "75%"],
       avoidLabelOverlap: false,
       itemStyle: {
-        borderRadius: 6,
+        borderRadius: 8,
         borderColor: "#fff",
         borderWidth: 2,
       },
@@ -55,6 +60,7 @@ const chartOption = computed<EChartsCoreOption>(() => ({
           show: true,
           fontSize: 16,
           fontWeight: "bold",
+          color: "#333",
         },
         itemStyle: {
           shadowBlur: 10,

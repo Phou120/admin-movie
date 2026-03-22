@@ -53,6 +53,12 @@ import PaymentListPage from "./modules/admin/payment/payment-list.vue";
 // QR Code Module
 import QrCodePage from "./modules/admin/qr-code/qr-code.vue";
 
+// Report Modules
+import ReportVideoPage from "./modules/admin/report/video/ReportVideo.vue";
+import ReportUserPage from "./modules/admin/report/user/ReportUser.vue";
+import ReportPackagePage from "./modules/admin/report/package/ReportPackage.vue";
+import ReportPaymentPage from "./modules/admin/report/payment/ReportPayment.vue";
+
 // Website
 import WebsiteHome from "./modules/website/home/Home.vue";
 
@@ -248,6 +254,28 @@ const routes = [
         path: "/video/edit/:id",
         name: "edit-video",
         component: EditVideoPage,
+      },
+
+      // Report Pages
+      {
+        path: "/admin/report/report-video",
+        name: "report-video",
+        component: ReportVideoPage,
+      },
+      {
+        path: "/admin/report/report-user",
+        name: "report-user",
+        component: ReportUserPage,
+      },
+      {
+        path: "/admin/report/report-package",
+        name: "report-package",
+        component: ReportPackagePage,
+      },
+      {
+        path: "/admin/report/report-payment",
+        name: "report-payment",
+        component: ReportPaymentPage,
       },
 
       // System Management

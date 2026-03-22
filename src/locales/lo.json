@@ -33,6 +33,7 @@
     "search": "ຄົ້ນຫາ",
     "filter": "ກັ່ນຕອງ",
     "clear": "ລຶບລ້າງ",
+    "reset": "ລີເຊັດ",
     "add": "ເພີ່ມ",
     "edit": "ແກ້ໄຂ",
     "delete": "ລຶບ",
@@ -51,7 +52,13 @@
     "warning": "ຄຳເຕືອນ",
     "info": "ຂໍ້ມູນ",
     "retry": "ລອງໃຝີອີຄຣູດ",
-    "update": "ອັບເດດ"
+    "update": "ອັບເດດ",
+    "export": "ສົ່ງອອກ",
+    "startDate": "ວັນທີເລີ່ມ",
+    "endDate": "ວັນທີສິ້ນສຸດ",
+    "noCustomer": "ບໍ່ລູກຄ້າ",
+    "noImage": "ບໍ່ຮູບພາດ",
+    "viewImage": "ເບຶງຮູບພາດ"
   },
   "auth": {
     "login": "ເຂົ້າສູ່ລະບົບ",
@@ -1114,6 +1121,146 @@
           "fixed": "ຖືກກຳນົດ",
           "price": "ໃສ່ລາຄາ"
         }
+      }
+    },
+    "reportVideo": {
+      "title": "ລາຍງານວິດີໂອ",
+      "searchPlaceholder": "ຊອກຫາວິດີໂອຕາມຊື່...",
+      "selectCategory": "ເລືອກໝວດໝູ່",
+      "selectCustomer": "ເລືອກລູກຄ້າ",
+      "selectStatus": "ເລືອກສະຖານະ",
+      "statusActive": "ໃຊ້ງານ",
+      "statusInactive": "ປິດໃຊ້ງານ",
+      "play": "ຫຼິ້ນ",
+      "export": "ສົ່ງອອກ",
+      "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານວິດີໂອ",
+      "metrics": {
+        "totalViews": "ຍີ່ຫຼົ້ນທັງໝົດ",
+        "totalLikes": "ໄລຍ້ທັງໝົດ",
+        "activeVideos": "ວິດີໂອທີ່ໃຊ້ງານ",
+        "totalVideos": "ວິດີໂອທັງໝົດ"
+      },
+      "charts": {
+        "viewsTrend": "ແນວໂນ້ມຍີ່ຫຼົ້ນ",
+        "categoryDistribution": "ການກະຈາຍຂອງໝວດໝູ່"
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "image": "ຮູບພາດ",
+        "title": "ຊື່",
+        "customer": "ລູກຄ້າ",
+        "categories": "ໝວດໝູ່",
+        "video": "ວິດີໂອ",
+        "trailer": "ຕົວຢ່າງ",
+        "totalViews": "ຍີ່ຫຼົ້ນທັງໝົດ",
+        "totalLikes": "ໄລຍ້ທັງໝົດ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງວັນທີ"
+      }
+    },
+    "reportUser": {
+      "title": "ລາຍງານຜູ້ໃຊ້ລະບົບ",
+      "searchPlaceholder": "ຊອກຫາຜູ້ໃຊ້ຕາມຊື່ ຫຼື ອີເມວ...",
+      "selectRole": "ເລືອກບົດບາດ",
+      "selectStatus": "ເລືອກສະຖານະ",
+      "dateRange": "ຊ່ວງວັນທີ",
+      "statusActive": "ໃຊ້ງານ",
+      "statusInactive": "ປິດໃຊ້ງານ",
+      "roleAdmin": "ຜູ້ບໍລິຫານ",
+      "roleSuperAdmin": "ຜູ້ບໍລິຫານລະດັບສູງ",
+      "roleCustomer": "ລູກຄ້າ",
+      "export": "ສົ່ງອອກ",
+      "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານຜູ້ໃຊ້",
+      "metrics": {
+        "totalUsers": "ຜູ້ໃຊ້ທັງໝົດ",
+        "activeUsers": "ຜູ້ໃຊ້ທີ່ໃຊ້ງານ",
+        "newRegistrations": "ສະໝັດສະໝີດໃໝ່",
+        "roleBreakdown": "ການແບ່ງບົດບາດ"
+      },
+      "charts": {
+        "registrationTrend": "ແນວໂນ້ມການລົງທະບຽນ",
+        "roleDistribution": "ການກະຈາຍຂອງບົດບາດ",
+        "activityHeatmap": "ແຜນທີ່ກິດຈະການ"
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່",
+        "email": "ອີເມວ",
+        "role": "ບົດບາດ",
+        "status": "ສະຖານະ",
+        "registrationDate": "ວັນທີລົງທະບຽນ",
+        "lastLogin": "ເຂົ້າສູ່ລະບົບລ້າສຸດ",
+        "loginCount": "ຈຳນວນເຂົ້າສູ່ລະບົບ"
+      }
+    },
+    "reportPackage": {
+      "title": "ລາຍງານແພັກເກັດ",
+      "searchPlaceholder": "ຊອກຫາແພັກເກັດຕາມຊື່ ຫຼື ເນື້ອຫາ...",
+      "selectType": "ເລືອກປະເພດແພັກເກັດ",
+      "selectStatus": "ເລືອກສະຖານະ",
+      "dateRange": "ຊ່ວງວັນທີ",
+      "statusActive": "ໃຊ້ງານ",
+      "statusInactive": "ປິດໃຊ້ງານ",
+      "export": "ສົ່ງອອກ",
+      "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານແພັກເກັດ",
+      "metrics": {
+        "totalPackages": "ແພັກເກັດທັງໝົດ",
+        "activePackages": "ແພັກເກັດທີ່ໃຊ້ງານ",
+        "totalRevenue": "ລາຍຮັບທັງໝົດ",
+        "totalSubscriptions": "ການສະໝັດສະໝີດທັງໝົດ"
+      },
+      "charts": {
+        "revenueTrend": "ແນວໂນ້ມລາຍຮັບ",
+        "salesComparison": "ການປຽບທຽບການຂາຍ",
+        "typeDistribution": "ການກະຈາຍປະເພດ"
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "name": "ຊື່ແພັກເກັດ",
+        "type": "ປະເພດ",
+        "price": "ລາຄາ",
+        "totalSales": "ຍອດຂາຍທັງໝົດ",
+        "totalRevenue": "ລາຍຮັບທັງໝົດ",
+        "activeSubscriptions": "ການສະໝັດສະໝີດທີ່ໃຊ້ງານ",
+        "status": "ສະຖານະ",
+        "createdAt": "ສ້າງວັນທີ"
+      }
+    },
+    "reportPayment": {
+      "title": "ລາຍງານການຊຳລະ",
+      "searchPlaceholder": "ຊອກຫາຕາມ ID ທຸລະກຳ ຫຼື ຊື່ສະມາຊິກ...",
+      "selectStatus": "ເລືອກສະຖານະ",
+      "selectPaymentType": "ເລືອກປະເພດການຊຳລະ",
+      "selectMember": "ເລືອກສະມາຊິກ",
+      "dateRange": "ຊ່ວງວັນທີ",
+      "statusPending": "ລໍຖ້າ",
+      "statusApproved": "ອະນຸມັດ",
+      "statusRejected": "ປະຕິເສດ",
+      "viewSlip": "ເບິ່ງສະລິບ",
+      "export": "ສົ່ງອອກ",
+      "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານການຊຳລະ",
+      "metrics": {
+        "totalRevenue": "ລາຍຮັບທັງໝົດ",
+        "pendingPayments": "ການຊຳລະທີ່ລໍຖ້າ",
+        "approvedPayments": "ການຊຳລະທີ່ອະນຸມັດ",
+        "rejectedPayments": "ການຊຳລະທີ່ປະຕິເສດ",
+        "transactionCount": "ຈຳນວນທຸລະກຳ"
+      },
+      "charts": {
+        "revenueTrend": "ແນວໂນ້ມລາຍຮັບ",
+        "statusDistribution": "ການກະຈາຍສະຖານະ",
+        "paymentTypeComparison": "ການປຽບທຽບປະເພດການຊຳລະ"
+      },
+      "columns": {
+        "no": "ລຳດັບ",
+        "transactionId": "ID ທຸລະກຳ",
+        "member": "ສະມາຊິກ",
+        "packageName": "ແພັກເກັດ",
+        "amount": "ຈຳນວນ",
+        "paymentType": "ປະເພດການຊຳລະ",
+        "status": "ສະຖານະ",
+        "slip": "ສະລິບ",
+        "paymentDate": "ວັນທີຊຳລະ"
       }
     }
   },

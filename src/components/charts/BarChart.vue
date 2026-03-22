@@ -45,12 +45,15 @@ const chartOption = computed<EChartsCoreOption>(() => ({
   },
   tooltip: {
     trigger: "axis",
-    backgroundColor: "rgba(255,255,255,0.9)",
+    backgroundColor: "rgba(255,255,255,0.95)",
+    borderColor: "#ccc",
+    borderWidth: 1,
     textStyle: {
-      color: "#fff",
+      color: "#333",
+      fontSize: 14,
     },
     formatter: (params: any) => {
-      return `<strong>${params.name}</strong><br/>${params.value}`;
+      return `<strong>${params[0].name}</strong><br/>${params[0].value}`;
     },
   },
   series: props.data.map((item, index) => ({
