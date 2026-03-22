@@ -230,6 +230,12 @@
       "tableTitle": "Video List",
       "searchPlaceholder": "Search videos by title or content...",
       "noData": "No videos found",
+      "viewDetails": "Video Details",
+      "information": "Information",
+      "media": "Media",
+      "statistics": "Statistics",
+      "statusActive": "Active",
+      "statusInactive": "Inactive",
       "columns": {
         "no": "No",
         "title": "Title",
@@ -269,6 +275,18 @@
           "mediaFiles": "Media Files",
           "categoriesAndTags": "Categories & Tags",
           "customerInformation": "Customer Information"
+        },
+        "validation": {
+          "titleRequired": "Please enter video title",
+          "contentRequired": "Please enter video content",
+          "customerRequired": "Please select a customer",
+          "videoRequired": "Please select a video file",
+          "invalidImage": "You can only upload image files",
+          "imageTooLarge": "Image must be smaller than 5MB",
+          "invalidVideo": "You can only upload video files",
+          "videoTooLarge": "Video must be smaller than 100MB",
+          "trailerTooLarge": "Trailer must be smaller than 50MB",
+          "updateError": "Failed to update video"
         }
       },
       "actions": {
@@ -276,6 +294,7 @@
         "edit": "Edit",
         "delete": "Delete",
         "play": "Play",
+        "playTrailer": "Play Trailer",
         "upload": "Upload",
         "save": "Save",
         "cancel": "Cancel",
@@ -483,6 +502,8 @@
       "endDate": "End Date",
       "updateStatus": "Update Status",
       "filterStatus": "Filter Status",
+      "selectCustomer": "Reassign to Customer",
+      "currentCustomer": "Keep Current Customer",
       "paymentNotFound": "Payment Not Found",
       "paymentNotFoundMessage": "The payment you're looking for doesn't exist or has been removed.",
       "notifications": {
@@ -1354,7 +1375,7 @@
       "signIn": "Sign In"
     },
     "home": {
-      "howItWorks": "How It Works",
+      "howItWorks": "Movie trailer",
       "step1": {
         "title": "Fill Application",
         "description": "Complete your application form online in just a few clicks!"

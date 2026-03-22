@@ -140,7 +140,7 @@
             <a-tag color="blue">{{ record.type }}</a-tag>
           </template>
           <template v-else-if="column.key === 'price'">
-            ${{ record.price?.toFixed(2) }}
+            ${{ Number(record.price || 0).toFixed(2) }}
           </template>
           <template v-else-if="column.key === 'status'">
             <a-tag :color="record.status === 'active' ? 'green' : 'red'">

@@ -7,6 +7,7 @@ import {
   DeleteOutlined,
   EyeOutlined,
   DownOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IPaymentForm, IPaymentList } from "./interface/payment.interface";
@@ -111,6 +112,9 @@ const data = reactive<IPaymentList>({
 const loading = ref(false);
 const searchText = ref("");
 const selectedStatus = ref<string | null>(null);
+
+// Track loading state for individual payment status updates
+const paymentStatusLoading = ref<Record<number, boolean>>({});
 
 // Function to get record key
 function getRecordKey(record: IPaymentForm): number {
@@ -235,6 +239,14 @@ function getStatusColor(status: string): string {
   }
 }
 
+// Get status label
+function getStatusLabel(status: string): string {
+  return t(
+    `status.${status?.toLowerCase()}`,
+    status?.toUpperCase() || status,
+  );
+}
+
 // Get available statuses based on current status
 function getAvailableStatuses(currentStatus: string) {
   switch (currentStatus?.toLowerCase()) {
@@ -257,15 +269,21 @@ function getAvailableStatuses(currentStatus: string) {
 
 // Update payment status
 async function updateStatus(id: number, newStatus: string) {
+  // Set loading state for this payment
+  paymentStatusLoading.value[id] = true;
+
   try {
     const response = await updatePaymentStatus(id, newStatus);
     showSuccessNotification(response.message || "Status updated successfully");
 
     // Reload payments data to reflect the change
-    loadPayments();
+    await loadPayments();
   } catch (error: any) {
     const errorMessage = error.response?.data?.message || error.message;
     showErrorNotification(errorMessage);
+  } finally {
+    // Clear loading state for this payment
+    paymentStatusLoading.value[id] = false;
   }
 }
 </script>
@@ -364,26 +382,29 @@ async function updateStatus(id: number, newStatus: string) {
           </template>
 
           <template v-else-if="column.key === 'status'">
-            <a-dropdown :trigger="['click']" placement="bottomCenter">
+            <a-dropdown :trigger="['click']" placement="bottomLeft">
               <a-tag
                 :color="getStatusColor(record.status)"
                 class="status-badge clickable"
                 style="cursor: pointer"
               >
-                {{
-                  t(
-                    `status.${record.status?.toLowerCase()}`,
-                    record.status?.toUpperCase(),
-                  )
-                }}
-                <down-outlined style="margin-left: 4px; font-size: 10px" />
+                <loading-outlined
+                  v-if="paymentStatusLoading[record.id]"
+                  style="margin-right: 4px"
+                />
+                {{ getStatusLabel(record.status) }}
+                <down-outlined
+                  v-if="!paymentStatusLoading[record.id]"
+                  style="margin-left: 4px; font-size: 10px"
+                />
               </a-tag>
               <template #overlay>
-                <a-menu>
+                <a-menu class="status-dropdown-menu">
                   <a-menu-item
                     v-for="status in getAvailableStatuses(record.status)"
                     :key="status.value"
                     @click="updateStatus(record.id, status.value)"
+                    :disabled="paymentStatusLoading[record.id]"
                   >
                     <a-tag
                       :color="getStatusColor(status.value)"
@@ -392,7 +413,6 @@ async function updateStatus(id: number, newStatus: string) {
                     >
                       {{ status.label }}
                     </a-tag>
-                    <!-- {{ status.label }} -->
                   </a-menu-item>
                 </a-menu>
               </template>

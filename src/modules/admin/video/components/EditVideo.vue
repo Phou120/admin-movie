@@ -56,7 +56,7 @@
           </a-col>
 
           <!-- Customer Selection - Only show for admin/super-admin -->
-          <a-col v-if="canSelectCustomer" :span="24">
+          <a-col :span="24">
             <a-card :title="t('modules.video.form.sections.customerInformation')" class="form-card">
               <a-form-item :label="t('modules.customer.columns.customer')" name="customer_id">
                 <a-select
@@ -65,8 +65,13 @@
                   size="large"
                   :loading="customersLoading"
                   :options="customers"
-                  :field-names="{ label: 'name', value: 'id' }"
-                />
+                  :disabled="!canSelectCustomer"
+                  :field-names="{ label: 'displayName', value: 'id' }"
+                >
+                  <template #option="{ displayName }">
+                    {{ displayName }}
+                  </template>
+                </a-select>
               </a-form-item>
             </a-card>
           </a-col>
@@ -389,7 +394,7 @@ const fetchVideoData = async (id: number) => {
   loading.value = true;
   try {
     const response = await getVideoById(id);
-    videoData.value = response.data;
+    videoData.value = response;
 
     // Populate form data
     formData.id = videoData.value.id;
@@ -572,14 +577,38 @@ const restoreTrailer = () => {
 
 // Fetch options
 const fetchCustomers = async () => {
-  if (!canSelectCustomer.value) {
-    return;
-  }
-
   customersLoading.value = true;
   try {
-    const data = await getCustomers();
-    customers.value = data;
+    // For admin/super-admin: fetch all customers
+    if (canSelectCustomer.value) {
+      const data = await getCustomers();
+      // Add displayName field to each customer
+      customers.value = data.map((customer: any) => ({
+        ...customer,
+        displayName: `${customer.name} ${customer.surname || ""}`.trim(),
+      }));
+    } else {
+      // For creator: load their own customer data from localStorage
+      const customerDataString = localStorage.getItem("customer");
+      if (customerDataString) {
+        try {
+          const customerData = JSON.parse(customerDataString);
+          // Add displayName field
+          const customerWithDisplayName = {
+            ...customerData,
+            displayName: `${customerData.name} ${customerData.surname || ""}`.trim(),
+          };
+          customers.value = [customerWithDisplayName];
+
+          // Pre-select the customer_id
+          formData.customer_id = customerData.id;
+
+          console.log("Creator customer data loaded:", customerWithDisplayName);
+        } catch (error) {
+          console.error("Error parsing customer data from localStorage:", error);
+        }
+      }
+    }
   } catch (error) {
     console.error("Failed to fetch customers:", error);
   } finally {

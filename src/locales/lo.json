@@ -230,6 +230,12 @@
       "tableTitle": "ລາຍການວິດີໂອ",
       "searchPlaceholder": "ຄົ້ນຫາວິດີໂອຕາມຫົວຂໍ້ ຫຼື ເນື້ອຫາ...",
       "noData": "ບໍ່ພົບວິດີໂອ",
+      "viewDetails": "ລາຍລະອຽດວິດີໂອ",
+      "information": "ຂໍ້ມູນ",
+      "media": "ສື່ມີເດຍ",
+      "statistics": "ສະຖິຕິ",
+      "statusActive": "ໃຊ້ງານ",
+      "statusInactive": "ປິດໃຊ້ງານ",
       "columns": {
         "no": "ລຳດັບ",
         "title": "ຫົວຂໍ້",
@@ -269,6 +275,18 @@
           "mediaFiles": "ໄຟລ໌ມີເດຍ",
           "categoriesAndTags": "ໝວດໝູ່ ແລະ ແທັກ",
           "customerInformation": "ຂໍ້ມູນລູກຄ້າ"
+        },
+        "validation": {
+          "titleRequired": "ກະລຸນາປ້ອນຫົວຂໍ້ວິດີໂອ",
+          "contentRequired": "ກະລຸນາປ້ອນເນື້ອຫາວິດີໂອ",
+          "customerRequired": "ກະລຸນາເລືອກລູກຄ້າ",
+          "videoRequired": "ກະລຸນາເລືອກໄຟລ໌ວິດີໂອ",
+          "invalidImage": "ທ່ານອັບໂຫຼດໄຟລ໌ຮູບພາບເທົ່ານັ້ນ",
+          "imageTooLarge": "ຮູບພາບຕ້ອງນ້ອນກວ່າ 5MB",
+          "invalidVideo": "ທ່ານອັບໂຫຼດໄຟລ໌ວິດີໂອເທົ່ານັ້ນ",
+          "videoTooLarge": "ວິດີໂອຕ້ອງນ້ອນກວ່າ 100MB",
+          "trailerTooLarge": "ຕົວຢ່າງຕ້ອງນ້ອນກວ່າ 50MB",
+          "updateError": "ການອັບເດດວິດີໂອບໍ່ສຳເລັດ"
         }
       },
       "actions": {
@@ -276,6 +294,7 @@
         "edit": "ແກ້ໄຂ",
         "delete": "ລຶບ",
         "play": "ເລີ່ນ",
+        "playTrailer": "ເລີ່ນຕົວຢ່າງ",
         "upload": "ອັບໂຫຼດ",
         "save": "ບັນທຶກ",
         "cancel": "ຍົກເລີກ",
@@ -476,6 +495,8 @@
       "startDate": "ວັນທີເລີ່ມ",
       "endDate": "ວັນທີສິ້ນສຸດ",
       "updateStatus": "ອັບເດດສະຖານະ",
+      "selectCustomer": "ມອບໃຫ້ລູກຄ້າ",
+      "currentCustomer": "ຮັກສາລູກຄ້າປະຈຸບັນ",
       "paymentNotFound": "ບໍ່ພົບການຊຳລະ",
       "paymentNotFoundMessage": "ການຊຳລະທີ່ທ່ານກຳລັງຊອກຫາບໍ່ມີຢູ່ ຫຼື ຖືກລຶບອອກໄປແລ້ວ.",
       "notifications": {
@@ -1347,7 +1368,7 @@
       "signIn": "ເຂົ້າສູ່ລະບົບ"
     },
     "home": {
-      "howItWorks": "ວິທີການເຮັດວຽກ",
+      "howItWorks": "ຕົວຢ່າງໜັງ",
       "step1": {
         "title": "ຕື້ມຟອມສະໝັກ",
         "description": "ຕື້ມຟອມສະໝັກອອນລາຍໄດ້ໃນບໍລິບົດງ່າຍໆ!"

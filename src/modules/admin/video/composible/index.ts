@@ -180,7 +180,7 @@ export function VideoComposible() {
 
   const getVideoById = async (id: number) => {
     const response = await apiClient.get(`/videos/${id}`);
-    return response.data;
+    return response.data.data || response.data;
   };
 
   const getCustomers = async () => {

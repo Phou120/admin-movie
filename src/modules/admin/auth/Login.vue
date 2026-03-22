@@ -152,10 +152,34 @@ const onFinish = async (values: any) => {
     });
 
     // Redirect based on role
-    const userRoles = localStorage.getItem("user_roles");
-    if (userRoles?.includes("customer")) {
-      router.push({ name: "customer" });
+    const userRolesString = localStorage.getItem("user_roles");
+    let userRoles: string[] = [];
+
+    if (userRolesString) {
+      try {
+        // Parse if it's a JSON string
+        if (userRolesString.startsWith("[") || userRolesString.startsWith("{")) {
+          userRoles = JSON.parse(userRolesString);
+        } else {
+          // Handle comma-separated string
+          userRoles = userRolesString.split(",").map((role) => role.trim());
+        }
+      } catch (error) {
+        console.error("Error parsing user_roles:", error);
+      }
+    }
+
+    console.log("User roles:", userRoles);
+
+    // Check roles and redirect accordingly
+    if (userRoles.includes("creator") || userRoles.includes("customer")) {
+      // Creator/Customer role → redirect to profile
+      router.push({ name: "profile" });
+    } else if (userRoles.includes("admin") || userRoles.includes("super-admin")) {
+      // Admin/Super-admin → redirect to dashboard
+      router.push({ name: "dashboard" });
     } else {
+      // Default → dashboard
       router.push({ name: "dashboard" });
     }
   } catch (error: any) {

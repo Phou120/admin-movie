@@ -45,6 +45,7 @@ import PackagePage from "./modules/admin/packages/Packages.vue";
 import VideoPage from "./modules/admin/video/video.vue";
 import AddVideoPage from "./modules/admin/video/components/AddVideo.vue";
 import EditVideoPage from "./modules/admin/video/components/EditVideo.vue";
+import ViewVideoPage from "./modules/admin/video/components/ViewVideo.vue";
 
 // Payment Module
 import PaymentPage from "./modules/admin/payment/payment.vue";
@@ -254,6 +255,11 @@ const routes = [
         path: "/video/edit/:id",
         name: "edit-video",
         component: EditVideoPage,
+      },
+      {
+        path: "/video/view/:id",
+        name: "view-video",
+        component: ViewVideoPage,
       },
 
       // Report Pages

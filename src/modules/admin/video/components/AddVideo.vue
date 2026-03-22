@@ -51,8 +51,13 @@
                     size="large"
                     :loading="customersLoading"
                     :options="customers"
-                    :field-names="{ label: 'name', value: 'id' }"
-                  />
+                    :disabled="!canSelectCustomer"
+                    :field-names="{ label: 'displayName', value: 'id' }"
+                  >
+                    <template #option="{ displayName }">
+                      {{ displayName }}
+                    </template>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
@@ -451,15 +456,38 @@ const handleTrailerChange = (info: any) => {
 
 // Fetch options
 const fetchCustomers = async () => {
-  // Only fetch customers if user can select them (admin/super-admin)
-  if (!canSelectCustomer.value) {
-    return;
-  }
-
   customersLoading.value = true;
   try {
-    const data = await getCustomers();
-    customers.value = data;
+    // For admin/super-admin: fetch all customers
+    if (canSelectCustomer.value) {
+      const data = await getCustomers();
+      // Add displayName field to each customer
+      customers.value = data.map((customer: any) => ({
+        ...customer,
+        displayName: `${customer.name} ${customer.surname || ""}`.trim(),
+      }));
+    } else {
+      // For creator: load their own customer data from localStorage
+      const customerDataString = localStorage.getItem("customer");
+      if (customerDataString) {
+        try {
+          const customerData = JSON.parse(customerDataString);
+          // Add displayName field
+          const customerWithDisplayName = {
+            ...customerData,
+            displayName: `${customerData.name} ${customerData.surname || ""}`.trim(),
+          };
+          customers.value = [customerWithDisplayName];
+
+          // Pre-select the customer_id
+          formData.customer_id = customerData.id;
+
+          console.log("Creator customer data loaded:", customerWithDisplayName);
+        } catch (error) {
+          console.error("Error parsing customer data from localStorage:", error);
+        }
+      }
+    }
   } catch (error) {
     console.error("Failed to fetch customers:", error);
   } finally {

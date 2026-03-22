@@ -17,7 +17,7 @@ export function useBanner() {
     const payload = {
       file_banner: formAdd.file_banner,
       link: formAdd.link,
-      order_by: Number(formAdd.order_by),
+      order_by: String(formAdd.order_by),
     };
     const response = await apiClient.post("/banners", payload);
     return response.data;
@@ -47,7 +47,7 @@ export function useBanner() {
     const payload: any = {
       id: FormUpdate.id,
       link: FormUpdate.link,
-      order_by: FormUpdate.order_by,
+      order_by: String(FormUpdate.order_by),
     };
 
     // Only include logo if it's not null

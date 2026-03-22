@@ -59,6 +59,13 @@ const canSelectCustomer = computed(() => {
   return roles.includes("admin") || roles.includes("super-admin");
 });
 
+// Check if user can manage videos (create, update, delete) - only for creator role
+const canManageVideos = computed(() => {
+  const roles = userRoles.value;
+  // Only creator role can manage videos
+  return roles.includes("creator");
+});
+
 const columns = computed(() => [
   {
     title: t("modules.video.columns.no"),
@@ -171,6 +178,9 @@ const isVideoModalVisible = ref(false);
 const currentVideoUrl = ref("");
 const currentVideoTitle = ref("");
 
+// Track loading state for individual video status updates
+const statusLoadingMap = ref<Map<number, boolean>>(new Map());
+
 // Search and filter state
 const searchText = ref("");
 const selectedCategoryId = ref<number | undefined>(undefined);
@@ -256,7 +266,10 @@ async function loadVideos(
       }
     }
 
-    data.videos = videosArray;
+    data.videos = videosArray.map((video: any) => ({
+      ...video,
+      statusLoading: statusLoadingMap.value.get(video.id) || false,
+    }));
 
     // Update pagination info based on response
     data.pagination = {
@@ -394,8 +407,16 @@ const closeVideoModal = () => {
 };
 
 // Navigation handlers
+function openAddPage() {
+  router.push({ name: "create-video" });
+}
+
 function openEditPage(id: number) {
   router.push({ name: "edit-video", params: { id } });
+}
+
+function openViewPage(id: number) {
+  router.push({ name: "view-video", params: { id } });
 }
 
 async function deleteVideo(id: number) {
@@ -410,6 +431,9 @@ async function deleteVideo(id: number) {
 
 // Update Video Status
 async function updateVideoStatus(id: number, status: string) {
+  // Set loading state for this video
+  statusLoadingMap.value.set(id, true);
+
   try {
     const response = await updateStatus(id, status);
     showSuccessNotification(response.message);
@@ -417,6 +441,9 @@ async function updateVideoStatus(id: number, status: string) {
   } catch (error: any) {
     const message = error.response?.data?.message || error.message;
     showErrorNotification(message);
+  } finally {
+    // Clear loading state for this video
+    statusLoadingMap.value.delete(id);
   }
 }
 
@@ -424,6 +451,11 @@ async function updateVideoStatus(id: number, status: string) {
 const getStatusLabel = (status: string) => {
   const statusKey = status?.toLowerCase();
   return t(`status.${statusKey}`, status?.toUpperCase() || "");
+};
+
+// Check if video status is currently being updated
+const isStatusLoading = (videoId: number) => {
+  return statusLoadingMap.value.get(videoId) || false;
 };
 
 // Handle status change with switch
@@ -440,16 +472,15 @@ function handleStatusChange(id: number, checked: boolean) {
       <div class="header-left">
         <h1>{{ t("modules.video.title") }}</h1>
       </div>
-      <!-- <div class="header-right">
+      <div class="header-right" v-if="canManageVideos">
         <a-button
           type="primary"
           class="add-btn"
-          :icon="h(PlusCircleFilled)"
           @click="openAddPage"
         >
           {{ t("modules.video.addNew") }}
         </a-button>
-      </div> -->
+      </div>
     </div>
 
     <!-- Search and Filter Section -->
@@ -652,7 +683,7 @@ function handleStatusChange(id: number, checked: boolean) {
                 @change="
                   (checked: boolean) => handleStatusChange(record.id, checked)
                 "
-                :loading="record.statusLoading"
+                :loading="isStatusLoading(record.id)"
                 :class="[
                   'status-toggle',
                   record.status === 'active'
@@ -672,13 +703,20 @@ function handleStatusChange(id: number, checked: boolean) {
 
           <template v-else-if="column.key === 'action'">
             <div class="action-icons">
-              <a-tooltip :title="t('actions.edit')">
-                <edit-outlined
+              <a-tooltip :title="t('actions.viewDetails')">
+                <EyeOutlined
+                  class="icon view"
+                  @click="openViewPage(record.id)"
+                />
+              </a-tooltip>
+              <a-tooltip v-if="canManageVideos" :title="t('actions.edit')">
+                <EditOutlined
                   class="icon edit"
                   @click="openEditPage(record.id)"
                 />
               </a-tooltip>
               <a-popconfirm
+                v-if="canManageVideos"
                 :title="t('message.deleteConfirm')"
                 placement="topRight"
                 @confirm="deleteVideo(record.id)"
@@ -1108,6 +1146,49 @@ function handleStatusChange(id: number, checked: boolean) {
   p {
     margin: 0;
     font-size: 16px;
+  }
+}
+
+// Action Icons Styling
+.action-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  .icon {
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px;
+    border-radius: 4px;
+
+    &.view {
+      color: #1890ff;
+
+      &:hover {
+        color: #40a9ff;
+        background-color: #e6f7ff;
+      }
+    }
+
+    &.edit {
+      color: #faad14;
+
+      &:hover {
+        color: #ffc53d;
+        background-color: #fffbe6;
+      }
+    }
+
+    &.delete {
+      color: #ff4d4f;
+
+      &:hover {
+        color: #ff7875;
+        background-color: #fff1f0;
+      }
+    }
   }
 }
 
