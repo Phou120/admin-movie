@@ -241,6 +241,7 @@ const data = reactive<{
     current: number;
     pageSize: number;
     total: number;
+    showSizeChanger?: boolean;
   };
 }>({
   packages: [],
@@ -248,6 +249,7 @@ const data = reactive<{
     current: 1,
     pageSize: 10,
     total: 0,
+    showSizeChanger: true,
   },
 });
 
@@ -301,15 +303,29 @@ async function loadReportData(
       endDate,
     );
 
-    if (response && response.data) {
-      data.packages = response.data;
-      data.pagination.total = response.pagination?.total || 0;
-    } else if (Array.isArray(response)) {
-      data.packages = response;
-      data.pagination.total = response.length;
-    }
+    // Set packages data
+    data.packages = response.data || [];
+
+    // Safely handle pagination with default values
+    const paginate = response.pagination || {};
+
+    data.pagination = {
+      current: paginate.currentPage ?? page ?? 1,
+      pageSize: paginate.limit ?? limit ?? 10,
+      total: paginate.total ?? 0,
+      showSizeChanger: true,
+    };
   } catch (error) {
     console.error("Error loading report data:", error);
+
+    // Reset to safe defaults on error
+    data.packages = [];
+    data.pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 0,
+      showSizeChanger: true,
+    };
   } finally {
     loading.value = false;
   }

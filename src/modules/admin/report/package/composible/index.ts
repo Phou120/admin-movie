@@ -1,7 +1,6 @@
 import apiClient from "../../../../../common/configuration/axios.config";
 // import type removed - no types used
 
-
 export function ReportPackageComposible() {
   const fetchReportData = async (
     page: number,
@@ -10,7 +9,7 @@ export function ReportPackageComposible() {
     package_type: string = "",
     status: string = "",
     start_date: string = "",
-    end_date: string = ""
+    end_date: string = "",
   ) => {
     const response = await apiClient.get("/packages/report", {
       params: {
@@ -23,7 +22,7 @@ export function ReportPackageComposible() {
         end_date,
       },
     });
-    return response.data.data || response.data;
+    return response.data;
   };
 
   const fetchSummary = async () => {

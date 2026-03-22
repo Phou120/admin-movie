@@ -1,6 +1,6 @@
 <template>
   <div class="customer-header">
-    <h1>{{ t('modules.user.title') }}</h1>
+    <h1>{{ t("modules.user.title") }}</h1>
     <div class="right-actions">
       <!-- 🔍 Search Box -->
       <a-input
@@ -25,7 +25,7 @@
         :icon="h(PlusCircleFilled)"
         @click="navigateToAddUser"
       >
-        {{ t('modules.user.addNew') }}
+        {{ t("modules.user.addNew") }}
       </a-button>
     </div>
   </div>
@@ -118,7 +118,10 @@
               @confirm="handleDelete(record.id)"
             >
               <a-tooltip :title="t('actions.delete')">
-                <delete-outlined class="icon delete" :title="t('actions.delete')" />
+                <delete-outlined
+                  class="icon delete"
+                  :title="t('actions.delete')"
+                />
               </a-tooltip>
             </a-popconfirm>
           </span>
@@ -197,7 +200,7 @@ const data = reactive<IUsers>({
   users: [],
   pagination: {
     current: 1,
-    pageSize: 30,
+    pageSize: 10,
     total: 0,
     showSizeChanger: true,
   },
@@ -206,29 +209,55 @@ const data = reactive<IUsers>({
 // Page offset for numbering
 const pageOffset = computed(() => {
   const current = data.pagination.current ?? 1;
-  const pageSize = data.pagination.pageSize ?? 30;
+  const pageSize = data.pagination.pageSize ?? 10;
   return (current - 1) * pageSize;
 });
 
 // Table columns
 const columns = computed(() => [
-  { title: t('modules.user.columns.no'), key: "no", align: "center", width: 70 },
-  { title: t('modules.user.columns.profile'), key: "profile", align: "center", width: 80 },
-  { title: t('modules.user.columns.name'), key: "full_name", width: 200, align: "center" },
   {
-    title: t('modules.user.columns.email'),
+    title: t("modules.user.columns.no"),
+    key: "no",
+    align: "center",
+    width: 70,
+  },
+  {
+    title: t("modules.user.columns.profile"),
+    key: "profile",
+    align: "center",
+    width: 80,
+  },
+  {
+    title: t("modules.user.columns.name"),
+    key: "full_name",
+    width: 200,
+    align: "center",
+  },
+  {
+    title: t("modules.user.columns.email"),
     dataIndex: "email",
     key: "email",
     width: 200,
     align: "center",
   },
-  { title: t('modules.user.columns.telephone'), dataIndex: "tel", key: "tel", width: 150, align: "center" },
-  { title: t('modules.user.columns.roles'), key: "roles", width: 150, align: "center" },
-  { title: t('modules.user.columns.status'), key: "permissions", width: 150 },
-  { title: t('modules.user.columns.createdAt'), key: "created_at", width: 180 },
-  { title: t('modules.user.columns.updatedAt'), key: "updated_at", width: 180 },
   {
-    title: t('modules.user.columns.action'),
+    title: t("modules.user.columns.telephone"),
+    dataIndex: "tel",
+    key: "tel",
+    width: 150,
+    align: "center",
+  },
+  {
+    title: t("modules.user.columns.roles"),
+    key: "roles",
+    width: 150,
+    align: "center",
+  },
+  { title: t("modules.user.columns.status"), key: "permissions", width: 150 },
+  { title: t("modules.user.columns.createdAt"), key: "created_at", width: 180 },
+  { title: t("modules.user.columns.updatedAt"), key: "updated_at", width: 180 },
+  {
+    title: t("modules.user.columns.action"),
     key: "action",
     width: 120,
     align: "center",
@@ -266,7 +295,7 @@ function submitSearchNow() {
 // Load users
 async function loadUsers(
   page = data.pagination.current,
-  limit = data.pagination.pageSize
+  limit = data.pagination.pageSize,
 ) {
   loading.value = true;
   try {
@@ -299,11 +328,11 @@ function handleTableChange(pagination: TablePaginationConfig) {
 async function handleDelete(id: number) {
   try {
     await deleteUser(id);
-    showSuccessNotification(t('modules.user.deleteSuccess'));
+    showSuccessNotification(t("modules.user.deleteSuccess"));
     loadUsers();
   } catch (error: any) {
     console.error("Failed to delete user:", error);
-    showErrorNotification(error.message || t('modules.user.deleteError'));
+    showErrorNotification(error.message || t("modules.user.deleteError"));
   }
 }
 

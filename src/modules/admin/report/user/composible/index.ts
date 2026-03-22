@@ -1,7 +1,5 @@
 import apiClient from "../../../../../common/configuration/axios.config";
-import type {
-  IRoleOption,
-} from "../interface/report-user.interface";
+import type { IRoleOption } from "../interface/report-user.interface";
 
 export function ReportUserComposible() {
   const fetchReportData = async (
@@ -11,7 +9,7 @@ export function ReportUserComposible() {
     role: string = "",
     status: string = "",
     start_date: string = "",
-    end_date: string = ""
+    end_date: string = "",
   ) => {
     const response = await apiClient.get("/users/report", {
       params: {
@@ -24,7 +22,7 @@ export function ReportUserComposible() {
         end_date,
       },
     });
-    return response.data.data || response.data;
+    return response.data;
   };
 
   const fetchSummary = async () => {

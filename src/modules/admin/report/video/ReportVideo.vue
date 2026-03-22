@@ -68,6 +68,8 @@
               v-model:value="selectedCategoryId"
               :placeholder="t('modules.reportVideo.selectCategory')"
               allow-clear
+              show-search
+              :filter-option="filterCategoryOption"
               style="width: 100%"
               :loading="categoriesLoading"
             >
@@ -85,6 +87,8 @@
               v-model:value="selectedCustomerId"
               :placeholder="t('modules.reportVideo.selectCustomer')"
               allow-clear
+              show-search
+              :filter-option="filterCustomerOption"
               style="width: 100%"
               :loading="customersLoading"
             >
@@ -102,6 +106,8 @@
               v-model:value="selectedStatus"
               :placeholder="t('modules.reportVideo.selectStatus')"
               allow-clear
+              show-search
+              :filter-option="filterStatusOption"
               style="width: 100%"
             >
               <a-select-option value="active">
@@ -185,7 +191,9 @@
               <span v-if="record.customer && record.customer.name">
                 {{ record.customer.name }} {{ record.customer.surname }}
               </span>
-              <span v-else class="no-customer">{{ t("common.noCustomer") }}</span>
+              <span v-else class="no-customer">{{
+                t("common.noCustomer")
+              }}</span>
             </div>
           </template>
           <template v-else-if="column.key === 'video_url'">
@@ -208,7 +216,9 @@
                 v-if="record.trailer_url"
                 type="link"
                 size="small"
-                @click="playVideo(record.trailer_url, `${record.title} - Trailer`)"
+                @click="
+                  playVideo(record.trailer_url, `${record.title} - Trailer`)
+                "
                 class="play-button"
               >
                 <PlayCircleOutlined /> {{ t("modules.reportVideo.play") }}
@@ -229,6 +239,13 @@
               <a-tag color="red" class="stat-tag">
                 <HeartOutlined class="stat-icon" />
                 {{ record.total_likes || 0 }}
+              </a-tag>
+            </div>
+          </template>
+          <template v-else-if="column.key === 'total_views_price'">
+            <div class="stats-display">
+              <a-tag color="green" class="stat-tag">
+                {{ formatCurrency(record.view_price || 0) }}
               </a-tag>
             </div>
           </template>
@@ -299,6 +316,7 @@ import {
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IReportVideo } from "./interface/report-video.interface";
 import formatDate from "../../../../common/utils/format-date.util";
+import { formatCurrency } from "../../../../common/utils/format-number.util";
 
 const {
   fetchReportData,
@@ -367,6 +385,12 @@ const columns = computed(() => [
     width: 120,
   },
   {
+    title: t("modules.reportVideo.columns.totalViewsPrice"),
+    key: "total_views_price",
+    align: "center" as const,
+    width: 120,
+  },
+  {
     title: t("modules.reportVideo.columns.status"),
     key: "status",
     align: "center" as const,
@@ -386,6 +410,7 @@ const data = reactive<{
     current: number;
     pageSize: number;
     total: number;
+    showSizeChanger?: boolean;
   };
 }>({
   videos: [],
@@ -393,6 +418,7 @@ const data = reactive<{
     current: 1,
     pageSize: 10,
     total: 0,
+    showSizeChanger: true,
   },
 });
 
@@ -436,6 +462,25 @@ function getRowNumber(index: number): number {
   return (current - 1) * pageSize + index + 1;
 }
 
+// Filter function for category select
+function filterCategoryOption(input: string, option: any) {
+  const category = categories.value.find((c) => c.id === option.value);
+  return category?.name?.toLowerCase().includes(input.toLowerCase()) ?? false;
+}
+
+// Filter function for customer select
+function filterCustomerOption(input: string, option: any) {
+  const customer = customers.value.find((c) => c.id === option.value);
+  const fullName = `${customer?.name || ''} ${customer?.surname || ''}`.toLowerCase();
+  return fullName.includes(input.toLowerCase());
+}
+
+// Filter function for status select
+function filterStatusOption(input: string, option: any) {
+  const statusText = option.children?.[0]?.children || '';
+  return statusText.toLowerCase().includes(input.toLowerCase());
+}
+
 async function loadReportData(
   page = data.pagination.current,
   limit = data.pagination.pageSize,
@@ -460,15 +505,29 @@ async function loadReportData(
       endDate,
     );
 
-    if (response && response.data) {
-      data.videos = response.data;
-      data.pagination.total = response.pagination?.total || 0;
-    } else if (Array.isArray(response)) {
-      data.videos = response;
-      data.pagination.total = response.length;
-    }
+    // Set videos data
+    data.videos = response.data || [];
+
+    // Safely handle pagination with default values
+    const paginate = response.pagination || {};
+
+    data.pagination = {
+      current: paginate.currentPage ?? page ?? 1,
+      pageSize: paginate.limit ?? limit ?? 10,
+      total: paginate.total ?? 0,
+      showSizeChanger: true,
+    };
   } catch (error) {
     console.error("Error loading report data:", error);
+
+    // Reset to safe defaults on error
+    data.videos = [];
+    data.pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 0,
+      showSizeChanger: true,
+    };
   } finally {
     loading.value = false;
   }

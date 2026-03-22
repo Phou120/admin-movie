@@ -18,12 +18,8 @@ import {
 } from "../../../common/utils/notification";
 import formatDate from "../../../common/utils/format-date.util";
 
-const {
-  fetchAll,
-  fetchByMemberId,
-  deletePaymentById,
-  updatePaymentStatus,
-} = PaymentComposible();
+const { fetchAll, fetchByMemberId, deletePaymentById, updatePaymentStatus } =
+  PaymentComposible();
 const { t } = useI18n();
 
 const route = useRoute();
@@ -73,7 +69,7 @@ const columns = computed(() => [
     dataIndex: "status",
     key: "status",
     align: "center",
-    width: 100,
+    width: 170,
   },
   {
     title: t("modules.payment.columns.slip"),
@@ -258,7 +254,10 @@ function getAvailableStatuses(currentStatus: string) {
         { label: t("status.failed"), value: "failed" },
       ];
     case "success":
-      return [{ label: t("status.failed"), value: "failed" }];
+      return [
+        { label: t("status.pending"), value: "pending" },
+        { label: t("status.failed"), value: "failed" },
+      ];
     case "failed":
       return [{ label: t("status.success"), value: "success" }];
     default:
@@ -608,6 +607,38 @@ function goBack() {
 
 .text-muted {
   color: #999;
+}
+
+.status-badge {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  min-width: 150px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+
+  &.clickable:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+  }
+}
+
+.status-dropdown-menu {
+  min-width: 160px;
+
+  .ant-menu-item {
+    padding: 8px 16px;
+    min-width: 260px;
+  }
+
+  .anticon {
+    margin-right: 8px;
+  }
 }
 
 .action-icons {

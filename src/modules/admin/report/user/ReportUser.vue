@@ -56,37 +56,7 @@
               </template>
             </a-input>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="8" :lg="8">
-            <a-select
-              v-model:value="selectedRole"
-              :placeholder="t('modules.reportUser.selectRole')"
-              allow-clear
-              style="width: 100%"
-            >
-              <a-select-option
-                v-for="role in roles"
-                :key="role.value"
-                :value="role.value"
-              >
-                {{ role.label }}
-              </a-select-option>
-            </a-select>
-          </a-col>
-          <a-col :xs="24" :sm="12" :md="8" :lg="8">
-            <a-select
-              v-model:value="selectedStatus"
-              :placeholder="t('modules.reportUser.selectStatus')"
-              allow-clear
-              style="width: 100%"
-            >
-              <a-select-option value="active">
-                {{ t("modules.reportUser.statusActive") }}
-              </a-select-option>
-              <a-select-option value="inactive">
-                {{ t("modules.reportUser.statusInactive") }}
-              </a-select-option>
-            </a-select>
-          </a-col>
+
           <a-col :xs="24" :sm="12" :md="12" :lg="8">
             <a-range-picker
               v-model:value="dateRange"
@@ -95,7 +65,7 @@
               @change="handleDateRangeChange"
             />
           </a-col>
-          <a-col :xs="24" :sm="12" :md="12" :lg="16">
+          <a-col :xs="24" :sm="12" :md="12" :lg="8">
             <a-space :size="8" wrap>
               <a-button type="primary" @click="handleSearch">
                 <SearchOutlined />
@@ -127,7 +97,7 @@
         :pagination="data.pagination"
         :row-key="getRecordKey"
         @change="handleTableChange"
-        :scroll="{ x: 1200 }"
+        :scroll="{ x: 1400 }"
       >
         <template #bodyCell="{ column, record, index }">
           <template v-if="column.key === 'no'">
@@ -135,38 +105,96 @@
           </template>
           <template v-else-if="column.key === 'profile'">
             <a-avatar
-              v-if="record.profile_image"
-              :src="record.profile_image"
-              :size="32"
+              v-if="record.profile?.image_url"
+              :src="record.profile.image_url"
+              :size="40"
+              shape="circle"
+              style="cursor: pointer"
+              @click="viewProfile(record)"
             />
-            <a-avatar v-else :size="32">{{ record.name?.charAt(0) }}</a-avatar>
+            <a-avatar
+              v-else
+              :size="40"
+              shape="circle"
+              style="cursor: pointer"
+              @click="viewProfile(record)"
+            >
+              {{ record.name?.charAt(0) }}
+            </a-avatar>
           </template>
           <template v-else-if="column.key === 'name'">
             {{ record.name }} {{ record.surname }}
           </template>
           <template v-else-if="column.key === 'role'">
-            <a-tag :color="getRoleColor(record.role)">
-              {{ t(`modules.reportUser.role${record.role?.replace("-", "")}`) }}
+            <a-tag
+              v-if="record.roles && record.roles.length > 0"
+              :color="getRoleColor(record.roles[0].name)"
+            >
+              {{ formatRoleName(record.roles[0].name) }}
             </a-tag>
+            <span v-else class="text-muted">-</span>
           </template>
-          <template v-else-if="column.key === 'status'">
-            <a-tag :color="record.status === 'active' ? 'green' : 'red'">
-              {{
-                record.status === "active"
-                  ? t("modules.reportUser.statusActive")
-                  : t("modules.reportUser.statusInactive")
-              }}
-            </a-tag>
+          <template v-else-if="column.key === 'created_at'">
+            {{ formatDate(record.created_at) }}
           </template>
-          <template v-else-if="column.key === 'registration_date'">
-            {{ formatDate(record.registration_date) }}
-          </template>
-          <template v-else-if="column.key === 'last_login'">
-            {{ record.last_login ? formatDate(record.last_login) : "-" }}
+          <template v-else-if="column.key === 'updated_at'">
+            {{ formatDate(record.updated_at) }}
           </template>
         </template>
       </a-table>
     </a-card>
+
+    <!-- Profile Modal -->
+    <a-modal
+      v-model:open="isProfileModalVisible"
+      :title="`${selectedUser?.name} ${selectedUser?.surname}`"
+      :footer="null"
+      width="500px"
+    >
+      <div v-if="selectedUser" class="profile-modal-content">
+        <div class="profile-header">
+          <a-avatar
+            v-if="selectedUser.profile?.image_url"
+            :src="selectedUser.profile.image_url"
+            :size="120"
+            shape="circle"
+          />
+          <a-avatar v-else :size="120" shape="circle">
+            {{ selectedUser.name?.charAt(0) }}
+          </a-avatar>
+        </div>
+
+        <div class="profile-info">
+          <a-descriptions :column="1" bordered>
+            <a-descriptions-item :label="t('modules.reportUser.columns.name')">
+              {{ selectedUser.name }} {{ selectedUser.surname }}
+            </a-descriptions-item>
+            <a-descriptions-item label="Email">
+              {{ selectedUser.email }}
+            </a-descriptions-item>
+            <a-descriptions-item label="Tel">
+              {{ selectedUser.tel || "-" }}
+            </a-descriptions-item>
+            <a-descriptions-item :label="t('modules.reportUser.columns.role')">
+              <a-tag v-if="selectedUser.roles && selectedUser.roles.length > 0">
+                {{ selectedUser.roles[0].name }}
+              </a-tag>
+              <span v-else>-</span>
+            </a-descriptions-item>
+            <a-descriptions-item
+              :label="t('modules.reportUser.columns.createdAt')"
+            >
+              {{ formatDate(selectedUser.created_at) }}
+            </a-descriptions-item>
+            <a-descriptions-item
+              :label="t('modules.reportUser.columns.updatedAt')"
+            >
+              {{ formatDate(selectedUser.updated_at) }}
+            </a-descriptions-item>
+          </a-descriptions>
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -183,8 +211,7 @@ import { type TablePaginationConfig } from "ant-design-vue";
 import type { IReportUser } from "./interface/report-user.interface";
 import formatDate from "../../../../common/utils/format-date.util";
 
-const { fetchReportData, fetchSummary, getRoles, exportToCSV } =
-  ReportUserComposible();
+const { fetchReportData, fetchSummary, exportToCSV } = ReportUserComposible();
 const { t } = useI18n();
 
 const columns = computed(() => [
@@ -220,29 +247,18 @@ const columns = computed(() => [
     width: 120,
   },
   {
-    title: t("modules.reportUser.columns.status"),
-    key: "status",
-    align: "center" as const,
-    width: 100,
-  },
-  {
-    title: t("modules.reportUser.columns.registrationDate"),
-    key: "registration_date",
+    title: t("modules.reportUser.columns.createdAt"),
+    dataIndex: "created_at",
+    key: "created_at",
     align: "center" as const,
     width: 150,
   },
   {
-    title: t("modules.reportUser.columns.lastLogin"),
-    key: "last_login",
+    title: t("modules.reportUser.columns.updatedAt"),
+    dataIndex: "updated_at",
+    key: "updated_at",
     align: "center" as const,
     width: 150,
-  },
-  {
-    title: t("modules.reportUser.columns.loginCount"),
-    dataIndex: "login_count",
-    key: "login_count",
-    align: "center" as const,
-    width: 100,
   },
 ]);
 
@@ -281,7 +297,10 @@ const searchText = ref("");
 const selectedRole = ref<string | undefined>(undefined);
 const selectedStatus = ref<string | undefined>(undefined);
 const dateRange = ref<any[]>([]);
-const roles = getRoles();
+
+// Profile modal state
+const isProfileModalVisible = ref(false);
+const selectedUser = ref<any>(null);
 
 function getRecordKey(record: IReportUser): number {
   return record.id ?? 0;
@@ -294,16 +313,43 @@ function getRowNumber(index: number): number {
 }
 
 function getRoleColor(role?: string): string {
-  switch (role) {
+  const roleLower = role?.toLowerCase();
+  switch (roleLower) {
     case "admin":
       return "blue";
+    case "superadmin":
     case "super-admin":
       return "purple";
     case "customer":
       return "green";
-    default:
+    case "creator":
+      return "cyan";
+    case "editor":
+      return "orange";
+    case "viewer":
       return "default";
+    default:
+      return "blue";
   }
+}
+
+// Format role name for display
+function formatRoleName(roleName: string): string {
+  // Capitalize first letter and handle special cases
+  if (!roleName) return "";
+
+  const specialCases: Record<string, string> = {
+    superadmin: "Super Admin",
+    "super-admin": "Super Admin",
+  };
+
+  const lowerName = roleName.toLowerCase();
+  if (specialCases[lowerName]) {
+    return specialCases[lowerName];
+  }
+
+  // Capitalize first letter
+  return roleName.charAt(0).toUpperCase() + roleName.slice(1);
 }
 
 async function loadReportData(
@@ -329,15 +375,27 @@ async function loadReportData(
       endDate,
     );
 
-    if (response && response.data) {
-      data.users = response.data;
-      data.pagination.total = response.pagination?.total || 0;
-    } else if (Array.isArray(response)) {
-      data.users = response;
-      data.pagination.total = response.length;
-    }
+    // Set users data
+    data.users = response.data || [];
+
+    // Safely handle pagination with default values
+    const paginate = response.pagination || {};
+
+    data.pagination = {
+      current: paginate.currentPage ?? page ?? 1,
+      pageSize: paginate.limit ?? limit ?? 10,
+      total: paginate.total ?? 0,
+    };
   } catch (error) {
     console.error("Error loading report data:", error);
+
+    // Reset to safe defaults on error
+    data.users = [];
+    data.pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 0,
+    };
   } finally {
     loading.value = false;
   }
@@ -413,6 +471,12 @@ async function handleExport() {
   }
 }
 
+// View user profile
+function viewProfile(user: any) {
+  selectedUser.value = user;
+  isProfileModalVisible.value = true;
+}
+
 onMounted(() => {
   loadReportData();
   loadSummary();
@@ -422,5 +486,24 @@ onMounted(() => {
 <style lang="scss" scoped>
 .report-page {
   padding: 16px;
+}
+
+.profile-modal-content {
+  .profile-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 16px 0;
+  }
+
+  .profile-info {
+    :deep(.ant-descriptions) {
+      .ant-descriptions-item-label {
+        font-weight: 600;
+        width: 120px;
+      }
+    }
+  }
 }
 </style>

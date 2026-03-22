@@ -24,7 +24,7 @@ export function ReportPaymentComposible() {
         end_date,
       },
     });
-    return response.data.data || response.data;
+    return response.data;
   };
 
   const fetchSummary = async () => {
@@ -45,7 +45,7 @@ export function ReportPaymentComposible() {
     const response = await apiClient.get("/customers", {
       params: { page: 1, limit: 1000, type: "member" },
     });
-    return response.data.data || [];
+    return response.data.data || response.data;
   };
 
   const exportToCSV = async (filters: {

@@ -1156,8 +1156,8 @@
       "export": "ສົ່ງອອກ",
       "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານວິດີໂອ",
       "metrics": {
-        "totalViews": "ຍີ່ຫຼົ້ນທັງໝົດ",
-        "totalLikes": "ໄລຍ້ທັງໝົດ",
+        "totalViews": "ຍອດເບິ່ງທັງໝົດ",
+        "totalLikes": "ຍອດໄລ້ທັງໝົດ",
         "activeVideos": "ວິດີໂອທີ່ໃຊ້ງານ",
         "totalVideos": "ວິດີໂອທັງໝົດ"
       },
@@ -1173,8 +1173,9 @@
         "categories": "ໝວດໝູ່",
         "video": "ວິດີໂອ",
         "trailer": "ຕົວຢ່າງ",
-        "totalViews": "ຍີ່ຫຼົ້ນທັງໝົດ",
-        "totalLikes": "ໄລຍ້ທັງໝົດ",
+        "totalViews": "ຍອດເບິ່ງທັງໝົດ",
+        "totalLikes": "ຍອດໄລ້ທັງໝົດ",
+        "totalViewsPrice": "ລາຍໄດ້ຕໍ່ໜັງ",
         "status": "ສະຖານະ",
         "createdAt": "ສ້າງວັນທີ"
       }
@@ -1211,7 +1212,9 @@
         "status": "ສະຖານະ",
         "registrationDate": "ວັນທີລົງທະບຽນ",
         "lastLogin": "ເຂົ້າສູ່ລະບົບລ້າສຸດ",
-        "loginCount": "ຈຳນວນເຂົ້າສູ່ລະບົບ"
+        "loginCount": "ຈຳນວນເຂົ້າສູ່ລະບົບ",
+        "createdAt": "ວັນທີສ້າງ",
+        "updatedAt": "ວັນທີອັບເດດ"
       }
     },
     "reportPackage": {

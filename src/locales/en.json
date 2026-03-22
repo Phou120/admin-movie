@@ -1182,6 +1182,7 @@
         "trailer": "Trailer",
         "totalViews": "Total Views",
         "totalLikes": "Total Likes",
+        "totalViewsPrice": "Total Views Price",
         "status": "Status",
         "createdAt": "Created At"
       }
@@ -1218,7 +1219,9 @@
         "status": "Status",
         "registrationDate": "Registration Date",
         "lastLogin": "Last Login",
-        "loginCount": "Login Count"
+        "loginCount": "Login Count",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At"
       }
     },
     "reportPackage": {
