@@ -1,6 +1,7 @@
 {
   "sidebar": {
     "dashboard": "ໜ້າຫຼັກ",
+    "customerDashboard": "ໜ້າຫຼັກຂອງຂ້ອຍ",
     "banner": "ແບນເນີ",
     "category": "ໝວດໝູ່",
     "tag": "ແທັກ",
@@ -58,7 +59,8 @@
     "endDate": "ວັນທີສິ້ນສຸດ",
     "noCustomer": "ບໍ່ລູກຄ້າ",
     "noImage": "ບໍ່ຮູບພາດ",
-    "viewImage": "ເບຶງຮູບພາດ"
+    "viewImage": "ເບຶງຮູບພາດ",
+    "refresh": "ໂຫຼດຄືນໃໝ່"
   },
   "auth": {
     "login": "ເຂົ້າສູ່ລະບົບ",
@@ -248,6 +250,7 @@
         "tags": "ແທັກ",
         "totalViews": "ຈຳນວນເຂົ້າຊົມ",
         "totalLikes": "ຈຳນວນຖືກໃຈ",
+        "viewPrice": "ລາຍຮັບຈາກວິດີໂອ",
         "status": "ສະຖານະ",
         "createdAt": "ສ້າງເມື່ອ",
         "updatedAt": "ອັບເດດເມື່ອ",
@@ -338,6 +341,9 @@
         "telephone": "ໂທລະຟອນ",
         "address": "ທີ່ຢູ່",
         "status": "ສະຖານະ",
+        "total_revenue": "ລາຍຮັບທັງໝົດ",
+        "paid_revenue": "ລາຍຮັບທີ່ຈ່າຍແລ້ວ",
+        "unpaid_revenue": "ລາຍຮັບທີ່ຍັງບໍ່ທັນຈ່າຍ",
         "customer": "ລູກຄ້າ",
         "type": "ປະເພດ",
         "avatar": "ຮູບໂປຣໄຟລ໌",
@@ -374,7 +380,14 @@
           "confirmPasswordRequired": "ກະລຸນາຢືນຢັນລະຫັດຜ່ານຂອງທ່ານ",
           "passwordMismatch": "ລະຫັດຜ່ານບໍ່ກົງກັນ"
         }
-      }
+      },
+      "dashboardTitle": "ແຜງຄວບຄຸມລູກຄ້າ",
+      "financialSummary": "ສະຫຼຸບການເງິນ",
+      "paymentPercentage": "ເປີເຊັນການຊຳລະ",
+      "totalVideos": "ວິດີໂອທັງໝົດ",
+      "totalViews": "ການເບິ່ງທັງໝົດ",
+      "noCustomerId": "ບໍ່ພົບ ID ລູກຄ້າໃນ localStorage",
+      "dataLoaded": "ໂຫຼດຂໍ້ມູນລູກຄ້າສຳເລັດ"
     },
     "category": {
       "title": "ການຈັດການໝວດໝູ່",
@@ -1327,6 +1340,7 @@
     "stop": "ຢຸດຊົ່ວງ",
     "refresh": "ຣີເຟຣສ",
     "reload": "ໂຫຼດໃໝ່",
+    "payment": "ຊຳລະ",
     "close": "ປິດ",
     "open": "ເປີດ",
     "back": "ກັບຄືນ",
@@ -1347,6 +1361,7 @@
     "updateSuccess": "ອັບເດດສຳເລັດ",
     "deleteSuccess": "ລຶບສຳເລັດ",
     "deleteConfirm": "ທ່ານແນ່ໃຈວ່າຈະລຶບລາຍການນີ້ບໍ?",
+    "paymentConfirm": "ທ່ານແນ່ໃຈບໍວ່າຈະດຳເນີນການຊຳລະໃຫ້ຜູ້ສ້າງຄົນນີ້?",
     "operationSuccess": "ດຳເນີນການສຳເລັດ",
     "operationFailed": "ດຳເນີນການບໍ່ສຳເລັດ",
     "confirmLogout": "ຢືນຢັນການອອກຈາກລະບົບ",

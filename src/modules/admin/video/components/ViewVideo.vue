@@ -162,7 +162,7 @@
                     <a-statistic
                       :title="t('modules.video.columns.totalViews')"
                       :value="videoData.total_views || 0"
-                      :value-style="{ color: '#3f8600' }"
+                      :value-style="{ color: '#018BF5' }"
                     >
                       <template #prefix>
                         <EyeOutlined />
@@ -175,6 +175,18 @@
                       :title="t('modules.video.columns.totalLikes')"
                       :value="videoData.total_likes || 0"
                       :value-style="{ color: '#cf1322' }"
+                    >
+                      <template #prefix>
+                        <HeartOutlined />
+                      </template>
+                    </a-statistic>
+                  </a-card>
+
+                  <a-card class="stat-card">
+                    <a-statistic
+                      :title="t('modules.video.columns.viewPrice')"
+                      :value="videoData.view_price || 0"
+                      :value-style="{ color: '#00A413' }"
                     >
                       <template #prefix>
                         <HeartOutlined />

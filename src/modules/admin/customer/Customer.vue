@@ -108,6 +108,24 @@
           </a-dropdown>
         </template>
 
+        <template v-else-if="column.key === 'total_revenue'">
+          <a-tag color="green"
+            >{{ formatCurrency(record.total_revenue || 0) }} LAK</a-tag
+          >
+        </template>
+
+        <template v-else-if="column.key === 'paid_revenue'">
+          <a-tag color="blue"
+            >{{ formatCurrency(record.paid_revenue || 0) }} LAK</a-tag
+          >
+        </template>
+
+        <template v-else-if="column.key === 'unpaid_revenue'">
+          <a-tag color="orange"
+            >{{ formatCurrency(record.unpaid_revenue || 0) }} LAK</a-tag
+          >
+        </template>
+
         <template v-else-if="column.key === 'created_at'">
           {{ formatDate(record.created_at) }}
         </template>
@@ -124,6 +142,16 @@
                 @click="goToViewCustomer(record)"
               />
             </a-tooltip>
+            <a-popconfirm
+              :title="t('message.paymentConfirm')"
+              @confirm="handlePayment(record.id)"
+              :ok-text="t('common.yes')"
+              :cancel-text="t('common.no')"
+            >
+              <a-tooltip :title="t('actions.payment')">
+                <dollar-outlined class="icon payment" />
+              </a-tooltip>
+            </a-popconfirm>
             <a-popconfirm
               :title="t('message.deleteConfirm')"
               @confirm="deleteCustomer(record.id)"
@@ -153,18 +181,21 @@ import {
   UserOutlined,
   DownOutlined,
   LoadingOutlined,
+  DollarOutlined,
 } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { ICustomer } from "./interface/customer.interface";
 import { useCustomer } from "./composible/index";
 import formatDate from "../../../common/utils/format-date.util";
+import { formatCurrency } from "../../../common/utils/format-number.util";
 import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../common/utils/notification";
 
 const router = useRouter();
-const { fetchAll, deleteCustomerById, updateStatus } = useCustomer();
+const { fetchAll, deleteCustomerById, updateStatus, fetchPaymentCreator } =
+  useCustomer();
 const { t } = useI18n();
 
 // State
@@ -236,6 +267,27 @@ const columns = computed(() => [
     width: 250,
   },
   {
+    title: t("modules.customer.form.total_revenue"),
+    dataIndex: "total_revenue",
+    key: "total_revenue",
+    width: 150,
+    align: "center",
+  },
+  {
+    title: t("modules.customer.form.paid_revenue"),
+    dataIndex: "paid_revenue",
+    key: "paid_revenue",
+    width: 150,
+    align: "center",
+  },
+  {
+    title: t("modules.customer.form.unpaid_revenue"),
+    dataIndex: "unpaid_revenue",
+    key: "unpaid_revenue",
+    width: 150,
+    align: "center",
+  },
+  {
     title: t("modules.customer.columns.status"),
     dataIndex: "status",
     key: "status",
@@ -257,7 +309,7 @@ const columns = computed(() => [
   {
     title: t("modules.customer.columns.action"),
     key: "action",
-    width: 100,
+    width: 130,
     fixed: "right",
     align: "center",
   },
@@ -310,6 +362,19 @@ function handleSearchChange(e: any) {
 const goToViewCustomer = (customer: any) => {
   router.push(`/customer/view/${customer.id}`);
 };
+
+// Handle Payment
+async function handlePayment(customerId: number) {
+  try {
+    const response = await fetchPaymentCreator(customerId);
+    showSuccessNotification(response.message);
+    // Optionally reload data after payment
+    loadCustomers();
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message;
+    showErrorNotification(message);
+  }
+}
 
 // Handle status change
 const handleStatusChange = async (id: number, status: string) => {
@@ -479,6 +544,14 @@ onMounted(() => loadCustomers());
 
       &:hover {
         background-color: rgba(255, 77, 79, 0.1);
+      }
+    }
+
+    &.payment {
+      color: #52c41a;
+
+      &:hover {
+        background-color: rgba(82, 196, 26, 0.1);
       }
     }
   }

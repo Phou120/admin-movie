@@ -133,6 +133,12 @@ const columns = computed(() => [
     width: 115,
   },
   {
+    title: t("modules.video.columns.viewPrice"),
+    key: "view_price",
+    align: "center",
+    width: 130,
+  },
+  {
     title: t("modules.video.columns.status"),
     key: "status",
     align: "center",
@@ -200,6 +206,22 @@ function getRowNumber(index: number): number {
   const current = data.pagination.current ?? 1;
   const pageSize = data.pagination.pageSize ?? 10;
   return (current - 1) * pageSize + index + 1;
+}
+
+// Function to format view price
+function formatViewPrice(price: number | undefined): string {
+  const value = price || 0;
+  if (value > 0) {
+    // Format with commas and .00 decimal places (without LAK suffix)
+    const formattedNumber = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+    return formattedNumber;
+  } else {
+    // Return just 0 if value is 0 or less
+    return "0";
+  }
 }
 
 // Function to load videos with pagination, search, and filters
@@ -473,11 +495,7 @@ function handleStatusChange(id: number, checked: boolean) {
         <h1>{{ t("modules.video.title") }}</h1>
       </div>
       <div class="header-right" v-if="canManageVideos">
-        <a-button
-          type="primary"
-          class="add-btn"
-          @click="openAddPage"
-        >
+        <a-button type="primary" class="add-btn" @click="openAddPage">
           {{ t("modules.video.addNew") }}
         </a-button>
       </div>
@@ -670,6 +688,14 @@ function handleStatusChange(id: number, checked: boolean) {
               <a-tag color="red" class="stat-tag">
                 <HeartOutlined class="stat-icon" />
                 {{ record.total_likes || 0 }}
+              </a-tag>
+            </div>
+          </template>
+
+          <template v-else-if="column.key === 'view_price'">
+            <div class="stats-display">
+              <a-tag color="green" class="stat-tag">
+                {{ formatViewPrice(record.view_price) }} LAK
               </a-tag>
             </div>
           </template>

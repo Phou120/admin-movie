@@ -1,6 +1,7 @@
 {
   "sidebar": {
     "dashboard": "Dashboard",
+    "customerDashboard": "My Dashboard",
     "banner": "Banner",
     "category": "Category",
     "tag": "Tag",
@@ -58,7 +59,8 @@
     "endDate": "End Date",
     "noCustomer": "No Customer",
     "noImage": "No Image",
-    "viewImage": "View Image"
+    "viewImage": "View Image",
+    "refresh": "Reload"
   },
   "auth": {
     "login": "Login",
@@ -248,6 +250,7 @@
         "tags": "Tags",
         "totalViews": "Total Views",
         "totalLikes": "Total Likes",
+        "viewPrice": "Video revenue",
         "status": "Status",
         "createdAt": "Created At",
         "updatedAt": "Updated At",
@@ -345,6 +348,9 @@
         "telephone": "Telephone",
         "address": "Address",
         "status": "Status",
+        "total_revenue": "Total Revenue",
+        "paid_revenue": "Paid Revenue",
+        "unpaid_revenue": "Unpaid Revenue",
         "customer": "Customer",
         "type": "Type",
         "avatar": "Profile Image",
@@ -381,7 +387,14 @@
           "confirmPasswordRequired": "Please confirm your password",
           "passwordMismatch": "Passwords do not match"
         }
-      }
+      },
+      "dashboardTitle": "Customer Dashboard",
+      "financialSummary": "Financial Summary",
+      "paymentPercentage": "Payment Percentage",
+      "totalVideos": "Total Videos",
+      "totalViews": "Total Views",
+      "noCustomerId": "Customer ID not found in localStorage",
+      "dataLoaded": "Customer data loaded successfully"
     },
     "category": {
       "title": "Category Management",
@@ -1334,6 +1347,7 @@
     "stop": "Stop",
     "refresh": "Refresh",
     "reload": "Reload",
+    "payment": "Payment",
     "close": "Close",
     "open": "Open",
     "back": "Back",
@@ -1354,6 +1368,7 @@
     "updateSuccess": "Updated successfully",
     "deleteSuccess": "Deleted successfully",
     "deleteConfirm": "Are you sure to delete this item?",
+    "paymentConfirm": "Are you sure you want to process payment for this creator?",
     "operationSuccess": "Operation completed successfully",
     "operationFailed": "Operation failed",
     "confirmLogout": "Confirm Logout",

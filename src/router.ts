@@ -15,7 +15,7 @@ import VerifyOTP from "./modules/admin/auth/components/verifyOTP.vue";
 import ResetPassword from "./modules/admin/auth/components/resetPassword.vue";
 
 // Dashboard
-import AdminDashboard from "./modules/admin/dashboard/DashBoard.vue";
+import DashboardWrapper from "./modules/admin/dashboard/DashboardWrapper.vue";
 
 // Available Admin Modules
 import CategoryPage from "./modules/admin/category/category.vue";
@@ -140,7 +140,7 @@ const routes = [
       {
         path: "/dashboard",
         name: "dashboard",
-        component: AdminDashboard,
+        component: DashboardWrapper,
       },
       {
         path: "/banner",

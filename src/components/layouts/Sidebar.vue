@@ -9,14 +9,14 @@
       mode="inline"
       :inline-collapsed="collapsed"
     >
-      <!-- Dashboard - Admin/Super-Admin only -->
+      <!-- Dashboard - All roles (shows different dashboard based on role) -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="isAdminOrSuperAdmin || isCreator"
         key="1"
         @click="handlerMenu('dashboard')"
       >
         <DashboardOutlined />
-        <span>{{ t("sidebar.dashboard") }}</span>
+        <span>{{ isCreator ? t("sidebar.customerDashboard") : t("sidebar.dashboard") }}</span>
       </a-menu-item>
 
       <!-- Banner - Admin/Super-Admin only -->
@@ -246,6 +246,12 @@ const userRoles = computed(() => {
 const isAdminOrSuperAdmin = computed(() => {
   const roles = userRoles.value;
   return roles.includes("admin") || roles.includes("super-admin");
+});
+
+// Check if user is creator
+const isCreator = computed(() => {
+  const roles = userRoles.value;
+  return roles.includes("creator");
 });
 
 // handle menu

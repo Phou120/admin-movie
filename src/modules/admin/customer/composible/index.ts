@@ -56,7 +56,7 @@ export function useCustomer() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return response.data.data.imageUrl;
@@ -85,7 +85,7 @@ export function useCustomer() {
           "Content-Type": "application/json",
           lang: "lo",
         },
-      }
+      },
     );
     return response.data;
   };
@@ -103,6 +103,14 @@ export function useCustomer() {
     return response.data;
   };
 
+  // Fetch payment creator
+  const fetchPaymentCreator = async (customerId: number) => {
+    const response = await apiClient.put("/view-movies/payment/creator", {
+      customer_id: customerId,
+    });
+    return response.data;
+  };
+
   return {
     fetchAll,
     getById,
@@ -111,5 +119,6 @@ export function useCustomer() {
     updateCustomer,
     deleteCustomerById,
     updateStatus,
+    fetchPaymentCreator,
   };
 }
