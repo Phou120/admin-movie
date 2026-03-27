@@ -1234,11 +1234,12 @@
       "statusInactive": "Inactive",
       "export": "Export",
       "noData": "No package report data found",
+      "times": "times",
       "metrics": {
-        "totalPackages": "Total Packages",
-        "activePackages": "Active Packages",
+        "totalPackages": "Amount Approved",
+        "activePackages": "Amount Pending",
         "totalRevenue": "Total Revenue",
-        "totalSubscriptions": "Total Subscriptions"
+        "totalPending": "Total Pending"
       },
       "charts": {
         "revenueTrend": "Revenue Trend",
@@ -1247,14 +1248,14 @@
       },
       "columns": {
         "no": "No",
-        "name": "Package Name",
         "type": "Type",
-        "price": "Price",
-        "totalSales": "Total Sales",
-        "totalRevenue": "Total Revenue",
-        "activeSubscriptions": "Active Subscriptions",
-        "status": "Status",
-        "createdAt": "Created At"
+        "price": "price",
+        "person_use": "amount to Approved",
+        "totalRevenue": "Total Approved",
+        "person_pending": "amount to Pending",
+        "totalPending": "Total Pending",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At"
       }
     },
     "reportPayment": {
@@ -1265,8 +1266,8 @@
       "selectMember": "Select Member",
       "dateRange": "Date Range",
       "statusPending": "Pending",
-      "statusApproved": "Approved",
-      "statusRejected": "Rejected",
+      "statusApproved": "Success",
+      "statusRejected": "Failed",
       "viewSlip": "View Slip",
       "export": "Export",
       "noData": "No payment report data found",
@@ -1284,9 +1285,9 @@
       },
       "columns": {
         "no": "No",
-        "transactionId": "Transaction ID",
         "member": "Member",
         "packageName": "Package",
+        "packageType": "Package Type",
         "amount": "Amount",
         "paymentType": "Payment Type",
         "status": "Status",

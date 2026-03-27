@@ -38,7 +38,7 @@ async function loadPaymentDetail() {
   } catch (error) {
     showErrorNotification(
       "Failed to load payment details:",
-      (error as Error).message
+      (error as Error).message,
     );
   } finally {
     loading.value = false;
@@ -185,6 +185,23 @@ onMounted(() => {
                 }}</a-tag>
               </div>
             </div>
+            <div class="detail-item">
+              <div class="item-label">{{ t("modules.payment.form.slip") }}</div>
+              <div class="item-value">
+                <a-button
+                  v-if="payment.slip"
+                  type="link"
+                  @click="viewSlip(payment.slip)"
+                  class="slip-btn"
+                >
+                  <template #icon>
+                    <file-image-outlined />
+                  </template>
+                  {{ t("modules.payment.viewSlip") }}
+                </a-button>
+                <span v-else class="text-muted">-</span>
+              </div>
+            </div>
 
             <div class="detail-item">
               <div class="item-label">
@@ -196,7 +213,7 @@ onMounted(() => {
                   {{
                     t(
                       `status.${payment.status?.toLowerCase()}`,
-                      payment.status?.toUpperCase()
+                      payment.status?.toUpperCase(),
                     )
                   }}
                 </a-tag>
@@ -307,61 +324,6 @@ onMounted(() => {
               <div class="item-label">{{ t("modules.payment.endDate") }}</div>
               <div class="item-value">
                 {{ formatDate(payment.usePackage?.end_date) }}
-              </div>
-            </div>
-          </a-card>
-        </a-col>
-
-        <!-- Bank Information -->
-        <a-col :xs="24" :lg="12">
-          <a-card
-            class="detail-card"
-            :title="t('modules.payment.bankInformation')"
-          >
-            <template #extra>
-              <bank-outlined />
-            </template>
-
-            <div class="detail-item">
-              <div class="item-label">
-                {{ t("modules.payment.columns.bank") }}
-              </div>
-              <div class="item-value bank-info">
-                <img
-                  v-if="payment.bank?.logo"
-                  :src="payment.bank.logo"
-                  :alt="payment.bank.name"
-                  class="bank-logo"
-                />
-                <strong>{{ payment.bank?.name }}</strong>
-              </div>
-            </div>
-
-            <div class="detail-item">
-              <div class="item-label">
-                {{ t("modules.payment.columns.currency") }}
-              </div>
-              <div class="item-value">
-                {{ payment.currency?.short_name }} -
-                {{ payment.currency?.name }}
-              </div>
-            </div>
-
-            <div class="detail-item">
-              <div class="item-label">{{ t("modules.payment.form.slip") }}</div>
-              <div class="item-value">
-                <a-button
-                  v-if="payment.slip"
-                  type="link"
-                  @click="viewSlip(payment.slip)"
-                  class="slip-btn"
-                >
-                  <template #icon>
-                    <file-image-outlined />
-                  </template>
-                  {{ t("modules.payment.viewSlip") }}
-                </a-button>
-                <span v-else class="text-muted">-</span>
               </div>
             </div>
           </a-card>

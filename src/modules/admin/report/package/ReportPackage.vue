@@ -8,6 +8,7 @@
             <a-statistic
               :title="t('modules.reportPackage.metrics.totalPackages')"
               :value="summary.total_packages"
+              :value-style="{ color: '#3f8600' }"
             />
           </a-card>
         </a-col>
@@ -16,7 +17,7 @@
             <a-statistic
               :title="t('modules.reportPackage.metrics.activePackages')"
               :value="summary.active_packages"
-              :value-style="{ color: '#3f8600' }"
+              :value-style="{ color: '#F39A00' }"
             />
           </a-card>
         </a-col>
@@ -26,16 +27,19 @@
               :title="t('modules.reportPackage.metrics.totalRevenue')"
               :value="summary.total_revenue"
               :precision="2"
-              :value-style="{ color: '#cf1322' }"
+              :value-style="{ color: '#3f8600' }"
+              suffix="LAK"
             />
           </a-card>
         </a-col>
         <a-col :span="6">
           <a-card :loading="summaryLoading">
             <a-statistic
-              :title="t('modules.reportPackage.metrics.totalSubscriptions')"
+              :title="t('modules.reportPackage.metrics.totalPending')"
               :value="summary.total_subscriptions"
-              :value-style="{ color: '#1890ff' }"
+              :precision="2"
+              :value-style="{ color: '#F39A00' }"
+              suffix="LAK"
             />
           </a-card>
         </a-col>
@@ -72,30 +76,8 @@
               </a-select-option>
             </a-select>
           </a-col>
-          <a-col :xs="24" :sm="12" :md="8" :lg="8">
-            <a-select
-              v-model:value="selectedStatus"
-              :placeholder="t('modules.reportPackage.selectStatus')"
-              allow-clear
-              style="width: 100%"
-            >
-              <a-select-option value="active">
-                {{ t("modules.reportPackage.statusActive") }}
-              </a-select-option>
-              <a-select-option value="inactive">
-                {{ t("modules.reportPackage.statusInactive") }}
-              </a-select-option>
-            </a-select>
-          </a-col>
+
           <a-col :xs="24" :sm="12" :md="12" :lg="8">
-            <a-range-picker
-              v-model:value="dateRange"
-              :placeholder="[t('common.startDate'), t('common.endDate')]"
-              style="width: 100%"
-              @change="handleDateRangeChange"
-            />
-          </a-col>
-          <a-col :xs="24" :sm="12" :md="12" :lg="16">
             <a-space :size="8" wrap>
               <a-button type="primary" @click="handleSearch">
                 <SearchOutlined />
@@ -133,25 +115,47 @@
           <template v-if="column.key === 'no'">
             {{ getRowNumber(index) }}
           </template>
-          <template v-else-if="column.key === 'name'">
-            {{ record.name }}
-          </template>
+
           <template v-else-if="column.key === 'type'">
             <a-tag color="blue">{{ record.type }}</a-tag>
           </template>
           <template v-else-if="column.key === 'price'">
-            ${{ Number(record.price || 0).toFixed(2) }}
-          </template>
-          <template v-else-if="column.key === 'status'">
-            <a-tag :color="record.status === 'active' ? 'green' : 'red'">
-              {{
-                record.status === "active"
-                  ? t("modules.reportPackage.statusActive")
-                  : t("modules.reportPackage.statusInactive")
-              }}
+            <a-tag class="stat-tag">
+              {{ formatCurrency(record.price || 0) }}
             </a-tag>
           </template>
+          <template v-else-if="column.key === 'personUse'">
+            <a-space :size="4">
+              <span>{{ Number(record.count_use_package || 0) }}</span>
+              {{ t("modules.reportPackage.times") }}
+            </a-space>
+          </template>
+          <template v-else-if="column.key === 'totalRevenue'">
+            <div class="stats-display">
+              <a-tag color="green" class="stat-tag">
+                {{ formatCurrency(record.total || 0) }}
+              </a-tag>
+            </div>
+          </template>
+
+          <template v-else-if="column.key === 'personPending'">
+            <a-space :size="4">
+              <span>{{ Number(record.count_user_package_pending || 0) }}</span>
+              {{ t("modules.reportPackage.times") }}
+            </a-space>
+          </template>
+          <template v-else-if="column.key === 'totalPending'">
+            <div class="stats-display">
+              <a-tag color="orange" class="stat-tag">
+                {{ formatCurrency(record.total_pending || 0) }}
+              </a-tag>
+            </div>
+          </template>
+
           <template v-else-if="column.key === 'created_at'">
+            {{ formatDate(record.created_at) }}
+          </template>
+          <template v-else-if="column.key === 'updated_at'">
             {{ formatDate(record.created_at) }}
           </template>
         </template>
@@ -172,6 +176,7 @@ import {
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IReportPackage } from "./interface/report-package.interface";
 import formatDate from "../../../../common/utils/format-date.util";
+import { formatCurrency } from "../../../../common/utils/format-number.util";
 
 const { fetchReportData, fetchSummary, getPackageTypes, exportToCSV } =
   ReportPackageComposible();
@@ -185,13 +190,6 @@ const columns = computed(() => [
     width: 70,
   },
   {
-    title: t("modules.reportPackage.columns.name"),
-    dataIndex: "name",
-    key: "name",
-    align: "left" as const,
-    width: 200,
-  },
-  {
     title: t("modules.reportPackage.columns.type"),
     key: "type",
     align: "center" as const,
@@ -201,13 +199,13 @@ const columns = computed(() => [
     title: t("modules.reportPackage.columns.price"),
     key: "price",
     align: "center" as const,
-    width: 100,
+    width: 120,
   },
   {
-    title: t("modules.reportPackage.columns.totalSales"),
-    key: "totalSales",
+    title: t("modules.reportPackage.columns.person_use"),
+    key: "personUse",
     align: "center" as const,
-    width: 120,
+    width: 140,
   },
   {
     title: t("modules.reportPackage.columns.totalRevenue"),
@@ -216,20 +214,26 @@ const columns = computed(() => [
     width: 120,
   },
   {
-    title: t("modules.reportPackage.columns.activeSubscriptions"),
-    key: "activeSubscriptions",
+    title: t("modules.reportPackage.columns.person_pending"),
+    key: "personPending",
     align: "center" as const,
-    width: 150,
+    width: 120,
   },
   {
-    title: t("modules.reportPackage.columns.status"),
-    key: "status",
+    title: t("modules.reportPackage.columns.totalPending"),
+    key: "totalPending",
     align: "center" as const,
-    width: 100,
+    width: 120,
   },
   {
     title: t("modules.reportPackage.columns.createdAt"),
     key: "created_at",
+    align: "center" as const,
+    width: 150,
+  },
+  {
+    title: t("modules.reportPackage.columns.updatedAt"),
+    key: "updated_at",
     align: "center" as const,
     width: 150,
   },
@@ -361,11 +365,6 @@ function handleTableChange(pagination: TablePaginationConfig) {
   data.pagination.current = pagination.current || 1;
   data.pagination.pageSize = pagination.pageSize || 10;
   loadReportData(data.pagination.current, data.pagination.pageSize);
-}
-
-function handleDateRangeChange() {
-  data.pagination.current = 1;
-  loadReportData(1, data.pagination.pageSize);
 }
 
 async function handleExport() {

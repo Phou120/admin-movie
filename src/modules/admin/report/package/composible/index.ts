@@ -6,7 +6,7 @@ export function ReportPackageComposible() {
     page: number,
     limit: number,
     search: string = "",
-    package_type: string = "",
+    type: string = "",
     status: string = "",
     start_date: string = "",
     end_date: string = "",
@@ -16,7 +16,7 @@ export function ReportPackageComposible() {
         page,
         limit,
         search,
-        package_type,
+        type,
         status,
         start_date,
         end_date,
@@ -32,10 +32,10 @@ export function ReportPackageComposible() {
 
   const getPackageTypes = () => {
     return [
-      { value: "1month", label: "1 Month" },
-      { value: "3months", label: "3 Months" },
-      { value: "6months", label: "6 Months" },
-      { value: "1year", label: "1 Year" },
+      { value: "one-month", label: "1 Month" },
+      { value: "three-month", label: "3 Months" },
+      { value: "six-month", label: "6 Months" },
+      { value: "one-year", label: "1 Year" },
     ];
   };
 

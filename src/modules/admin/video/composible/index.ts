@@ -7,7 +7,7 @@ export function VideoComposible() {
     limit: number,
     search: string = "",
     category_id: string = "",
-    customer_id: string = ""
+    customer_id: string = "",
   ) => {
     console.log("=== FETCH ALL VIDEOS ===", {
       page,
@@ -16,7 +16,7 @@ export function VideoComposible() {
       category_id,
       customer_id,
     });
-    const response = await apiClient.get("/videos", {
+    const response = await apiClient.get("/videos/creators", {
       params: {
         page,
         limit,
@@ -57,7 +57,7 @@ export function VideoComposible() {
       console.log(
         "Appending video:",
         formAdd.video_name.name,
-        formAdd.video_name.size
+        formAdd.video_name.size,
       );
       formData.append("video_name", formAdd.video_name);
     } else {
@@ -68,7 +68,7 @@ export function VideoComposible() {
       console.log(
         "Appending trailer:",
         formAdd.trailer.name,
-        formAdd.trailer.size
+        formAdd.trailer.size,
       );
       formData.append("trailer", formAdd.trailer);
     } else {
@@ -85,7 +85,7 @@ export function VideoComposible() {
     for (let [key, value] of formData.entries()) {
       console.log(
         `${key}:`,
-        value instanceof File ? `${value.name} (${value.size} bytes)` : value
+        value instanceof File ? `${value.name} (${value.size} bytes)` : value,
       );
     }
 
@@ -161,7 +161,7 @@ export function VideoComposible() {
     for (let [key, value] of formData.entries()) {
       console.log(
         `${key}:`,
-        value instanceof File ? `${value.name} (${value.size} bytes)` : value
+        value instanceof File ? `${value.name} (${value.size} bytes)` : value,
       );
     }
 

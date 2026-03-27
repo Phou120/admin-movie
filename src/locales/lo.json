@@ -1227,11 +1227,12 @@
       "statusInactive": "ປິດໃຊ້ງານ",
       "export": "ສົ່ງອອກ",
       "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານແພັກເກັດ",
+      "times": "ເທື່ອ",
       "metrics": {
-        "totalPackages": "ແພັກເກັດທັງໝົດ",
-        "activePackages": "ແພັກເກັດທີ່ໃຊ້ງານ",
+        "totalPackages": "ຈຳນວນທີ່ອານຸມັດ",
+        "activePackages": "ຈຳນວນທີ່ລໍຖ້າອານຸມັດ",
         "totalRevenue": "ລາຍຮັບທັງໝົດ",
-        "totalSubscriptions": "ການສະໝັດສະໝີດທັງໝົດ"
+        "totalPending": "ລາຍຮັບທັງໝົດທີ່ລໍຖ້າອານຸມັດ"
       },
       "charts": {
         "revenueTrend": "ແນວໂນ້ມລາຍຮັບ",
@@ -1240,14 +1241,14 @@
       },
       "columns": {
         "no": "ລຳດັບ",
-        "name": "ຊື່ແພັກເກັດ",
         "type": "ປະເພດ",
         "price": "ລາຄາ",
-        "totalSales": "ຍອດຂາຍທັງໝົດ",
+        "person_use": "ຈຳນວນທີ່ອານຸມັດ",
         "totalRevenue": "ລາຍຮັບທັງໝົດ",
-        "activeSubscriptions": "ການສະໝັດສະໝີດທີ່ໃຊ້ງານ",
-        "status": "ສະຖານະ",
-        "createdAt": "ສ້າງວັນທີ"
+        "person_pending": "ຈຳນວນທີ່ຍັງລໍຖ້າອານຸມັດ",
+        "totalPending": "ລາຍຮັບທັງໝົດທີ່ຍັງລໍຖ້າອານຸມັດ",
+        "createdAt": "ສ້າງວັນທີ",
+        "updatedAt": "ວັນທີອັບເດດ"
       }
     },
     "reportPayment": {
@@ -1277,9 +1278,9 @@
       },
       "columns": {
         "no": "ລຳດັບ",
-        "transactionId": "ID ທຸລະກຳ",
         "member": "ສະມາຊິກ",
         "packageName": "ແພັກເກັດ",
+        "packageType": "ປະເພດແພັກເກັດ",
         "amount": "ຈຳນວນ",
         "paymentType": "ປະເພດການຊຳລະ",
         "status": "ສະຖານະ",

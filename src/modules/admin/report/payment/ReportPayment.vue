@@ -3,51 +3,58 @@
     <a-card :title="t('modules.reportPayment.title')" :bordered="false">
       <!-- Summary Cards -->
       <a-row :gutter="16" style="margin-bottom: 24px">
-        <a-col :span="5">
+        <a-col :span="6">
           <a-card :loading="summaryLoading">
             <a-statistic
               :title="t('modules.reportPayment.metrics.totalRevenue')"
               :value="summary.total_revenue"
               :precision="2"
+              suffix="LAK"
               :value-style="{ color: '#3f8600' }"
             />
           </a-card>
         </a-col>
-        <a-col :span="4">
+        <a-col :span="6">
           <a-card :loading="summaryLoading">
             <a-statistic
               :title="t('modules.reportPayment.metrics.pendingPayments')"
               :value="summary.pending_payments"
+              :precision="2"
+              suffix="LAK"
               :value-style="{ color: '#faad14' }"
             />
           </a-card>
         </a-col>
-        <a-col :span="5">
+        <a-col :span="6">
           <a-card :loading="summaryLoading">
             <a-statistic
               :title="t('modules.reportPayment.metrics.approvedPayments')"
               :value="summary.approved_payments"
+              :precision="2"
+              suffix="LAK"
               :value-style="{ color: '#52c41a' }"
             />
           </a-card>
         </a-col>
-        <a-col :span="5">
+        <a-col :span="6">
           <a-card :loading="summaryLoading">
             <a-statistic
               :title="t('modules.reportPayment.metrics.rejectedPayments')"
               :value="summary.rejected_payments"
+              :precision="2"
+              suffix="LAK"
               :value-style="{ color: '#ff4d4f' }"
             />
           </a-card>
         </a-col>
-        <a-col :span="5">
+        <!-- <a-col :span="4">
           <a-card :loading="summaryLoading">
             <a-statistic
               :title="t('modules.reportPayment.metrics.transactionCount')"
               :value="summary.transaction_count"
             />
           </a-card>
-        </a-col>
+        </a-col> -->
       </a-row>
 
       <!-- Filters -->
@@ -164,8 +171,38 @@
           <template v-if="column.key === 'no'">
             {{ getRowNumber(index) }}
           </template>
+          <template v-else-if="column.key === 'member_name'">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <img
+                v-if="record.user?.user_profile?.image_url"
+                :src="record.user.user_profile.image_url"
+                alt="Profile"
+                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"
+              />
+              <div
+                v-else
+                style="width: 40px; height: 40px; border-radius: 50%; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff;"
+              >
+                {{ record.customer?.name?.charAt(0) || '?' }}
+              </div>
+              <div>
+                <div>{{ record.customer?.name }} {{ record.customer?.surname }}</div>
+                <div style="font-size: 12px; color: #666">
+                  {{ record.customer?.email }}
+                </div>
+                <div style="font-size: 12px; color: #666">
+                  {{ record.customer?.tel }}
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-else-if="column.key === 'packageName'">
+            {{ record.usePackage.package.type }}
+          </template>
           <template v-else-if="column.key === 'amount'">
-            ${{ record.amount?.toFixed(2) }}
+            <a-tag class="stat-tag">
+              {{ formatCurrency(record.usePackage.package.price || 0) }}
+            </a-tag>
           </template>
           <template v-else-if="column.key === 'payment_type'">
             <a-tag color="blue">{{ record.payment_type }}</a-tag>
@@ -173,35 +210,39 @@
           <template v-else-if="column.key === 'status'">
             <a-tag
               :color="
-                record.status === 'approved'
+                record.status === 'success'
                   ? 'green'
-                  : record.status === 'rejected'
-                    ? 'red'
-                    : 'orange'
+                  : record.status === 'pending'
+                    ? 'orange'
+                    : record.status === 'failed'
+                      ? 'red'
+                      : 'orange'
               "
             >
               {{
-                record.status === "approved"
+                record.status === "success"
                   ? t("modules.reportPayment.statusApproved")
-                  : record.status === "rejected"
-                    ? t("modules.reportPayment.statusRejected")
-                    : t("modules.reportPayment.statusPending")
+                  : record.status === "pending"
+                    ? t("modules.reportPayment.statusPending")
+                    : record.status === "failed"
+                      ? t("modules.reportPayment.statusRejected")
+                      : t("modules.reportPayment.statusRejected")
               }}
             </a-tag>
           </template>
           <template v-else-if="column.key === 'slip'">
             <a-button
-              v-if="record.slip_url"
+              v-if="record.slip"
               type="link"
               size="small"
-              @click="viewSlip(record.slip_url)"
+              @click="viewSlip(record.slip)"
             >
               {{ t("modules.reportPayment.viewSlip") }}
             </a-button>
             <span v-else>-</span>
           </template>
           <template v-else-if="column.key === 'payment_date'">
-            {{ formatDate(record.payment_date) }}
+            {{ formatDate(record.created_at) }}
           </template>
         </template>
       </a-table>
@@ -236,6 +277,7 @@ import {
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IReportPayment } from "./interface/report-payment.interface";
 import formatDate from "../../../../common/utils/format-date.util";
+import { formatCurrency } from "../../../../common/utils/format-number.util";
 
 const {
   fetchReportData,
@@ -252,12 +294,6 @@ const columns = computed(() => [
     key: "no",
     align: "center" as const,
     width: 70,
-  },
-  {
-    title: t("modules.reportPayment.columns.transactionId"),
-    key: "transaction_id",
-    align: "center" as const,
-    width: 120,
   },
   {
     title: t("modules.reportPayment.columns.member"),
