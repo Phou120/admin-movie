@@ -2,7 +2,11 @@
   <div class="customer-dashboard">
     <!-- Header -->
     <a-page-header
-      :title="customerData?.name ? `${customerData.name} ${customerData.surname}` : t('modules.customer.title')"
+      :title="
+        customerData?.name
+          ? `${customerData.name} ${customerData.surname}`
+          : t('modules.customer.title')
+      "
       :sub-title="t('modules.customer.dashboardTitle')"
       @back="handleBack"
     >
@@ -57,7 +61,11 @@
               :value="customerData?.total_revenue || 0"
               :precision="2"
               suffix="LAK"
-              :value-style="{ color: '#3f8600', fontSize: '24px', fontWeight: 'bold' }"
+              :value-style="{
+                color: '#3f8600',
+                fontSize: '24px',
+                fontWeight: 'bold',
+              }"
             >
               <template #prefix>
                 <DollarOutlined style="color: #52c41a" />
@@ -74,7 +82,11 @@
               :value="customerData?.paid_revenue || 0"
               :precision="2"
               suffix="LAK"
-              :value-style="{ color: '#1890ff', fontSize: '24px', fontWeight: 'bold' }"
+              :value-style="{
+                color: '#1890ff',
+                fontSize: '24px',
+                fontWeight: 'bold',
+              }"
             >
               <template #prefix>
                 <CheckCircleOutlined style="color: #1890ff" />
@@ -91,7 +103,11 @@
               :value="customerData?.unpaid_revenue || 0"
               :precision="2"
               suffix="LAK"
-              :value-style="{ color: '#faad14', fontSize: '24px', fontWeight: 'bold' }"
+              :value-style="{
+                color: '#faad14',
+                fontSize: '24px',
+                fontWeight: 'bold',
+              }"
             >
               <template #prefix>
                 <ClockCircleOutlined style="color: #faad14" />
@@ -110,7 +126,7 @@
                 color: getStatusColor(customerData?.status),
                 fontSize: '20px',
                 fontWeight: 'bold',
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
               }"
             >
               <template #prefix>
@@ -208,7 +224,8 @@
           <a-card class="timestamps-card">
             <a-space :size="20">
               <span>
-                <CalendarOutlined /> {{ t("modules.customer.columns.createdAt") }}:
+                <CalendarOutlined />
+                {{ t("modules.customer.columns.createdAt") }}:
                 <strong>{{ formatDate(customerData?.created_at) }}</strong>
               </span>
               <span>
@@ -224,7 +241,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import {
@@ -253,14 +270,6 @@ const { t } = useI18n();
 const loading = ref(false);
 const error = ref("");
 const customerData = ref<any>(null);
-
-// Computed properties
-const paymentPercentage = computed(() => {
-  if (!customerData.value || !customerData.value.total_revenue) return 0;
-  const paid = customerData.value.paid_revenue || 0;
-  const total = customerData.value.total_revenue;
-  return Math.round((paid / total) * 100);
-});
 
 // Methods
 const loadCustomerData = async () => {

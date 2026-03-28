@@ -6,7 +6,6 @@ import { useI18n } from "vue-i18n";
 import {
   ArrowLeftOutlined,
   CreditCardOutlined,
-  BankOutlined,
   CalendarOutlined,
   UserOutlined,
   DollarOutlined,
