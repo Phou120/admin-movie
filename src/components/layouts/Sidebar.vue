@@ -9,19 +9,19 @@
       mode="inline"
       :inline-collapsed="collapsed"
     >
-      <!-- Dashboard - All roles (shows different dashboard based on role) -->
+      <!-- Dashboard - Only super-admin and creator roles -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin || isCreator"
+        v-if="hasRole('super-admin') || hasRole('creator')"
         key="1"
         @click="handlerMenu('dashboard')"
       >
         <DashboardOutlined />
-        <span>{{ isCreator ? t("sidebar.customerDashboard") : t("sidebar.dashboard") }}</span>
+        <span>{{ hasRole('creator') ? t("sidebar.customerDashboard") : t("sidebar.dashboard") }}</span>
       </a-menu-item>
 
       <!-- Banner - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'banner')"
         key="2"
         @click="handlerMenu('banner')"
       >
@@ -31,7 +31,7 @@
 
       <!-- Category - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'category')"
         key="3"
         @click="handlerMenu('category')"
       >
@@ -40,7 +40,7 @@
       </a-menu-item>
 
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'view')"
         key="19"
         @click="handlerMenu('view')"
       >
@@ -56,7 +56,7 @@
 
       <!-- Package - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'package')"
         key="6"
         @click="handlerMenu('package')"
       >
@@ -66,7 +66,7 @@
 
       <!-- Payment - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'payment')"
         key="17"
         @click="handlerMenu('payment')"
       >
@@ -76,7 +76,7 @@
 
       <!-- QR Code - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'qr-code')"
         key="18"
         @click="handlerMenu('qr-code')"
       >
@@ -86,7 +86,7 @@
 
       <!-- Customer - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'customer')"
         key="14"
         @click="handlerMenu('customer')"
       >
@@ -96,7 +96,7 @@
 
       <!-- Member - Admin/Super-Admin only -->
       <a-menu-item
-        v-if="isAdminOrSuperAdmin"
+        v-if="can('read', 'member')"
         key="15"
         @click="handlerMenu('member')"
       >
@@ -105,22 +105,22 @@
       </a-menu-item>
 
       <!-- System Submenu - Admin/Super-Admin only -->
-      <a-sub-menu v-if="isAdminOrSuperAdmin" key="sub3">
+      <a-sub-menu v-if="can('read', 'permission') || can('read', 'role') || can('read', 'user')" key="sub3">
         <template #title>
           <span>
             <SettingOutlined />
             <span>{{ t("sidebar.system") }}</span>
           </span>
         </template>
-        <a-menu-item key="10" @click="handlerMenu('permission')">
+        <a-menu-item v-if="can('read', 'permission')" key="10" @click="handlerMenu('permission')">
           <SafetyOutlined />
           {{ t("sidebar.permission") }}
         </a-menu-item>
-        <a-menu-item key="11" @click="handlerMenu('role')">
+        <a-menu-item v-if="can('read', 'role')" key="11" @click="handlerMenu('role')">
           <CrownOutlined />
           {{ t("sidebar.role") }}
         </a-menu-item>
-        <a-menu-item key="12" @click="handlerMenu('user')">
+        <a-menu-item v-if="can('read', 'user')" key="12" @click="handlerMenu('user')">
           <UserOutlined />
           {{ t("sidebar.user") }}
         </a-menu-item>
@@ -132,26 +132,26 @@
         <span>{{ t("sidebar.profile") }}</span>
       </a-menu-item>
 
-      <a-sub-menu v-if="isAdminOrSuperAdmin" key="sub4">
+      <a-sub-menu v-if="can('read', 'report-video') || can('read', 'report-user') || can('read', 'report-package') || can('read', 'report-payment')" key="sub4">
         <template #title>
           <span>
             <StockOutlined />
             <span>{{ t("sidebar.reports") }}</span>
           </span>
         </template>
-        <a-menu-item key="20" @click="handlerMenu('report-video')">
+        <a-menu-item v-if="can('read', 'report-video')" key="20" @click="handlerMenu('report-video')">
           <VideoCameraOutlined />
           {{ t("sidebar.report.video") }}
         </a-menu-item>
-        <a-menu-item key="21" @click="handlerMenu('report-user')">
+        <a-menu-item v-if="can('read', 'report-user')" key="21" @click="handlerMenu('report-user')">
           <UserOutlined />
           {{ t("sidebar.report.user") }}
         </a-menu-item>
-        <a-menu-item key="22" @click="handlerMenu('report-package')">
+        <a-menu-item v-if="can('read', 'report-package')" key="22" @click="handlerMenu('report-package')">
           <ShoppingOutlined />
           {{ t("sidebar.report.package") }}
         </a-menu-item>
-        <a-menu-item key="23" @click="handlerMenu('report-payment')">
+        <a-menu-item v-if="can('read', 'report-payment')" key="23" @click="handlerMenu('report-payment')">
           <WalletOutlined />
           {{ t("sidebar.report.payment") }}
         </a-menu-item>
@@ -161,7 +161,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import {
@@ -181,6 +181,7 @@ import {
   WalletOutlined,
   QrcodeOutlined,
 } from "@ant-design/icons-vue";
+import { useAuth } from "../../common/composables/useAuth";
 
 defineProps<{ collapsed: boolean }>();
 
@@ -190,6 +191,9 @@ const selectedKeys = ref<string[]>([]);
 const router = useRouter();
 const route = useRoute();
 const { t } = useI18n();
+
+// Use auth composable for permission checks
+const { can, hasRole } = useAuth();
 
 // Route name to menu key mapping
 const routeToMenuKey: Record<string, string> = {
@@ -223,36 +227,6 @@ watch(
   },
   { immediate: true },
 );
-
-// User role check
-const userRoles = computed(() => {
-  const rolesString = localStorage.getItem("user_roles");
-  if (!rolesString) return [];
-
-  try {
-    // Parse if it's a JSON string, otherwise handle as comma-separated
-    if (rolesString.startsWith("[") || rolesString.startsWith("{")) {
-      return JSON.parse(rolesString);
-    }
-    // Handle comma-separated string
-    return rolesString.split(",").map((role) => role.trim());
-  } catch (error) {
-    console.error("Error parsing user_roles from localStorage:", error);
-    return [];
-  }
-});
-
-// Check if user is admin or super-admin
-const isAdminOrSuperAdmin = computed(() => {
-  const roles = userRoles.value;
-  return roles.includes("admin") || roles.includes("super-admin");
-});
-
-// Check if user is creator
-const isCreator = computed(() => {
-  const roles = userRoles.value;
-  return roles.includes("creator");
-});
 
 // handle menu
 const handlerMenu = (key: string) => {

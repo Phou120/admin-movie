@@ -18,10 +18,12 @@ import {
 } from "../../../common/utils/notification";
 import AddPackageModal from "./components/AddPackageModal.vue";
 import UpdatePackageModal from "./components/UpdatePackageModal.vue";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, deletePackageById, updatePackage, createPackage } =
   PackagesComposible();
 const { t } = useI18n();
+const { can } = useAuth();
 
 const typeOptions = [
   { label: t("modules.package.type.1month"), value: "1month" },
@@ -226,6 +228,7 @@ function getPackageTypeLabel(type: string): string {
     <h1>{{ t("modules.package.title") }}</h1>
     <div>
       <a-button
+        v-if="can('create', 'package')"
         type="primary"
         class="clear-btn"
         :icon="h(PlusCircleFilled)"
@@ -274,10 +277,11 @@ function getPackageTypeLabel(type: string): string {
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">
-          <a-tooltip :title="t('actions.edit')">
+          <a-tooltip v-if="can('update', 'package')" :title="t('actions.edit')">
             <edit-outlined class="icon edit" @click="openEditModal(record)" />
           </a-tooltip>
           <a-popconfirm
+            v-if="can('delete', 'package')"
             :title="t('message.deleteConfirm')"
             @confirm="deletePackage(record.id)"
           >

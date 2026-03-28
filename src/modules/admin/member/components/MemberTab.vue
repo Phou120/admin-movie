@@ -107,16 +107,17 @@
 
           <template v-else-if="column.key === 'action'">
             <span class="action-icons">
-              <a-tooltip :title="t('modules.payment.viewPayments')">
+              <a-tooltip v-if="can('read', 'payment')" :title="t('modules.payment.viewPayments')">
                 <credit-card-outlined
                   class="icon payment"
                   @click="viewPayments(record.id)"
                 />
               </a-tooltip>
-              <a-tooltip :title="t('actions.view')">
+              <a-tooltip v-if="can('read', 'member')" :title="t('actions.view')">
                 <eye-outlined class="icon view" @click="viewMember(record)" />
               </a-tooltip>
               <a-popconfirm
+                v-if="can('delete', 'member')"
                 :title="t('message.deleteConfirm')"
                 @confirm="deleteMember(record.id)"
               >
@@ -156,6 +157,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../../common/utils/notification";
+import { useAuth } from "../../../../common/composables/useAuth";
 
 // Props
 interface Props {
@@ -176,6 +178,7 @@ const emit = defineEmits<Emits>();
 const router = useRouter();
 const { updateStatus } = useMember();
 const { t } = useI18n();
+const { can } = useAuth();
 
 // Local state
 const memberSearchText = ref("");

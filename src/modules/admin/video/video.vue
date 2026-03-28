@@ -18,29 +18,13 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../common/utils/notification";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const router = useRouter();
 const { fetchAll, deleteVideoById, getCategories, getCustomers, updateStatus } =
   VideoComposible();
 const { t } = useI18n();
-
-// User role check
-const userRoles = computed(() => {
-  const rolesString = localStorage.getItem("user_roles");
-  if (!rolesString) return [];
-
-  try {
-    // Parse if it's a JSON string, otherwise handle as comma-separated
-    if (rolesString.startsWith("[") || rolesString.startsWith("{")) {
-      return JSON.parse(rolesString);
-    }
-    // Handle comma-separated string
-    return rolesString.split(",").map((role) => role.trim());
-  } catch (error) {
-    console.error("Error parsing user_roles from localStorage:", error);
-    return [];
-  }
-});
+const { can, hasRole } = useAuth();
 
 // Get current customer ID for customer role
 const getCurrentCustomerId = computed(() => {
@@ -54,16 +38,12 @@ const getCurrentCustomerId = computed(() => {
 
 // Check if user can select customers (admin or super-admin)
 const canSelectCustomer = computed(() => {
-  const roles = userRoles.value;
-  // Check if any role in the array is 'admin' or 'super-admin'
-  return roles.includes("admin") || roles.includes("super-admin");
+  return hasRole("admin") || hasRole("super-admin");
 });
 
 // Check if user can manage videos (create, update, delete) - only for creator role
 const canManageVideos = computed(() => {
-  const roles = userRoles.value;
-  // Only creator role can manage videos
-  return roles.includes("creator");
+  return can("update", "video") || can("delete", "video");
 });
 
 const columns = computed(() => [
@@ -735,14 +715,14 @@ function handleStatusChange(id: number, checked: boolean) {
                   @click="openViewPage(record.id)"
                 />
               </a-tooltip>
-              <a-tooltip v-if="canManageVideos" :title="t('actions.edit')">
+              <a-tooltip v-if="can('update', 'video')" :title="t('actions.edit')">
                 <EditOutlined
                   class="icon edit"
                   @click="openEditPage(record.id)"
                 />
               </a-tooltip>
               <a-popconfirm
-                v-if="canManageVideos"
+                v-if="can('delete', 'video')"
                 :title="t('message.deleteConfirm')"
                 placement="topRight"
                 @confirm="deleteVideo(record.id)"

@@ -11,6 +11,11 @@ export function useAuth() {
       localStorage.setItem("user_id", response.data.data.user.id);
       localStorage.setItem("user_roles", JSON.stringify(response.data.data.roles));
 
+      // Store permissions if they exist in the response
+      if (response.data.data.permissions && Array.isArray(response.data.data.permissions)) {
+        localStorage.setItem("user_permissions", JSON.stringify(response.data.data.permissions));
+      }
+
       // Store customer data if customer object exists
       if (response.data.data.customer && response.data.data.customer.id) {
         localStorage.setItem("customer_id", response.data.data.customer.id.toString());

@@ -97,7 +97,9 @@ function confirmLogout() {
         localStorage.removeItem("token");
         localStorage.removeItem("user_id");
         localStorage.removeItem("user_roles");
+        localStorage.removeItem("user_permissions");
         localStorage.removeItem("customer_id");
+        localStorage.removeItem("customer");
         message.success(t("message.logoutSuccess"));
         router.push("/login");
       } catch (err) {

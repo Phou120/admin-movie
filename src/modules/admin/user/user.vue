@@ -20,6 +20,7 @@
 
       <!-- Add Button - Navigate to Add Page -->
       <a-button
+        v-if="can('create', 'user')"
         type="primary"
         class="add-btn"
         :icon="h(PlusCircleFilled)"
@@ -103,7 +104,7 @@
 
         <template v-else-if="column.key === 'action'">
           <span class="action-icons">
-            <a-tooltip :title="t('actions.edit')">
+            <a-tooltip v-if="can('update', 'user')" :title="t('actions.edit')">
               <edit-outlined
                 class="icon edit"
                 @click="navigateToEditUser(record.id)"
@@ -111,6 +112,7 @@
               />
             </a-tooltip>
             <a-popconfirm
+              v-if="can('delete', 'user')"
               :title="t('modules.user.deleteConfirm')"
               :ok-text="t('common.yes')"
               :cancel-text="t('common.no')"
@@ -162,6 +164,7 @@ import {
   showSuccessNotification,
 } from "../../../common/utils/notification";
 import { useRouter } from "vue-router";
+import { useAuth } from "../../../common/composables/useAuth";
 
 // Register the icons
 // No need for explicit registration if using as components
@@ -171,6 +174,7 @@ const { fetchAll, deleteUser } = useUsers();
 const loading = ref(false);
 const router = useRouter();
 const { t } = useI18n();
+const { can } = useAuth();
 const search = ref("");
 
 let searchTimer: number | null = null;

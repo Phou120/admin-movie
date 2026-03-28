@@ -352,7 +352,7 @@ const loadUserData = async () => {
   } catch (error) {
     console.error("Failed to fetch user:", error);
     message.error(t('modules.user.editForm.validation.loadUserError'));
-    router.push({ name: "users" });
+    router.push({ name: "user" });
   } finally {
     loading.value = false;
     // After initial load is complete, enable role watcher
@@ -588,7 +588,7 @@ async function onFinish() {
     const response = await updateUser(userId.value, updateData);
     showSuccessNotification(response.message || t('modules.user.editForm.updateSuccess'));
     console.log("User updated:", response);
-    router.push({ name: "users" });
+    router.push({ name: "user" });
   } catch (error: any) {
     console.error("Failed to update user:", error);
     const errorMessage =

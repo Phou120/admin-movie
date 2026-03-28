@@ -2,7 +2,7 @@
   <div class="customer-header">
     <h1>{{ t("modules.banner.title") }}</h1>
     <div>
-      <AddButton :label="t('modules.banner.addNew')" @click="openAddModal" />
+      <AddButton v-if="can('create', 'banner')" :label="t('modules.banner.addNew')" @click="openAddModal" />
     </div>
   </div>
 
@@ -43,10 +43,11 @@
 
         <template v-else-if="column.key === 'action'">
           <span class="action-icons">
-            <a-tooltip :title="t('actions.edit')">
+            <a-tooltip v-if="can('update', 'banner')" :title="t('actions.edit')">
               <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip>
             <a-popconfirm
+              v-if="can('delete', 'banner')"
               :title="t('message.deleteConfirm')"
               @confirm="deleteBanner(record.id)"
             >
@@ -93,10 +94,12 @@ import {
 } from "../../../common/utils/notification";
 import AddBannerModal from "./components/AddBannerModal.vue";
 import EditBannerModal from "./components/EditBannerModal.vue";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, createBanner, upload, updateBanner, deleteBannerById } =
   useBanner();
 const { t } = useI18n();
+const { can } = useAuth();
 
 // Modal controls
 const isAddModalVisible = ref(false);

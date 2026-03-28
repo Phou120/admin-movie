@@ -10,9 +10,11 @@ import {
   showSuccessNotification,
 } from "../../../common/utils/notification";
 import EditQrCodeModal from "./components/EditQrCodeModal.vue";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, updateQrCode, upload } = QrCodeComposible();
 const { t } = useI18n();
+const { can } = useAuth();
 
 const columns = computed(() => [
   {
@@ -237,7 +239,7 @@ function handleImageError(event: Event) {
 
         <template v-else-if="column.key === 'action'">
           <div class="action-icons">
-            <a-tooltip :title="t('actions.edit')">
+            <a-tooltip v-if="can('update', 'qr-code')" :title="t('actions.edit')">
               <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip>
           </div>

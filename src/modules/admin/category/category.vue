@@ -19,10 +19,12 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../common/utils/notification";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, deleteCategoryById, updateCategory, createCategory } =
   CourseCategoryComposible();
 const { t } = useI18n();
+const { can } = useAuth();
 
 const columns = computed(() => [
   {
@@ -215,6 +217,7 @@ function handleCancel() {
     <h1>{{ t("modules.category.title") }}</h1>
     <div>
       <a-button
+        v-if="can('create', 'category')"
         type="primary"
         class="clear-btn"
         :icon="h(PlusCircleFilled)"
@@ -245,10 +248,11 @@ function handleCancel() {
       </template>
       <template v-else-if="column.key === 'action'">
         <span class="action-icons">
-          <a-tooltip :title="t('actions.edit')">
+          <a-tooltip v-if="can('update', 'category')" :title="t('actions.edit')">
             <edit-outlined class="icon edit" @click="openEditModal(record)" />
           </a-tooltip>
           <a-popconfirm
+            v-if="can('delete', 'category')"
             :title="t('message.deleteConfirm')"
             @confirm="deleteCategory(record.id)"
           >

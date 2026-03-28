@@ -143,6 +143,7 @@
               />
             </a-tooltip>
             <a-popconfirm
+              v-if="can('create', 'payment')"
               :title="t('message.paymentConfirm')"
               @confirm="handlePayment(record.id)"
               :ok-text="t('common.yes')"
@@ -153,6 +154,7 @@
               </a-tooltip>
             </a-popconfirm>
             <a-popconfirm
+              v-if="can('delete', 'customer')"
               :title="t('message.deleteConfirm')"
               @confirm="deleteCustomer(record.id)"
             >
@@ -192,11 +194,13 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../common/utils/notification";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const router = useRouter();
 const { fetchAll, deleteCustomerById, updateStatus, fetchPaymentCreator } =
   useCustomer();
 const { t } = useI18n();
+const { can } = useAuth();
 
 // State
 const loading = ref(false);

@@ -37,7 +37,11 @@ apiClient.interceptors.response.use(
 
       // Clear auth data
       localStorage.removeItem("token");
+      localStorage.removeItem("user_id");
       localStorage.removeItem("user_roles");
+      localStorage.removeItem("user_permissions");
+      localStorage.removeItem("customer_id");
+      localStorage.removeItem("customer");
 
       // Redirect to login page (only if not already there)
       if (router.currentRoute.value.name !== "login") {

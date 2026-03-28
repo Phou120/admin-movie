@@ -16,10 +16,12 @@ import {
   showSuccessNotification,
 } from "../../../common/utils/notification";
 import formatDate from "../../../common/utils/format-date.util";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, fetchByMemberId, deletePaymentById, updatePaymentStatus } =
   PaymentComposible();
 const { t } = useI18n();
+const { can } = useAuth();
 
 const route = useRoute();
 const router = useRouter();
@@ -442,13 +444,14 @@ async function updateStatus(id: number, newStatus: string) {
 
           <template v-else-if="column.key === 'action'">
             <div class="action-icons">
-              <a-tooltip :title="t('actions.view')">
+              <a-tooltip v-if="can('read', 'payment')" :title="t('actions.view')">
                 <eye-outlined
                   class="icon view"
                   @click="viewPaymentDetails(record)"
                 />
               </a-tooltip>
               <a-popconfirm
+                v-if="can('delete', 'payment')"
                 :title="t('message.deleteConfirm')"
                 placement="topRight"
                 @confirm="deletePayment(record.id)"

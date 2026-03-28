@@ -158,7 +158,10 @@ const onFinish = async (values: any) => {
     if (userRolesString) {
       try {
         // Parse if it's a JSON string
-        if (userRolesString.startsWith("[") || userRolesString.startsWith("{")) {
+        if (
+          userRolesString.startsWith("[") ||
+          userRolesString.startsWith("{")
+        ) {
           userRoles = JSON.parse(userRolesString);
         } else {
           // Handle comma-separated string
@@ -175,12 +178,15 @@ const onFinish = async (values: any) => {
     if (userRoles.includes("creator") || userRoles.includes("customer")) {
       // Creator/Customer role → redirect to profile
       router.push({ name: "profile" });
-    } else if (userRoles.includes("admin") || userRoles.includes("super-admin")) {
+    } else if (
+      userRoles.includes("admin") ||
+      userRoles.includes("super-admin")
+    ) {
       // Admin/Super-admin → redirect to dashboard
-      router.push({ name: "dashboard" });
+      router.push({ name: "profile" });
     } else {
       // Default → dashboard
-      router.push({ name: "dashboard" });
+      router.push({ name: "profile" });
     }
   } catch (error: any) {
     console.error("Login failed:", error);
