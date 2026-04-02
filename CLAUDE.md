@@ -261,6 +261,7 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 | `banner/category/package` | Content and service management |
 | `qr-code` | QR code generation and management |
 | `views` | Page view analytics tracking |
+| `report` | Report generation (video, user, package, payment) |
 
 **Website Modules** (public pages under `src/modules/website/`):
 | Module | Purpose |
@@ -274,6 +275,13 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 
 - `VITE_API_BASE_URL` - Backend API base URL (e.g., `http://localhost:8000/api/`)
 
+### Application Initialization
+
+The app initialization order in `src/main.ts`:
+1. Imports Vue core, router, Ant Design Vue, and i18n
+2. Imports global styles: `style.css`, `global.css`, `global.scss`, and Quill editor styles
+3. Creates app instance, registers plugins (router, Antd, i18n), then mounts
+
 ### TypeScript Configuration
 
 - Uses TypeScript project references with `tsconfig.json`, `tsconfig.app.json`, and `tsconfig.node.json`
@@ -282,6 +290,7 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
   - `noUnusedParameters` - Flags unused function parameters
   - `noFallthroughCasesInSwitch` - Requires explicit break/return in all switch cases
   - `erasableSyntaxOnly` - Only allows TypeScript syntax that can be erased
+  - `noUncheckedSideEffectImports` - Validates side-effect imports
 - Build command `pnpm build` runs `vue-tsc -b` for type checking before building
 
 ### Common Utilities

@@ -15,7 +15,8 @@
 
     <div class="header-action-container">
       <LanguageSwitcher />
-      <PaymentNotificationDropdown />
+      <!-- Payment notifications only for admin and super-admin -->
+      <PaymentNotificationDropdown v-if="hasRole('admin') || hasRole('super-admin')" />
       <!-- <a-badge count="2">
         <a-avatar shape="square" size="large" class="navbar-btn">
           <shopping-cart-outlined class="menu-icon" />
@@ -54,11 +55,13 @@ import { message, Modal } from "ant-design-vue";
 import LanguageSwitcher from "../LanguageSwitcher.vue";
 import PaymentNotificationDropdown from "../../modules/admin/payment/components/PaymentNotificationDropdown.vue";
 import { useI18n } from "vue-i18n";
+import { useAuth } from "../../common/composables/useAuth";
 
 const collapsed = ref<boolean>(false);
 
 const emit = defineEmits<{ (e: "toggleSidebar"): void }>();
 const { t } = useI18n();
+const { hasRole } = useAuth();
 
 const onCollapsed = () => {
   collapsed.value = !collapsed.value;
