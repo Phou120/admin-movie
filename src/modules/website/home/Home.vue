@@ -74,10 +74,11 @@
               v-else-if="step.mediaType === 'video'"
               :src="step.mediaSource"
               controls
-              autoplay
+              playsinline
               loop
               muted
               class="step-media"
+              @error="handleVideoError"
             />
           </div>
           <a-typography-title :level="4" style="margin-top: 16px">
@@ -133,6 +134,17 @@ function navigateTo(link: string) {
   }
 }
 
+// Handle video loading errors
+function handleVideoError(event: Event) {
+  console.error('Video failed to load:', event);
+  const video = event.target as HTMLVideoElement;
+  if (video) {
+    console.error('Video src:', video.src);
+    console.error('Video error code:', video.error?.code);
+    message.error('Failed to load video. Please check your connection.');
+  }
+}
+
 // Steps data - using computed to get translated values
 const steps = computed(() => [
   {
@@ -146,14 +158,14 @@ const steps = computed(() => [
     title: t('website.home.step2.title'),
     mediaType: "video",
     mediaSource:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     description: t('website.home.step2.description'),
   },
   {
     title: t('website.home.step3.title'),
     mediaType: "video",
     mediaSource:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     description: t('website.home.step3.description'),
   },
 ]);
@@ -256,15 +268,24 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 200px;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .step-media {
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
   max-height: 100%;
   border-radius: 8px;
   object-fit: contain;
+}
+
+.step-media[src=""] {
+  display: none;
 }
 
 </style>
