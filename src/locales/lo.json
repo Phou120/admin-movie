@@ -60,7 +60,12 @@
     "noCustomer": "ບໍ່ລູກຄ້າ",
     "noImage": "ບໍ່ຮູບພາດ",
     "viewImage": "ເບຶງຮູບພາດ",
-    "refresh": "ໂຫຼດຄືນໃໝ່"
+    "refresh": "ໂຫຼດຄືນໃໝ່",
+    "thisMonth": "ເດີນນີນນີນ",
+    "lastMonth": "ເດີນທີນນີນ",
+    "yearAgo": "ປີນນີນສູງ",
+    "threshold": "ຂັນເຊະລາຍ",
+    "loadingFailed": "ບໍ່ສາມຂອງເລັດ"
   },
   "auth": {
     "login": "ເຂົ້າສູ່ລະບົບ",
@@ -130,6 +135,89 @@
         "pdf": "PDF",
         "excel": "Excel"
       }
+    },
+    "analytics": {
+      "packageRevenue": "ລາຍໄືນບໍລູກຄ້າ",
+      "packageDistribution": "ການແຂະຫຼາກໝວດບໍລູກ",
+      "packagePerformance": "ການສະແິຍບໍລູກຄ້າ",
+      "memberGrowth": "ການຜູ້ຊ້ນເຕະຫຼນ",
+      "memberStatus": "ສະຖານະສະມາຍຂອງ",
+      "memberEngagement": "ການການການສຳືນ",
+      "retention": "ຕົວສຸປະຊິນ",
+      "revenueTrend": "ແພັດກວດລາຍໄືນ",
+      "paymentMethods": "ວິດີການຊຳລະ",
+      "approvalRate": "ອັດອອຍອະນອັດອເຕະ",
+      "monthlyRevenue": "ລາຍປະລັງໃຊື",
+      "avgTransaction": "ມູາມານການຊຳລາມານ",
+      "successRate": "ອັອານປົກສຳັນ",
+      "revenuePerMember": "ລາຍຕໍາຜູ້ຊ້ນ",
+      "totalPackages": "ບໍລູກຄ້າທັງໝົດ",
+      "totalRevenue": "ລາຍພັດ",
+      "totalMembers": "ຈຳຂອງທັງຫຼົ",
+      "activeMembers": "ສະມາຍພັນ",
+      "pendingPayments": "ການຊຳລະທີນຖ່າຍພວກ",
+      "renewalRate": "ອັອານລຳຫຼນ",
+      "churnRate": "ອານລຳຫຼນ",
+      "growthSpurt": "ການເຕະຫຼນຂົຍ້ຂ້າ",
+      "growthSpurtDesc": "ການຜູ້ຊ້ນເຕະຫຼນເພີ່ {percentage}% ໃນອນເດນີ!",
+      "highChurnWarning": "ພົບອານລຳຫຼນສູງສູງ",
+      "highChurnWarningDesc": "ພວກຂັ້າຍາສູງຕົວສຸປະຊິນ ເພືອານລຳຫຼນຂໍ",
+      "lowApprovalRate": "ອັອານອັດອະນອັດຕ້າຕ້ອງ",
+      "viewFullReport": "ເບືນອານລາຍປັນ",
+      "viewAllMembers": "ເບຈະສະໃາຍຊີທັງຫຼົ",
+      "refresh": "ປັນຂໍ້ຂໍໃ",
+      "lastUpdated": "ປັນອັບເດທີມາ",
+      "dataRefreshed": "ຂໍານການໄລູກຖື່ລີມາ",
+      "exportComingSoon": "ການສົ່ງຂໍ້ເລະໄລູກ",
+      "noData": "ບໍ່ຂໍານ",
+      "packageAnalytics": "ການວິເຄາະບໍລູກຄ້າ",
+      "memberAnalytics": "ການວິເຄາະສະມາຍິກ",
+      "financialAnalytics": "ການວິເຄາະການເງິນ",
+      "overview": "ພາບລວມການວິເຄາະ",
+      "subtitle": "ຕິດຕາມຕົວຊີ້ວັດຂອງທ່ານ ແລະ ຕິດຕາມປະສິດທິພາບໃນທຸກພາກສ່ວນ",
+      "packageDescription": "ເບິ່ງລາຍຮັບບໍລູກຄ້າ, ການແຈກຢາຍ, ແລະ ຕົວຊີ້ວັດປະສິດທິພາບ",
+      "memberDescription": "ຕິດຕາມການນັບຂຶ້ນຂອງສະມາຍິກ, ກາມມີສ່ວນຮ່ວມ, ແລະ ການວິເຄາະການຮັກສາສະມາຍິກ",
+      "financialDescription": "ຕິດຕາມແນວໂນມລາຍຮັບ, ວິທີການຊຳລະເງິນ, ແລະ ຕົວຊີ້ວັດການເງິນ"
+    },
+    "time": {
+      "days": "ມື້",
+      "day": "ມື້",
+      "hours": "ຊົ່ວໂມງ",
+      "minutes": "ນາທີ",
+      "seconds": "ວິນາທີ",
+      "ago": "ທີ່ຜ່ານມາ",
+      "minutesAgo": "ນາທີທີ່ຜ່ານມາ",
+      "hoursAgo": "ຊົ່ວໂມງທີ່ຜ່ານມາ",
+      "daysAgo": "ມື້ທີ່ຜ່ານມາ",
+      "range7Days": "7 ມື້",
+      "range30Days": "30 ມື້",
+      "range90Days": "90 ມື້"
+    },
+    "expandAll": "ຂະຫຍາຍທັງຫມົດ",
+    "collapseAll": "ຍຸບທັງຫມົດ",
+    "loadingAnalytics": "ກຳລັງໂຫຼດຂໍ້ມູນການວິເຄາະ...",
+    "refresh": "ໂຫຼດຄືນ",
+    "exportAll": "ສົ່ງຂໍ້ມູນທັງຫມົດ",
+    "timeRange": "ຊ່ວງເວລາ",
+    "last7Days": "7 ມື້ທີ່ຜ່ານມາ",
+    "last30Days": "30 ມື້ທີ່ຜ່ານມາ",
+    "last90Days": "90 ມື້ທີ່ຜ່ານມາ",
+    "income": "ລາຍຮັບ",
+    "expenses": "ລາຍຈ່າຍ",
+    "dataRefreshed": "ຂໍ້ມູນໜ້າຫຼັກຖືກໂຫຼດຄືນແລ້ວ",
+    "months": {
+      "jan": "ມ.ກ.",
+      "feb": "ກ.ພ.",
+      "mar": "ມີ.ນ.",
+      "apr": "ມ.ສ.",
+      "may": "ພ.ພ.",
+      "jun": "ມິ.ຖ.",
+      "jul": "ກ.ລ.",
+      "aug": "ສ.ຫ.",
+      "sep": "ກ.ຍ.",
+      "oct": "ຕ.ລ.",
+      "nov": "ພ.ຈ.",
+      "dec": "ທ.ວ."
     }
   },
   "video": {
@@ -1399,6 +1487,18 @@
       "step3": {
         "title": "ຕິດຕາມສະຖານະ",
         "description": "ຮັບການອັບເດດແບບລະບົບເວລາ ແລະ ການແຈ້ງເຕືອນກ່ຽວກັບສະຖານະການສະໝັກຂອງທ່ານ."
+      },
+      "step4": {
+        "title": "ຮັບການອະນຸມັດ",
+        "description": "ສະໝັກຂອງທ່ານຈະຖືກກວດສອບ ແລະ ອະນຸມັດໃນໄວໆນີ້."
+      },
+      "step5": {
+        "title": "ເຂົ້າຮ່ວມສະໝັກ",
+        "description": "ເຂົ້າຮ່ວມກັບພວກເຮົາ ແລະ ເລີ່ມຕົນເອງຂອງທ່ານ."
+      },
+      "step6": {
+        "title": "ຮູ້ສຶກປະສົບການ",
+        "description": "ສຳຫຼວດປະສົບການການສະໝັກ ແລະ ເພີມສ້າງອະນາຄົດຂອງທ່ານ."
       }
     },
     "aboutUs": {

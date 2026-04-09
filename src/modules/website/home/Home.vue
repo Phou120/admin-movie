@@ -6,11 +6,7 @@
     </div>
 
     <!-- Banner carousel - only show when banners are loaded -->
-    <a-carousel
-      v-else-if="banners.length > 0"
-      autoplay
-      class="banner-carousel"
-    >
+    <a-carousel v-else-if="banners.length > 0" autoplay class="banner-carousel">
       <div v-for="banner in banners" :key="banner.id" class="banner-slide">
         <img
           :src="banner.image_url || banner.image"
@@ -44,52 +40,55 @@
 
     <!-- Fallback message if no banners -->
     <div v-else class="no-banners">
-      <a-empty :description="t('website.noBannersAvailable') || 'No banners available'" />
+      <a-empty
+        :description="t('website.noBannersAvailable') || 'No banners available'"
+      />
     </div>
 
     <a-typography-title
       :level="2"
       style="text-align: center; margin-bottom: 32px; margin-top: 40px"
     >
-      {{ t('website.home.howItWorks') }}
+      {{ t("website.home.howItWorks") }}
     </a-typography-title>
-    <a-row :gutter="32" justify="center">
-      <a-col
-        v-for="(step, idx) in steps"
-        :key="idx"
-        :xs="24"
-        :sm="12"
-        :md="8"
-        style="margin-bottom: 24px"
-      >
-        <a-card hoverable class="step-card">
-          <div class="step-media-container">
-            <img
-              v-if="step.mediaType === 'image'"
-              :src="step.mediaSource"
-              :alt="step.title"
-              class="step-media"
-            />
-            <video
-              v-else-if="step.mediaType === 'video'"
-              :src="step.mediaSource"
-              controls
-              playsinline
-              loop
-              muted
-              class="step-media"
-              @error="handleVideoError"
-            />
-          </div>
-          <a-typography-title :level="4" style="margin-top: 16px">
-            {{ step.title }}
-          </a-typography-title>
-          <a-typography-paragraph>
-            {{ step.description }}
-          </a-typography-paragraph>
-        </a-card>
-      </a-col>
-    </a-row>
+    <div class="custom">
+      <a-row :gutter="32" justify="center">
+        <a-col
+          v-for="(step, idx) in steps"
+          :key="idx"
+          :xs="20"
+          :sm="10"
+          :md="8"
+          style="margin-bottom: 24px"
+        >
+          <a-card hoverable class="step-card">
+            <div class="step-media-container">
+              <img
+                v-if="step.mediaType === 'image'"
+                :src="step.mediaSource"
+                :alt="step.title"
+                class="step-media"
+              />
+              <video
+                v-else-if="step.mediaType === 'video'"
+                :src="step.mediaSource"
+                controls
+                autoplay
+                loop
+                muted
+                class="step-media"
+              />
+            </div>
+            <a-typography-title :level="4" style="margin-top: 16px">
+              {{ step.title }}
+            </a-typography-title>
+            <a-typography-paragraph>
+              {{ step.description }}
+            </a-typography-paragraph>
+          </a-card>
+        </a-col>
+      </a-row>
+    </div>
   </WebsiteLayout>
 </template>
 
@@ -99,6 +98,14 @@ import { useI18n } from "vue-i18n";
 import { message } from "ant-design-vue";
 import { useBanner } from "../../admin/banner/composible";
 import WebsiteLayout from "../components/WebsiteLayout.vue";
+
+// Import video assets
+import step1Video from "../../../assets/videos/1765385133200-290324360.mp4";
+import step2Video from "../../../assets/videos/1765711898724-492505555.mp4";
+import step3Video from "../../../assets/videos/videoplayback (1).mp4";
+import step4Video from "../../../assets/videos/videoplayback (2).mp4";
+import step5Video from "../../../assets/videos/videoplayback (3).mp4";
+import step6Video from "../../../assets/videos/videoplayback.mp4";
 
 // Composables
 const { fetchAll } = useBanner();
@@ -134,39 +141,43 @@ function navigateTo(link: string) {
   }
 }
 
-// Handle video loading errors
-function handleVideoError(event: Event) {
-  console.error('Video failed to load:', event);
-  const video = event.target as HTMLVideoElement;
-  if (video) {
-    console.error('Video src:', video.src);
-    console.error('Video error code:', video.error?.code);
-    message.error('Failed to load video. Please check your connection.');
-  }
-}
-
 // Steps data - using computed to get translated values
 const steps = computed(() => [
   {
-    title: t('website.home.step1.title'),
+    title: t("website.home.step1.title"),
     mediaType: "video",
-    mediaSource:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-    description: t('website.home.step1.description'),
+    mediaSource: step1Video,
+    description: t("website.home.step1.description"),
   },
   {
-    title: t('website.home.step2.title'),
+    title: t("website.home.step2.title"),
     mediaType: "video",
-    mediaSource:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-    description: t('website.home.step2.description'),
+    mediaSource: step2Video,
+    description: t("website.home.step2.description"),
   },
   {
-    title: t('website.home.step3.title'),
+    title: t("website.home.step3.title"),
     mediaType: "video",
-    mediaSource:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    description: t('website.home.step3.description'),
+    mediaSource: step3Video,
+    description: t("website.home.step3.description"),
+  },
+  {
+    title: t("website.home.step4.title"),
+    mediaType: "video",
+    mediaSource: step4Video,
+    description: t("website.home.step4.description"),
+  },
+  {
+    title: t("website.home.step5.title"),
+    mediaType: "video",
+    mediaSource: step5Video,
+    description: t("website.home.step5.description"),
+  },
+  {
+    title: t("website.home.step6.title"),
+    mediaType: "video",
+    mediaSource: step6Video,
+    description: t("website.home.step6.description"),
   },
 ]);
 
@@ -268,24 +279,20 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 200px;
-  background: #000;
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 .step-media {
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: 100%;
   max-height: 100%;
   border-radius: 8px;
   object-fit: contain;
+  padding: 8px;
 }
 
-.step-media[src=""] {
-  display: none;
+.custom {
+  margin: 0 auto;
+  padding: 0 15px;
 }
-
 </style>

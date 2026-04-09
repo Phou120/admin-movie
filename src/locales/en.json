@@ -60,7 +60,12 @@
     "noCustomer": "No Customer",
     "noImage": "No Image",
     "viewImage": "View Image",
-    "refresh": "Reload"
+    "refresh": "Reload",
+    "thisMonth": "This Month",
+    "lastMonth": "Last Month",
+    "yearAgo": "Same Month Last Year",
+    "threshold": "Threshold",
+    "loadingFailed": "Failed to load data"
   },
   "auth": {
     "login": "Login",
@@ -130,6 +135,89 @@
         "pdf": "PDF",
         "excel": "Excel"
       }
+    },
+    "analytics": {
+      "packageRevenue": "Package Revenue",
+      "packageDistribution": "Package Distribution",
+      "packagePerformance": "Package Performance",
+      "memberGrowth": "Member Growth",
+      "memberStatus": "Member Status",
+      "memberEngagement": "Member Engagement",
+      "retention": "Retention Metrics",
+      "revenueTrend": "Revenue Trend",
+      "paymentMethods": "Payment Methods",
+      "approvalRate": "Approval Rate",
+      "monthlyRevenue": "Monthly Revenue",
+      "avgTransaction": "Avg Transaction Value",
+      "successRate": "Success Rate",
+      "revenuePerMember": "Revenue Per Member",
+      "totalPackages": "Total Packages",
+      "totalRevenue": "Total Revenue",
+      "totalMembers": "Total Members",
+      "activeMembers": "Active Members",
+      "pendingPayments": "Pending Payments",
+      "renewalRate": "Renewal Rate",
+      "churnRate": "Churn Rate",
+      "growthSpurt": "Growth Spurt Detected",
+      "growthSpurtDesc": "Member growth increased by {percentage}% this month!",
+      "highChurnWarning": "High churn rate detected",
+      "highChurnWarningDesc": "Consider retention strategies to reduce member loss",
+      "lowApprovalRate": "Low approval rate warning",
+      "viewFullReport": "View Full Report",
+      "viewAllMembers": "View All Members",
+      "refresh": "Refresh Data",
+      "lastUpdated": "Last updated",
+      "dataRefreshed": "Dashboard data refreshed",
+      "exportComingSoon": "Export functionality coming soon",
+      "noData": "No data available",
+      "packageAnalytics": "Package Analytics",
+      "memberAnalytics": "Member Analytics",
+      "financialAnalytics": "Financial Analytics",
+      "overview": "Analytics Overview",
+      "subtitle": "Track your key metrics and monitor performance across all areas",
+      "packageDescription": "View package revenue, distribution, and performance metrics",
+      "memberDescription": "Track member growth, engagement, and retention analytics",
+      "financialDescription": "Monitor revenue trends, payment methods, and financial KPIs"
+    },
+    "time": {
+      "days": "Days",
+      "day": "Day",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds",
+      "ago": "ago",
+      "minutesAgo": "minutes ago",
+      "hoursAgo": "hours ago",
+      "daysAgo": "days ago",
+      "range7Days": "7 Days",
+      "range30Days": "30 Days",
+      "range90Days": "90 Days"
+    },
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
+    "loadingAnalytics": "Loading analytics data...",
+    "refresh": "Refresh",
+    "exportAll": "Export All Data",
+    "timeRange": "Time Range",
+    "last7Days": "Last 7 Days",
+    "last30Days": "Last 30 Days",
+    "last90Days": "Last 90 Days",
+    "income": "Income",
+    "expenses": "Expenses",
+    "dataRefreshed": "Dashboard data refreshed",
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
     }
   },
   "video": {
@@ -1406,6 +1494,18 @@
       "step3": {
         "title": "Track Status",
         "description": "Get real-time updates and notifications on your application status."
+      },
+      "step4": {
+        "title": "Get Approved",
+        "description": "Your application will be reviewed and approved quickly."
+      },
+      "step5": {
+        "title": "Join Us",
+        "description": "Join with us and start your journey."
+      },
+      "step6": {
+        "title": "Enjoy Experience",
+        "description": "Explore the application experience and build your future."
       }
     },
     "aboutUs": {

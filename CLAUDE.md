@@ -33,7 +33,7 @@ pnpm preview
 - **Vue I18n** for internationalization (primary: Lao, secondary: English)
 - **ECharts** with echarts-for-vue for dashboard visualization
 - **Quill** and **TinyMCE** as rich text editors (`@tinymce/tinymce-vue`)
-- **SASS** for styling
+- **SASS** (`sass-embedded`) for styling
 - **Vite** as build tool
 
 ## Architecture Overview
@@ -64,6 +64,15 @@ src/modules/website/
 ```
 
 Each admin module is self-contained with its own composible (business logic), components, and interfaces.
+
+**Cross-module usage**: Website modules can import and reuse admin module composables:
+```vue
+<!-- In src/modules/website/home/Home.vue -->
+<script setup>
+import { useBanner } from "../../admin/banner/composible";
+const { fetchAll } = useBanner();
+</script>
+```
 
 ### Composable Pattern
 
@@ -165,34 +174,32 @@ Route patterns:
 
 ### Component Organization
 
-**Admin Layout Components** (`src/components/layouts/`):
-- `Layout.vue` - Main layout wrapper for admin panel (sidebar + navbar + content area)
-- `Navbar.vue` - Top navigation bar with user menu, notifications, logout
-- `Sidebar.vue` - Dynamic sidebar with role-based menu items, route-to-menu-key mapping for active state
-
-**Website Layout Components** (`src/modules/website/components/`):
-- `WebsiteLayout.vue` - Main layout wrapper for public pages, wraps AppHeader/AppFooter around content
-- `AppHeader.vue` - Global header with logo, public navigation links, language switcher, auth buttons
-- `AppFooter.vue` - Global footer with copyright information
-
-**Reusable Components** (`src/components/`):
-- `AddButton.vue` - Standardized add button for list pages
-- `LanguageSwitcher.vue` - Language toggle (en/lo)
-- `TextEditor.vue` - Rich text editor component (uses Quill)
-
-**Common Directory** (`src/common/`):
-- `configuration/` - Axios instance and app configuration
-- `guards/` - Route guards (authentication)
-- `composables/` - Shared composables (e.g., socket notifications)
-- `utils/` - Utility functions (date/number formatting, notifications, socket)
-- `interface/` - Shared TypeScript interfaces (e.g., pagination)
-- `enums/` - Shared enums (e.g., status)
+- **Admin layout**: `src/components/layouts/` — `Layout.vue` (sidebar + navbar + content), `Navbar.vue`, `Sidebar.vue`
+- **Website layout**: `src/modules/website/components/` — `WebsiteLayout.vue`, `AppHeader.vue`, `AppFooter.vue`
+- **Reusable**: `src/components/` — `AddButton.vue`, `LanguageSwitcher.vue`, `TextEditor.vue` (Quill)
+- **Common**: `src/common/` — `configuration/`, `guards/`, `composables/`, `utils/`, `interface/`, `enums/`
 
 ### Styling
 
 - **Global styles**: Both `src/assets/global.css` and `src/assets/style/global.scss` are imported in `main.ts`
 - **Ant Design Vue** provides the primary component styling
 - **Quill** rich text editor styles are imported from `quill/dist/quill.snow.css`
+
+### Static Assets in Vite
+
+**Video and image assets** stored in `src/assets/` must be referenced using relative imports from the component's location:
+```typescript
+// ✅ Correct - relative path from the component file
+import step1Video from "../../../assets/videos/step1.mp4";
+
+// ❌ Wrong - no @ alias is configured in vite.config.ts
+import step1Video from "@/assets/videos/step1.mp4";
+```
+
+For videos requiring autoplay, browser policies require the `muted` attribute:
+```vue
+<video autoplay muted loop :src="videoSource" />
+```
 
 ### File Upload Pattern
 
@@ -205,6 +212,12 @@ if (file) formData.append("file_field", file);
 await apiClient.post("/endpoint", formData, {
   headers: { "Content-Type": "multipart/form-data" }
 });
+```
+
+**Single file upload utility**: Some modules (e.g., banner) provide an `upload` helper:
+```typescript
+const { upload } = useBanner();
+const imageUrl = await upload(file); // Returns URL string
 ```
 
 **Array handling in FormData**: When sending arrays (e.g., multiple categories), use bracket notation:
@@ -240,6 +253,23 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 - Single item/detail endpoints: `{ data: {} }`
 - Use `response.data.data` to access the actual array or object
 
+**Loading state patterns**: Use granular loading states for better UX:
+```typescript
+const loadingBanners = ref(false);
+const loadingVideos = ref(false);
+
+async function loadBanners() {
+  loadingBanners.value = true;
+  try {
+    // API call
+  } finally {
+    loadingBanners.value = false;
+  }
+}
+```
+
+This allows independent loading indicators for different data sources on the same page.
+
 ### Naming Conventions
 
 - **Files**: kebab-case (`bank-currency.vue`, `add-video.vue`)
@@ -250,37 +280,11 @@ const fetchAll = async (page: number, limit: number, search: string = "") => {
 
 ### Key Modules
 
-| Module | Purpose |
-|--------|---------|
-| `auth` | Login, password reset, OTP verification |
-| `dashboard` | Statistics and overview |
-| `video` | Content CRUD with file uploads |
-| `user/role/permission` | User and access management |
-| `customer/member` | User profile and member management |
-| `payment` | Payment processing with real-time notifications |
-| `banner/category/package` | Content and service management |
-| `qr-code` | QR code generation and management |
-| `views` | Page view analytics tracking |
-| `report` | Report generation (video, user, package, payment) |
-
-**Website Modules** (public pages under `src/modules/website/`):
-| Module | Purpose |
-|--------|---------|
-| `home` | Landing page |
-| `about-us` | About information page |
-| `contact` | Contact form page |
-| `register` | User registration page |
+Admin modules are in `src/modules/admin/` (auth, dashboard, video, user, role, permission, customer, member, payment, banner, category, package, qr-code, views, report). Website public pages are in `src/modules/website/` (home, about-us, contact, register). Browse the directories for specifics.
 
 ### Environment Variables
 
 - `VITE_API_BASE_URL` - Backend API base URL (e.g., `http://localhost:8000/api/`)
-
-### Application Initialization
-
-The app initialization order in `src/main.ts`:
-1. Imports Vue core, router, Ant Design Vue, and i18n
-2. Imports global styles: `style.css`, `global.css`, `global.scss`, and Quill editor styles
-3. Creates app instance, registers plugins (router, Antd, i18n), then mounts
 
 ### TypeScript Configuration
 
@@ -295,7 +299,4 @@ The app initialization order in `src/main.ts`:
 
 ### Common Utilities
 
-- `src/common/utils/format-date.util.ts` - Date formatting with Day.js
-- `src/common/utils/format-number.util.ts` - Number formatting
-- `src/common/utils/notification.util.ts` - User notifications
-- `src/common/utils/socket.util.ts` - Global Socket.io connection instance
+Utilities in `src/common/utils/`: `format-date.util.ts` (Day.js), `format-number.util.ts`, `notification.util.ts`, `socket.util.ts`.
