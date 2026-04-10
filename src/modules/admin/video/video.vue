@@ -24,7 +24,7 @@ const router = useRouter();
 const { fetchAll, deleteVideoById, getCategories, getCustomers, updateStatus } =
   VideoComposible();
 const { t } = useI18n();
-const { can, hasRole } = useAuth();
+const { hasRole } = useAuth();
 
 // Get current customer ID for customer role
 const getCurrentCustomerId = computed(() => {
@@ -43,7 +43,7 @@ const canSelectCustomer = computed(() => {
 
 // Check if user can manage videos (create, update, delete) - only for creator role
 const canManageVideos = computed(() => {
-  return can("update", "video") || can("delete", "video");
+  return hasRole("creator");
 });
 
 const columns = computed(() => [
@@ -715,14 +715,14 @@ function handleStatusChange(id: number, checked: boolean) {
                   @click="openViewPage(record.id)"
                 />
               </a-tooltip>
-              <a-tooltip v-if="can('update', 'video')" :title="t('actions.edit')">
+              <a-tooltip v-if="canManageVideos" :title="t('actions.edit')">
                 <EditOutlined
                   class="icon edit"
                   @click="openEditPage(record.id)"
                 />
               </a-tooltip>
               <a-popconfirm
-                v-if="can('delete', 'video')"
+                v-if="canManageVideos"
                 :title="t('message.deleteConfirm')"
                 placement="topRight"
                 @confirm="deleteVideo(record.id)"

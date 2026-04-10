@@ -19,7 +19,7 @@ pnpm build
 pnpm preview
 ```
 
-**Note:** This project uses **pnpm** as the package manager. This project does not have a test framework configured.
+**Note:** This project uses **pnpm** as the package manager. This project does not have a test framework, ESLint, or Prettier configured.
 
 ## Tech Stack
 
@@ -64,6 +64,8 @@ src/modules/website/
 ```
 
 Each admin module is self-contained with its own composible (business logic), components, and interfaces.
+
+**Spelling note**: Most admin modules use `composible/` (misspelling), but a few use `composables/` (e.g., `src/common/composables/`, `src/modules/admin/payment/composables/`, `src/components/charts/composables/`). Follow the existing spelling in whichever directory you're working in.
 
 **Cross-module usage**: Website modules can import and reuse admin module composables:
 ```vue
