@@ -4,6 +4,11 @@ import { CloseOutlined, SaveOutlined } from "@ant-design/icons-vue";
 import type { IViewsForm } from "../interface/views.interface";
 import { formatInputNumber, parseFormattedNumber } from "../../../../common/utils/format-number.util";
 import { useI18n } from "vue-i18n";
+import { ViewsComposible } from "../composible/index";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../../../../common/utils/notification";
 
 interface Props {
   visible: boolean;
@@ -12,12 +17,14 @@ interface Props {
 
 interface Emits {
   (e: "update:visible", value: boolean): void;
-  (e: "submit", form: IViewsForm): void;
+  (e: "success"): void;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
+const { updateView } = ViewsComposible();
+const loading = ref(false);
 
 const formUpdate = ref<IViewsForm>({
   id: 0,
@@ -81,14 +88,26 @@ const handlePricePaste = (event: ClipboardEvent) => {
 };
 
 // Submit form
-const handleSubmit = () => {
-  if (formUpdate.value.qty === 1 && formUpdate.value.price > 0) {
-    emit("submit", { ...formUpdate.value });
+const handleSubmit = async () => {
+  if (!isFormValid.value) return;
+
+  loading.value = true;
+  try {
+    const response = await updateView({ ...formUpdate.value });
+    showSuccessNotification(response.message);
+    emit("success");
+    emit("update:visible", false);
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message;
+    showErrorNotification("Failed to update view", message);
+  } finally {
+    loading.value = false;
   }
 };
 
 // Cancel
 const handleCancel = () => {
+  if (loading.value) return;
   emit("update:visible", false);
 };
 
@@ -103,6 +122,8 @@ const isFormValid = computed(() => {
     :open="visible"
     :title="t('modules.views.editModal')"
     :footer="null"
+    :closable="!loading"
+    :mask-closable="!loading"
     @cancel="handleCancel"
   >
     <a-form layout="vertical">
@@ -147,14 +168,19 @@ const isFormValid = computed(() => {
     </a-form>
 
     <div class="modal-footer">
-      <a-button class="custom-cancel-btn" @click="handleCancel">
+      <a-button
+        class="custom-cancel-btn"
+        :disabled="loading"
+        @click="handleCancel"
+      >
         <CloseOutlined />{{ t('common.cancel') }}
       </a-button>
       <a-button
         type="primary"
         class="custom-ok-btn"
+        :loading="loading"
+        :disabled="!isFormValid || loading"
         @click="handleSubmit"
-        :disabled="!isFormValid"
       >
         <SaveOutlined />
         {{ t('common.update') }}

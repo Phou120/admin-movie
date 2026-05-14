@@ -1014,6 +1014,7 @@
         "password": "Password",
         "confirmPassword": "Confirm Password",
         "roles": "Roles",
+        "profileImage": "Profile Image",
         "sections": {
           "basicInformation": "Basic Information",
           "accountDetails": "Account Details",
@@ -1040,7 +1041,14 @@
           "confirmPasswordRequired": "Please confirm password",
           "passwordMismatch": "Passwords do not match",
           "rolesRequired": "Please select at least one role",
-          "createError": "Failed to create user"
+          "createError": "Failed to create user",
+          "loadRolesError": "Failed to load user roles",
+          "loadRolePermissionsError": "Could not load permissions for role {roleId}",
+          "loadPermissionsError": "Failed to load permissions",
+          "imageFileType": "You can only upload image files!",
+          "imageFileSize": "Image must be smaller than 2MB!",
+          "permissionsRequired": "Please select at least one permission",
+          "formError": "Please check the form for errors"
         },
         "actions": {
           "goBack": "Go Back",

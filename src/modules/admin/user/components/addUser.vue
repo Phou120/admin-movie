@@ -342,7 +342,7 @@ const fetchRoles = async () => {
     roleModules.value = response.data || [];
   } catch (error) {
     console.error("Failed to fetch roles:", error);
-    message.error("Failed to load user roles. Please check API server status.");
+    message.error(t('modules.user.addForm.validation.loadRolesError'));
   }
 };
 
@@ -392,7 +392,7 @@ watch(
           }
         } catch (error) {
           console.error(`Failed to fetch role ${roleId} permissions:`, error);
-          message.warning(`Could not load permissions for role ${roleId}`);
+          message.warning(t('modules.user.addForm.validation.loadRolePermissionsError', { roleId }));
         }
       }
 
@@ -487,7 +487,7 @@ async function loadAllPermissions() {
     permissionModules.value = res.data || [];
   } catch (error) {
     console.error("Failed to load permissions:", error);
-    message.error("Failed to load permissions");
+    message.error(t('modules.user.addForm.validation.loadPermissionsError'));
   } finally {
     loadingPermissions.value = false;
   }
@@ -501,12 +501,12 @@ const goBack = (): void => {
 const beforeUploadAdd = async (file: File): Promise<boolean> => {
   const isImage = file.type.startsWith("image/");
   if (!isImage) {
-    message.error("You can only upload image files!");
+    message.error(t('modules.user.addForm.validation.imageFileType'));
     return false;
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error("Image must be smaller than 2MB!");
+    message.error(t('modules.user.addForm.validation.imageFileSize'));
     return false;
   }
 
@@ -537,9 +537,9 @@ async function onFinish() {
 const onFinishFailed = (errorInfo: any): void => {
   console.log("Failed:", errorInfo);
   if (formState.permissions.length === 0) {
-    message.error("Please select at least one permission!");
+    message.error(t('modules.user.addForm.validation.permissionsRequired'));
   } else {
-    message.error("Please check the form for errors");
+    message.error(t('modules.user.addForm.validation.formError'));
   }
 };
 

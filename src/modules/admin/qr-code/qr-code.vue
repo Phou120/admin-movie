@@ -5,14 +5,11 @@ import { QrCodeComposible } from "./composible/index";
 import { EditOutlined } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IQrCodeForm, IQrCodeList } from "./interface/qr-code.interface";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "../../../common/utils/notification";
+import { showErrorNotification } from "../../../common/utils/notification";
 import EditQrCodeModal from "./components/EditQrCodeModal.vue";
 import { useAuth } from "../../../common/composables/useAuth";
 
-const { fetchAll, updateQrCode, upload } = QrCodeComposible();
+const { fetchAll } = QrCodeComposible();
 const { t } = useI18n();
 const { can } = useAuth();
 
@@ -66,7 +63,6 @@ const data = reactive<IQrCodeList>({
 const loading = ref(false);
 const isEditModalVisible = ref(false);
 const selectedQrCode = ref<IQrCodeForm | null>(null);
-const editModalRef = ref();
 
 // Function to get record key
 function getRecordKey(record: IQrCodeForm): number {
@@ -142,53 +138,6 @@ function openEditModal(qrCode: any) {
   isEditModalVisible.value = true;
 }
 
-// CRUD operations
-async function handleEditSuccess() {
-  try {
-    const formData = editModalRef.value?.formData;
-    const hasNewFile = editModalRef.value?.hasNewFile;
-
-    if (!formData?.id) {
-      showErrorNotification(
-        t("common.error"),
-        t("modules.qrCode.form.validation.idRequired"),
-      );
-      return;
-    }
-
-    let file = null;
-    // Only upload if user selected a new file
-    if (hasNewFile && formData.file instanceof File) {
-      const uploadResponse = await upload(formData.file);
-      file = uploadResponse;
-    }
-
-    const payload: any = {
-      id: formData.id,
-    };
-
-    // Only include file if a new one was uploaded
-    if (file) {
-      payload.file = file;
-    }
-
-    const response = await updateQrCode(payload);
-    showSuccessNotification(response.message || "QR Code updated successfully");
-
-    // Close modal before reloading
-    isEditModalVisible.value = false;
-
-    // Reload data
-    await loadQrCodes();
-  } catch (error) {
-    console.error("Failed to update qr code:", error);
-    showErrorNotification(
-      t("modules.qrCode.form.validation.updateError"),
-      (error as Error).message,
-    );
-  }
-}
-
 // Function to handle image error
 function handleImageError(event: Event) {
   const target = event.target as HTMLImageElement;
@@ -250,10 +199,9 @@ function handleImageError(event: Event) {
 
   <!-- Edit Modal Component -->
   <EditQrCodeModal
-    ref="editModalRef"
     v-model:visible="isEditModalVisible"
     :qrCode="selectedQrCode"
-    @success="handleEditSuccess"
+    @success="loadQrCodes"
   />
 </template>
 

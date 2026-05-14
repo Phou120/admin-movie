@@ -83,6 +83,7 @@ const data = reactive<IUserCourseCategory>({
 const isEditModalVisible = ref(false);
 const isAddModalVisible = ref(false);
 const loading = ref(false);
+const submitting = ref(false);
 
 const formUpdate = ref<ICustomerForm>({
   id: 0,
@@ -154,13 +155,18 @@ function openAddModal() {
 
 // Submit new category
 async function submitAdd() {
+  if (!formAdd.value.name?.trim()) return;
+
+  submitting.value = true;
   try {
     const response = await createCategory(formAdd.value);
     showSuccessNotification(response.message);
     isAddModalVisible.value = false;
     await loadCategories();
   } catch (error) {
-    showErrorNotification("Failed to add category: ", (error as Error).message);
+    showErrorNotification("Failed to add category", (error as Error).message);
+  } finally {
+    submitting.value = false;
   }
 }
 
@@ -176,38 +182,42 @@ function openEditModal(category: ICustomerForm) {
 
 // Submit update
 async function submitUpdate() {
+  if (!formUpdate.value.name?.trim()) return;
+
+  submitting.value = true;
   try {
     const response = await updateCategory(formUpdate.value);
     showSuccessNotification(response.message);
     isEditModalVisible.value = false;
     await loadCategories();
   } catch (err) {
-    showErrorNotification(
-      "Failed to update category: ",
-      (err as Error).message
-    );
+    showErrorNotification("Failed to update category", (err as Error).message);
+  } finally {
+    submitting.value = false;
   }
 }
 
 // Delete category
 async function deleteCategory(id: number) {
+  loading.value = true;
   try {
     const response = await deleteCategoryById(id);
     showSuccessNotification(response.message);
     await loadCategories();
   } catch (error) {
-    showErrorNotification(
-      "Failed to delete category: ",
-      (error as Error).message
-    );
+    showErrorNotification("Failed to delete category", (error as Error).message);
+  } finally {
+    loading.value = false;
   }
 }
 
 // Cancel handlers
 function handleEditCancel() {
+  if (submitting.value) return;
   isEditModalVisible.value = false;
 }
 function handleCancel() {
+  if (submitting.value) return;
   isAddModalVisible.value = false;
 }
 </script>
@@ -270,6 +280,8 @@ function handleCancel() {
     v-model:open="isEditModalVisible"
     :title="t('modules.category.edit')"
     :footer="null"
+    :closable="!submitting"
+    :mask-closable="!submitting"
     @cancel="handleEditCancel"
   >
     <a-form layout="vertical">
@@ -295,10 +307,18 @@ function handleCancel() {
       </a-form-item>
     </a-form>
     <div class="modal-footer">
-      <a-button class="custom-cancel-btn" @click="handleEditCancel"
+      <a-button
+        class="custom-cancel-btn"
+        :disabled="submitting"
+        @click="handleEditCancel"
         ><CloseOutlined />{{ t("actions.close") }}</a-button
       >
-      <a-button type="primary" class="custom-ok-btn" @click="submitUpdate">
+      <a-button
+        type="primary"
+        class="custom-ok-btn"
+        :loading="submitting"
+        @click="submitUpdate"
+      >
         <SaveOutlined />
         {{ t("actions.update") }}
       </a-button>
@@ -310,6 +330,8 @@ function handleCancel() {
     v-model:open="isAddModalVisible"
     :title="t('modules.category.addNew')"
     :footer="null"
+    :closable="!submitting"
+    :mask-closable="!submitting"
     @cancel="handleCancel"
   >
     <a-form layout="vertical">
@@ -335,10 +357,17 @@ function handleCancel() {
       </a-form-item>
     </a-form>
     <div class="modal-footer">
-      <a-button class="custom-cancel-btn" @click="handleCancel"
+      <a-button
+        class="custom-cancel-btn"
+        :disabled="submitting"
+        @click="handleCancel"
         ><CloseOutlined />{{ t("actions.close") }}</a-button
       >
-      <a-button type="primary" class="custom-ok-btn" @click="submitAdd"
+      <a-button
+        type="primary"
+        class="custom-ok-btn"
+        :loading="submitting"
+        @click="submitAdd"
         ><SaveOutlined />{{ t("actions.create") }}</a-button
       >
     </div>

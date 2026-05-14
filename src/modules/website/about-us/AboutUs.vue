@@ -1,225 +1,229 @@
 <template>
   <WebsiteLayout>
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="hero-overlay">
-          <a-typography-title :level="1" class="hero-title">
-            {{ t('website.aboutUs.hero.title') }}
-          </a-typography-title>
-          <a-typography-paragraph class="hero-subtitle">
-            {{ t('website.aboutUs.hero.subtitle') }}
-          </a-typography-paragraph>
-        </div>
-      </section>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-overlay">
+        <a-typography-title :level="1" class="hero-title">
+          {{ t("website.aboutUs.hero.title") }}
+        </a-typography-title>
+        <a-typography-paragraph class="hero-subtitle">
+          {{ t("website.aboutUs.hero.subtitle") }}
+        </a-typography-paragraph>
+      </div>
+    </section>
 
-      <!-- Our Story Section -->
-      <section class="story-section">
-        <div class="container">
-          <a-row :gutter="[48, 48]" align="middle" class="story-row">
-            <a-col :xs="24" :md="12">
-              <div class="image-wrapper">
-                <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
-                  alt="Our Team"
-                  class="story-image"
-                />
-              </div>
-            </a-col>
-            <a-col :xs="24" :md="12">
-              <div class="story-content">
-                <a-typography-title :level="2" class="section-title">
-                  {{ t('website.aboutUs.story.title') }}
-                </a-typography-title>
-                <a-typography-paragraph class="story-text">
-                  {{ t('website.aboutUs.story.paragraph1') }}
-                </a-typography-paragraph>
-                <a-typography-paragraph class="story-text">
-                  {{ t('website.aboutUs.story.paragraph2') }}
-                </a-typography-paragraph>
-              </div>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
+    <!-- Our Story Section -->
+    <section class="story-section">
+      <div class="container">
+        <a-row :gutter="[48, 48]" align="middle" class="story-row">
+          <a-col :xs="24" :md="12">
+            <div class="image-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
+                alt="Our Team"
+                class="story-image"
+              />
+            </div>
+          </a-col>
+          <a-col :xs="24" :md="12">
+            <div class="story-content">
+              <a-typography-title :level="2" class="section-title">
+                {{ t("website.aboutUs.story.title") }}
+              </a-typography-title>
+              <a-typography-paragraph class="story-text">
+                {{ t("website.aboutUs.story.paragraph1") }}
+              </a-typography-paragraph>
+              <a-typography-paragraph class="story-text">
+                {{ t("website.aboutUs.story.paragraph2") }}
+              </a-typography-paragraph>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
 
-      <!-- Mission & Vision Section -->
-      <section class="mission-vision-section">
-        <div class="container">
-          <a-row :gutter="[32, 32]">
-            <a-col :xs="24" :md="12">
-              <a-card class="value-card mission-card" hoverable>
-                <template #cover>
-                  <div class="card-icon-wrapper mission-icon">
-                    <RocketOutlined class="card-icon" />
-                  </div>
-                </template>
-                <a-card-meta>
-                  <template #title>
-                    <span class="card-title">{{ t('website.aboutUs.mission.title') }}</span>
-                  </template>
-                  <template #description>
-                    <p class="card-description">
-                      {{ t('website.aboutUs.mission.description') }}
-                    </p>
-                  </template>
-                </a-card-meta>
-              </a-card>
-            </a-col>
-            <a-col :xs="24" :md="12">
-              <a-card class="value-card vision-card" hoverable>
-                <template #cover>
-                  <div class="card-icon-wrapper vision-icon">
-                    <EyeOutlined class="card-icon" />
-                  </div>
-                </template>
-                <a-card-meta>
-                  <template #title>
-                    <span class="card-title">{{ t('website.aboutUs.vision.title') }}</span>
-                  </template>
-                  <template #description>
-                    <p class="card-description">
-                      {{ t('website.aboutUs.vision.description') }}
-                    </p>
-                  </template>
-                </a-card-meta>
-              </a-card>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
-
-      <!-- Core Values Section -->
-      <section class="values-section">
-        <div class="container">
-          <a-typography-title :level="2" class="section-title centered">
-            {{ t('website.aboutUs.coreValues.title') }}
-          </a-typography-title>
-          <a-row :gutter="[24, 24]" style="margin-top: 48px">
-            <a-col
-              v-for="value in coreValues"
-              :key="value.key"
-              :xs="24"
-              :sm="12"
-              :lg="6"
-            >
-              <div class="value-item">
-                <div class="value-icon-circle">
-                  <component :is="value.icon" class="value-icon" />
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision-section">
+      <div class="container">
+        <a-row :gutter="[32, 32]">
+          <a-col :xs="24" :md="12">
+            <a-card class="value-card mission-card" hoverable>
+              <template #cover>
+                <div class="card-icon-wrapper mission-icon">
+                  <RocketOutlined class="card-icon" />
                 </div>
-                <a-typography-title :level="4" class="value-title">
-                  {{ value.title }}
-                </a-typography-title>
-                <a-typography-paragraph class="value-description">
-                  {{ value.description }}
-                </a-typography-paragraph>
-              </div>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
+              </template>
+              <a-card-meta>
+                <template #title>
+                  <span class="card-title">{{
+                    t("website.aboutUs.mission.title")
+                  }}</span>
+                </template>
+                <template #description>
+                  <p class="card-description">
+                    {{ t("website.aboutUs.mission.description") }}
+                  </p>
+                </template>
+              </a-card-meta>
+            </a-card>
+          </a-col>
+          <a-col :xs="24" :md="12">
+            <a-card class="value-card vision-card" hoverable>
+              <template #cover>
+                <div class="card-icon-wrapper vision-icon">
+                  <EyeOutlined class="card-icon" />
+                </div>
+              </template>
+              <a-card-meta>
+                <template #title>
+                  <span class="card-title">{{
+                    t("website.aboutUs.vision.title")
+                  }}</span>
+                </template>
+                <template #description>
+                  <p class="card-description">
+                    {{ t("website.aboutUs.vision.description") }}
+                  </p>
+                </template>
+              </a-card-meta>
+            </a-card>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
 
-      <!-- Team Section -->
-      <section class="team-section">
-        <div class="container">
-          <a-typography-title :level="2" class="section-title centered">
-            {{ t('website.aboutUs.team.title') }}
-          </a-typography-title>
-          <a-typography-paragraph class="section-subtitle centered">
-            {{ t('website.aboutUs.team.subtitle') }}
-          </a-typography-paragraph>
-
-          <a-row
-            :gutter="[32, 32]"
-            justify="center"
-            style="margin-top: 48px"
-            class="team-row"
+    <!-- Core Values Section -->
+    <section class="values-section">
+      <div class="container">
+        <a-typography-title :level="2" class="section-title centered">
+          {{ t("website.aboutUs.coreValues.title") }}
+        </a-typography-title>
+        <a-row :gutter="[24, 24]" style="margin-top: 48px">
+          <a-col
+            v-for="value in coreValues"
+            :key="value.key"
+            :xs="24"
+            :sm="12"
+            :lg="6"
           >
-            <a-col
-              v-for="member in teamMembers"
-              :key="member.name"
-              :xs="24"
-              :sm="12"
-              :lg="8"
-            >
-              <a-card class="team-card" hoverable>
-                <div class="team-avatar">
-                  <img :src="member.avatar" :alt="member.name" />
-                </div>
-                <a-typography-title :level="4" class="team-name">
-                  {{ member.name }}
-                </a-typography-title>
-                <a-typography-text class="team-position">
-                  {{ member.position }}
-                </a-typography-text>
-                <div class="team-social">
-                  <a-button type="link" size="small">
-                    <LinkedinOutlined />
-                  </a-button>
-                  <a-button type="link" size="small">
-                    <TwitterOutlined />
-                  </a-button>
-                  <a-button type="link" size="small">
-                    <MailOutlined />
-                  </a-button>
-                </div>
-              </a-card>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
-
-      <!-- Statistics Section -->
-      <section class="stats-section">
-        <div class="container">
-          <a-row :gutter="[32, 32]">
-            <a-col
-              v-for="(stat, index) in statistics"
-              :key="`stat-${index}`"
-              :xs="12"
-              :sm="6"
-            >
-              <div class="stat-item">
-                <component :is="stat.icon" class="stat-icon" />
-                <a-typography-title :level="2" class="stat-number">
-                  {{ stat.number }}
-                </a-typography-title>
-                <a-typography-text class="stat-label">
-                  {{ stat.label }}
-                </a-typography-text>
+            <div class="value-item">
+              <div class="value-icon-circle">
+                <component :is="value.icon" class="value-icon" />
               </div>
-            </a-col>
-          </a-row>
-        </div>
-      </section>
+              <a-typography-title :level="4" class="value-title">
+                {{ value.title }}
+              </a-typography-title>
+              <a-typography-paragraph class="value-description">
+                {{ value.description }}
+              </a-typography-paragraph>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
 
-      <!-- CTA Section -->
-      <section class="cta-section">
-        <div class="container">
-          <a-typography-title :level="2" class="cta-title">
-            {{ t('website.aboutUs.cta.title') }}
-          </a-typography-title>
-          <a-typography-paragraph class="cta-subtitle">
-            {{ t('website.aboutUs.cta.subtitle') }}
-          </a-typography-paragraph>
-          <a-space size="large" style="margin-top: 32px">
-            <a-button
-              type="primary"
-              size="large"
-              class="cta-button"
-              @click="goToHome"
-            >
-              {{ t('website.aboutUs.cta.getStarted') }}
-            </a-button>
-            <a-button
-              size="large"
-              class="cta-button-secondary"
-              @click="goToContact"
-            >
-              {{ t('website.aboutUs.cta.contactUs') }}
-            </a-button>
-          </a-space>
-        </div>
-      </section>
+    <!-- Team Section -->
+    <section class="team-section">
+      <div class="container">
+        <a-typography-title :level="2" class="section-title centered">
+          {{ t("website.aboutUs.team.title") }}
+        </a-typography-title>
+        <a-typography-paragraph class="section-subtitle centered">
+          {{ t("website.aboutUs.team.subtitle") }}
+        </a-typography-paragraph>
+
+        <a-row
+          :gutter="[32, 32]"
+          justify="center"
+          style="margin-top: 48px"
+          class="team-row"
+        >
+          <a-col
+            v-for="member in teamMembers"
+            :key="member.name"
+            :xs="24"
+            :sm="12"
+            :lg="8"
+          >
+            <a-card class="team-card" hoverable>
+              <div class="team-avatar">
+                <img :src="member.avatar" :alt="member.name" />
+              </div>
+              <a-typography-title :level="4" class="team-name">
+                {{ member.name }}
+              </a-typography-title>
+              <a-typography-text class="team-position">
+                {{ member.position }}
+              </a-typography-text>
+              <div class="team-social">
+                <a-button type="link" size="small">
+                  <LinkedinOutlined />
+                </a-button>
+                <a-button type="link" size="small">
+                  <TwitterOutlined />
+                </a-button>
+                <a-button type="link" size="small">
+                  <MailOutlined />
+                </a-button>
+              </div>
+            </a-card>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+      <div class="container">
+        <a-row :gutter="[32, 32]">
+          <a-col
+            v-for="(stat, index) in statistics"
+            :key="`stat-${index}`"
+            :xs="12"
+            :sm="6"
+          >
+            <div class="stat-item">
+              <component :is="stat.icon" class="stat-icon" />
+              <a-typography-title :level="2" class="stat-number">
+                {{ stat.number }}
+              </a-typography-title>
+              <a-typography-text class="stat-label">
+                {{ stat.label }}
+              </a-typography-text>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <a-typography-title :level="2" class="cta-title">
+          {{ t("website.aboutUs.cta.title") }}
+        </a-typography-title>
+        <a-typography-paragraph class="cta-subtitle">
+          {{ t("website.aboutUs.cta.subtitle") }}
+        </a-typography-paragraph>
+        <a-space size="large" style="margin-top: 32px">
+          <a-button
+            type="primary"
+            size="large"
+            class="cta-button"
+            @click="goToHome"
+          >
+            {{ t("website.aboutUs.cta.getStarted") }}
+          </a-button>
+          <a-button
+            size="large"
+            class="cta-button-secondary"
+            @click="goToContact"
+          >
+            {{ t("website.aboutUs.cta.contactUs") }}
+          </a-button>
+        </a-space>
+      </div>
+    </section>
   </WebsiteLayout>
 </template>
 
@@ -244,7 +248,7 @@ import {
 import WebsiteLayout from "../components/WebsiteLayout.vue";
 import phoudImg from "../../../assets/images/phoud.jpeg";
 import aecImg from "../../../assets/images/aec216e7-4448-4294-8544-1cbee65d71d1.jpeg";
-import logoImg from "../../../assets/images/logo.png";
+import logoImg from "../../../assets/images/yee.jpeg";
 
 const router = useRouter();
 const { t } = useI18n();
@@ -260,28 +264,28 @@ const goToContact = () => {
 // Core values data - computed with translations
 const coreValues = [
   {
-    key: 'passion',
+    key: "passion",
     icon: HeartOutlined,
-    title: t('website.aboutUs.coreValues.passion.title'),
-    description: t('website.aboutUs.coreValues.passion.description'),
+    title: t("website.aboutUs.coreValues.passion.title"),
+    description: t("website.aboutUs.coreValues.passion.description"),
   },
   {
-    key: 'excellence',
+    key: "excellence",
     icon: TrophyOutlined,
-    title: t('website.aboutUs.coreValues.excellence.title'),
-    description: t('website.aboutUs.coreValues.excellence.description'),
+    title: t("website.aboutUs.coreValues.excellence.title"),
+    description: t("website.aboutUs.coreValues.excellence.description"),
   },
   {
-    key: 'collaboration',
+    key: "collaboration",
     icon: TeamOutlined,
-    title: t('website.aboutUs.coreValues.collaboration.title'),
-    description: t('website.aboutUs.coreValues.collaboration.description'),
+    title: t("website.aboutUs.coreValues.collaboration.title"),
+    description: t("website.aboutUs.coreValues.collaboration.description"),
   },
   {
-    key: 'innovation',
+    key: "innovation",
     icon: ThunderboltOutlined,
-    title: t('website.aboutUs.coreValues.innovation.title'),
-    description: t('website.aboutUs.coreValues.innovation.description'),
+    title: t("website.aboutUs.coreValues.innovation.title"),
+    description: t("website.aboutUs.coreValues.innovation.description"),
   },
 ];
 
@@ -309,22 +313,22 @@ const statistics = [
   {
     icon: UserOutlined,
     number: "50K+",
-    label: t('website.aboutUs.stats.activeUsers'),
+    label: t("website.aboutUs.stats.activeUsers"),
   },
   {
     icon: GlobalOutlined,
     number: "100+",
-    label: t('website.aboutUs.stats.countries'),
+    label: t("website.aboutUs.stats.countries"),
   },
   {
     icon: SafetyOutlined,
     number: "99.9%",
-    label: t('website.aboutUs.stats.uptime'),
+    label: t("website.aboutUs.stats.uptime"),
   },
   {
     icon: CustomerServiceOutlined,
     number: "24/7",
-    label: t('website.aboutUs.stats.support'),
+    label: t("website.aboutUs.stats.support"),
   },
 ];
 </script>
@@ -356,7 +360,8 @@ const statistics = [
 
 /* Hero Section with animated background and overlay */
 .hero-section {
-  background: linear-gradient(135deg, #0d334aff 0%, #1a5380 100%),
+  background:
+    linear-gradient(135deg, #0d334aff 0%, #1a5380 100%),
     url("https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600")
       center/cover no-repeat;
   background-blend-mode: overlay;
@@ -374,7 +379,8 @@ const statistics = [
 }
 
 .hero-section:hover {
-  background: linear-gradient(135deg, #0d334aff 0%, #1a5380 100%),
+  background:
+    linear-gradient(135deg, #0d334aff 0%, #1a5380 100%),
     url("https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600")
       center/cover no-repeat;
   background-blend-mode: overlay;
@@ -439,7 +445,9 @@ const statistics = [
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 .story-image {
   width: 100%;
@@ -648,7 +656,9 @@ const statistics = [
   padding: 0 40px;
   font-size: 1rem;
   font-weight: 500;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
 }
 .cta-button:hover {
   background: #1a5380;
@@ -661,13 +671,14 @@ const statistics = [
   font-weight: 500;
   border: 2px solid #0d334aff;
   color: #0d334aff;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 .cta-button-secondary:hover {
   background: #0d334aff;
   color: #fff;
 }
-
 
 /* Responsive adjustments for all devices */
 

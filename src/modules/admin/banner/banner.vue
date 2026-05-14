@@ -67,16 +67,14 @@
 
   <!-- Separated Modal Components -->
   <AddBannerModal
-    ref="addModalRef"
     v-model:visible="isAddModalVisible"
-    @success="handleAddSuccess"
+    @success="loadBanners"
   />
 
   <EditBannerModal
-    ref="editModalRef"
     v-model:visible="isEditModalVisible"
     :banner="selectedBanner"
-    @success="handleEditSuccess"
+    @success="loadBanners"
   />
 </template>
 
@@ -84,7 +82,7 @@
 import { ref, reactive, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
-import { message, Modal, type TablePaginationConfig } from "ant-design-vue";
+import { type TablePaginationConfig } from "ant-design-vue";
 import type { IBanner, IBannerForm } from "./interface/banner.interface";
 import { useBanner } from "./composible/index";
 import AddButton from "../../../components/AddButton.vue";
@@ -96,8 +94,7 @@ import AddBannerModal from "./components/AddBannerModal.vue";
 import EditBannerModal from "./components/EditBannerModal.vue";
 import { useAuth } from "../../../common/composables/useAuth";
 
-const { fetchAll, createBanner, upload, updateBanner, deleteBannerById } =
-  useBanner();
+const { fetchAll, deleteBannerById } = useBanner();
 const { t } = useI18n();
 const { can } = useAuth();
 
@@ -105,8 +102,6 @@ const { can } = useAuth();
 const isAddModalVisible = ref(false);
 const isEditModalVisible = ref(false);
 const loading = ref(false);
-const addModalRef = ref();
-const editModalRef = ref();
 const selectedBanner = ref<IBannerForm | null>(null);
 
 // Table Data
@@ -224,86 +219,18 @@ function openEditModal(banner: any) {
   isEditModalVisible.value = true;
 }
 
-// CRUD operations
-async function handleAddSuccess() {
-  try {
-    const formData = addModalRef.value?.formData;
-
-    if (!formData?.file_banner) {
-      showErrorNotification("Validation Error", "Please upload a banner image");
-      return;
-    }
-
-    if (!formData?.link?.trim()) {
-      showErrorNotification("Validation Error", "Link is required");
-      return;
-    }
-
-    let file_banner = formData.file_banner;
-    // If it's a File object, upload it first
-    if (formData.file_banner instanceof File) {
-      const uploadResponse = await upload(formData.file_banner);
-      file_banner = uploadResponse;
-    }
-
-    const response = await createBanner({
-      ...formData,
-      file_banner,
-    });
-
-    showSuccessNotification(response.message);
-    await loadBanners();
-  } catch (error) {
-    showErrorNotification("Failed to create banner:", (error as Error).message);
-  }
-}
-
-async function handleEditSuccess() {
-  try {
-    const formData = editModalRef.value?.formData;
-
-    if (!formData?.file_banner) {
-      showErrorNotification("Validation Error", "Please upload a banner image");
-      return;
-    }
-
-    if (!formData?.link?.trim()) {
-      showErrorNotification("Validation Error", "Link is required");
-      return;
-    }
-
-    let file_banner = null;
-    // If it's a File object, upload it first
-    if (formData.file_banner instanceof File) {
-      const uploadResponse = await upload(formData.file_banner);
-      file_banner = uploadResponse;
-    }
-
-    const response = await updateBanner({
-      ...formData,
-      file_banner,
-    });
-
-    showSuccessNotification(response.message);
-    await loadBanners();
-  } catch (error) {
-    showErrorNotification("Failed to update banner:", (error as Error).message);
-  }
-}
-
 // Delete Banner
-function deleteBanner(id: number) {
-  Modal.confirm({
-    title: t("message.deleteConfirm"),
-    okText: t("actions.confirm"),
-    cancelText: t("actions.cancel"),
-    okType: "danger",
-    onOk: async () => {
-      const response = await deleteBannerById(id);
-      message.success(response.message);
-      loadBanners();
-    },
-  });
+async function deleteBanner(id: number) {
+  loading.value = true;
+  try {
+    const response = await deleteBannerById(id);
+    showSuccessNotification(response.message);
+    await loadBanners();
+  } catch (error) {
+    showErrorNotification("Failed to delete banner", (error as Error).message);
+  } finally {
+    loading.value = false;
+  }
 }
 
 onMounted(() => loadBanners());

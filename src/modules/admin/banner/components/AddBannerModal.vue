@@ -7,7 +7,11 @@ import {
   PlusOutlined,
 } from "@ant-design/icons-vue";
 import type { IBannerForm } from "../interface/banner.interface";
-import { showErrorNotification } from "../../../../common/utils/notification";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../../../../common/utils/notification";
+import { useBanner } from "../composible/index";
 
 interface Props {
   visible: boolean;
@@ -21,6 +25,7 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
+const { createBanner, upload } = useBanner();
 
 const formData = ref<IBannerForm>({
   file_banner: "",
@@ -148,21 +153,25 @@ async function handleSubmit() {
 
   loading.value = true;
   try {
-    // This will be handled by parent component
+    let file_banner = formData.value.file_banner;
+    if (formData.value.file_banner instanceof File) {
+      file_banner = await upload(formData.value.file_banner);
+    }
+
+    const response = await createBanner({
+      ...formData.value,
+      file_banner,
+    });
+
+    showSuccessNotification(response.message);
     emit("success");
     handleCancel();
   } catch (error) {
-    showErrorNotification("Failed to create banner:", (error as Error).message);
+    showErrorNotification("Failed to create banner", (error as Error).message);
   } finally {
     loading.value = false;
   }
 }
-
-// Expose form data to parent
-defineExpose({
-  formData,
-  previewAddImage,
-});
 </script>
 
 <template>

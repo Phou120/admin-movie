@@ -5,14 +5,10 @@ import { EditOutlined } from "@ant-design/icons-vue";
 import { type TablePaginationConfig } from "ant-design-vue";
 import type { IViewsData, IViewsForm } from "./interface/views.interface";
 import formatDate from "../../../common/utils/format-date.util";
-import {
-  showErrorNotification,
-  showSuccessNotification,
-} from "../../../common/utils/notification";
 import UpdateViewModal from "./components/UpdateViewModal.vue";
 import { useI18n } from "vue-i18n";
 
-const { fetchAll, updateView } = ViewsComposible();
+const { fetchAll } = ViewsComposible();
 const { t } = useI18n();
 
 const columns = computed(() => [
@@ -134,19 +130,6 @@ function openUpdateModal(record: any) {
   isUpdateModalVisible.value = true;
 }
 
-// Submit updated view
-async function submitUpdate(form: IViewsForm) {
-  try {
-    const response = await updateView(form);
-    showSuccessNotification(response.message);
-    isUpdateModalVisible.value = false;
-    await loadViews();
-  } catch (error: any) {
-    const message = error.response?.data?.message || error.message;
-    showErrorNotification(message);
-  }
-}
-
 // Format price to display with commas using current locale
 function formatPrice(price: number): string {
   return new Intl.NumberFormat().format(price);
@@ -193,7 +176,7 @@ function formatPrice(price: number): string {
   <UpdateViewModal
     v-model:visible="isUpdateModalVisible"
     :viewData="selectedView"
-    @submit="submitUpdate"
+    @success="loadViews"
   />
 </template>
 

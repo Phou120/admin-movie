@@ -8,8 +8,12 @@ import {
   CloudUploadOutlined,
 } from "@ant-design/icons-vue";
 import type { IQrCodeForm } from "../interface/qr-code.interface";
-import { showErrorNotification } from "../../../../common/utils/notification";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../../../../common/utils/notification";
 import type { UploadProps } from "ant-design-vue";
+import { QrCodeComposible } from "../composible/index";
 
 interface Props {
   visible: boolean;
@@ -24,6 +28,7 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
+const { updateQrCode, upload } = QrCodeComposible();
 
 const formData = ref<IQrCodeForm>({
   id: 0,
@@ -91,6 +96,7 @@ function resetForm() {
 }
 
 function handleCancel() {
+  if (loading.value) return;
   resetForm();
   emit("update:visible", false);
 }
@@ -149,9 +155,30 @@ const beforeUpload: UploadProps["beforeUpload"] = () => {
 };
 
 async function handleSubmit() {
+  if (!formData.value.id) {
+    showErrorNotification(
+      t("common.error"),
+      t("modules.qrCode.form.validation.idRequired")
+    );
+    return;
+  }
+
   loading.value = true;
   try {
+    const payload: any = { id: formData.value.id };
+
+    // Only upload + include file if user picked a new one
+    if (hasNewFile.value && formData.value.file instanceof File) {
+      payload.file = await upload(formData.value.file);
+    }
+
+    const response = await updateQrCode(payload);
+    showSuccessNotification(
+      response.message || "QR Code updated successfully"
+    );
     emit("success");
+    resetForm();
+    emit("update:visible", false);
   } catch (error) {
     showErrorNotification(
       t("modules.qrCode.form.validation.updateError"),
@@ -161,13 +188,6 @@ async function handleSubmit() {
     loading.value = false;
   }
 }
-
-// Expose form data and state to parent
-defineExpose({
-  formData,
-  hasNewFile, // Parent checks this to know if a new file was selected
-  displayImageUrl,
-});
 </script>
 
 <template>
@@ -175,6 +195,8 @@ defineExpose({
     :open="visible"
     :title="t('modules.qrCode.editModal')"
     :footer="null"
+    :closable="!loading"
+    :mask-closable="!loading"
     @cancel="handleCancel"
     :width="modalWidth"
     class="qr-code-modal"

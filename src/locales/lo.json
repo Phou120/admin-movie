@@ -1007,6 +1007,7 @@
         "password": "ລະຫັດຜ່ານ",
         "confirmPassword": "ຢືນຢັນລະຫັດຜ່ານ",
         "roles": "ບົດບາດ",
+        "profileImage": "ຮູບໂປຣໄຟລ໌",
         "sections": {
           "basicInformation": "ຂໍ້ມູນພື້ນຖານ",
           "accountDetails": "ລາຍລະອຽດບັນຊີ",
@@ -1033,7 +1034,14 @@
           "confirmPasswordRequired": "ກະລຸນາຢືນຢັນລະຫັດຜ່ານ",
           "passwordMismatch": "ລະຫັດຜ່ານບໍ່ກົງກັນ",
           "rolesRequired": "ກະລຸນາເລືອກບົດບາດຢ່າງຫນ້ອຍໜຶ່ງ",
-          "createError": "ສ້າງຜູ້ໃຊ້ບໍ່ສຳເລັດ"
+          "createError": "ສ້າງຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+          "loadRolesError": "ດຶງຂໍ້ມູນບົດບາດຜູ້ໃຊ້ບໍ່ສຳເລັດ",
+          "loadRolePermissionsError": "ບໍ່ສາມາດໂຫຼດສິດທິການໃຊ້ງານສຳລັບບົດບາດ {roleId}",
+          "loadPermissionsError": "ດຶງຂໍ້ມູນສິດທິການໃຊ້ງານບໍ່ສຳເລັດ",
+          "imageFileType": "ສາມາດອັບໂຫຼດໄດ້ພຽງໄຟລ໌ຮູບພາບ!",
+          "imageFileSize": "ຮູບພາບຕ້ອງນ້ອຍກວ່າ 2MB!",
+          "permissionsRequired": "ກະລຸນາເລືອກສິດທິການໃຊ້ງານຢ່າງຫນ້ອຍໜຶ່ງ",
+          "formError": "ກະລຸນາກວດສອບຟອມຫາຂໍ້ຜິດພາດ"
         },
         "actions": {
           "goBack": "ກັບຄືນ",
