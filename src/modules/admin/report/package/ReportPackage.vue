@@ -178,7 +178,7 @@ import type { IReportPackage } from "./interface/report-package.interface";
 import formatDate from "../../../../common/utils/format-date.util";
 import { formatCurrency } from "../../../../common/utils/format-number.util";
 
-const { fetchReportData, fetchSummary, getPackageTypes, exportToCSV } =
+const { fetchReportData, fetchSummary, getPackageTypes, exportToExcel } =
   ReportPackageComposible();
 const { t } = useI18n();
 
@@ -370,25 +370,18 @@ function handleTableChange(pagination: TablePaginationConfig) {
 async function handleExport() {
   exporting.value = true;
   try {
-    const startDate = dateRange.value?.[0]
-      ? dateRange.value[0].format("YYYY-MM-DD")
-      : undefined;
-    const endDate = dateRange.value?.[1]
-      ? dateRange.value[1].format("YYYY-MM-DD")
-      : undefined;
-
-    const response = await exportToCSV({
+    const response = await exportToExcel({
       search: searchText.value,
-      package_type: selectedPackageType.value,
-      status: selectedStatus.value,
-      start_date: startDate,
-      end_date: endDate,
+      type: selectedPackageType.value,
     });
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `package-report-${new Date().getTime()}.csv`);
+    link.setAttribute("download", `package-report-${new Date().getTime()}.xlsx`);
     document.body.appendChild(link);
     link.click();
     link.remove();

@@ -38,14 +38,12 @@ export function ReportUserComposible() {
     ];
   };
 
-  const exportToCSV = async (filters: {
+  const exportToExcel = async (filters: {
     search?: string;
-    role?: string;
-    status?: string;
     start_date?: string;
     end_date?: string;
   }) => {
-    const response = await apiClient.get("/users/report/export", {
+    const response = await apiClient.get("/users/export", {
       params: filters,
       responseType: "blob",
     });
@@ -56,6 +54,6 @@ export function ReportUserComposible() {
     fetchReportData,
     fetchSummary,
     getRoles,
-    exportToCSV,
+    exportToExcel,
   };
 }

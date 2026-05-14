@@ -282,7 +282,15 @@ This allows independent loading indicators for different data sources on the sam
 
 ### Key Modules
 
-Admin modules are in `src/modules/admin/` (auth, dashboard, video, user, role, permission, customer, member, payment, banner, category, package, qr-code, views, report). Website public pages are in `src/modules/website/` (home, about-us, contact, register). Browse the directories for specifics.
+Admin modules are in `src/modules/admin/` (auth, dashboard, video, user, role, permission, customer, member, payment, banner, category, packages, qr-code, views, report). Website public pages are in `src/modules/website/` (home, about-us, contact, register, test). Browse the directories for specifics.
+
+### External Documentation
+
+- `openspec/` — OpenSpec change management directory. Contains:
+  - `openspec/API_DOCUMENTATION.md`, `API_QUICK_REFERENCE.md`, `API_EXAMPLES.md` — backend API contract for report endpoints (request/response shapes, auth requirements, status enums, mock data)
+  - `openspec/changes/` — in-flight change proposals with designs and tasks (e.g., `admin-report-pages/`, `customer-status-badge-redesign/`)
+  - `openspec/specs/` — capability specifications
+- `docs/dashboard-api-spec.md` — dashboard API specification
 
 ### Environment Variables
 

@@ -1380,6 +1380,10 @@
       "viewSlip": "View Slip",
       "export": "Export",
       "noData": "No payment report data found",
+      "paymentTypes": {
+        "cash": "Cash",
+        "transfer": "Transfer"
+      },
       "metrics": {
         "totalRevenue": "Total Revenue",
         "pendingPayments": "Pending Payments",

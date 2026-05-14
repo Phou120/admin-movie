@@ -73,9 +73,13 @@
                 v-else-if="step.mediaType === 'video'"
                 :src="step.mediaSource"
                 controls
+                controlslist="nodownload noremoteplayback"
+                disablepictureinpicture
                 autoplay
                 loop
                 muted
+                playsinline
+                @contextmenu.prevent
                 class="step-media"
               />
             </div>

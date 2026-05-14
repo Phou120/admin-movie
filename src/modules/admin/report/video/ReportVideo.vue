@@ -295,6 +295,10 @@
         v-if="currentVideoUrl"
         :src="currentVideoUrl"
         controls
+        controlslist="nodownload noremoteplayback"
+        disablepictureinpicture
+        playsinline
+        @contextmenu.prevent
         style="width: 100%"
       />
     </a-modal>
@@ -323,7 +327,7 @@ const {
   fetchSummary,
   getCategories,
   getCustomers,
-  exportToCSV,
+  exportToExcel,
 } = ReportVideoComposible();
 const { t } = useI18n();
 
@@ -606,8 +610,7 @@ async function handleExport() {
       ? dateRange.value[1].format("YYYY-MM-DD")
       : undefined;
 
-    const response = await exportToCSV({
-      search: searchText.value,
+    const response = await exportToExcel({
       category_id: selectedCategoryId.value,
       customer_id: selectedCustomerId.value,
       status: selectedStatus.value,
@@ -615,11 +618,13 @@ async function handleExport() {
       end_date: endDate,
     });
 
-    // Create download link
-    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `video-report-${new Date().getTime()}.csv`);
+    link.setAttribute("download", `video-report-${new Date().getTime()}.xlsx`);
     document.body.appendChild(link);
     link.click();
     link.remove();

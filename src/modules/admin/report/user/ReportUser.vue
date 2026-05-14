@@ -211,7 +211,7 @@ import { type TablePaginationConfig } from "ant-design-vue";
 import type { IReportUser } from "./interface/report-user.interface";
 import formatDate from "../../../../common/utils/format-date.util";
 
-const { fetchReportData, fetchSummary, exportToCSV } = ReportUserComposible();
+const { fetchReportData, fetchSummary, exportToExcel } = ReportUserComposible();
 const { t } = useI18n();
 
 const columns = computed(() => [
@@ -448,18 +448,19 @@ async function handleExport() {
       ? dateRange.value[1].format("YYYY-MM-DD")
       : undefined;
 
-    const response = await exportToCSV({
+    const response = await exportToExcel({
       search: searchText.value,
-      role: selectedRole.value,
-      status: selectedStatus.value,
       start_date: startDate,
       end_date: endDate,
     });
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `user-report-${new Date().getTime()}.csv`);
+    link.setAttribute("download", `user-report-${new Date().getTime()}.xlsx`);
     document.body.appendChild(link);
     link.click();
     link.remove();

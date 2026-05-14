@@ -47,15 +47,14 @@ export function ReportVideoComposible() {
     return response.data.data || response.data;
   };
 
-  const exportToCSV = async (filters: {
-    search?: string;
+  const exportToExcel = async (filters: {
     category_id?: number;
     customer_id?: number;
     status?: string;
     start_date?: string;
     end_date?: string;
   }) => {
-    const response = await apiClient.get("/videos/report/export", {
+    const response = await apiClient.get("/videos/export", {
       params: filters,
       responseType: "blob",
     });
@@ -67,6 +66,6 @@ export function ReportVideoComposible() {
     fetchSummary,
     getCategories,
     getCustomers,
-    exportToCSV,
+    exportToExcel,
   };
 }

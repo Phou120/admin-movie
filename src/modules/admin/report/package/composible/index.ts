@@ -39,14 +39,11 @@ export function ReportPackageComposible() {
     ];
   };
 
-  const exportToCSV = async (filters: {
+  const exportToExcel = async (filters: {
     search?: string;
-    package_type?: string;
-    status?: string;
-    start_date?: string;
-    end_date?: string;
+    type?: string;
   }) => {
-    const response = await apiClient.get("/packages/report/export", {
+    const response = await apiClient.get("/packages/export", {
       params: filters,
       responseType: "blob",
     });
@@ -57,6 +54,6 @@ export function ReportPackageComposible() {
     fetchReportData,
     fetchSummary,
     getPackageTypes,
-    exportToCSV,
+    exportToExcel,
   };
 }

@@ -1276,12 +1276,12 @@
       },
       "columns": {
         "no": "ລຳດັບ",
-        "image": "ຮູບພາດ",
-        "title": "ຊື່",
-        "customer": "ລູກຄ້າ",
+        "image": "ຮູບພາບໜັງ",
+        "title": "ຊື່ໜັງ",
+        "customer": "ຜູ້ລົງໜັງ",
         "categories": "ໝວດໝູ່",
         "video": "ວິດີໂອ",
-        "trailer": "ຕົວຢ່າງ",
+        "trailer": "ຕົວຢ່າງໜັງ",
         "totalViews": "ຍອດເບິ່ງທັງໝົດ",
         "totalLikes": "ຍອດໄລ້ທັງໝົດ",
         "totalViewsPrice": "ລາຍໄດ້ຕໍ່ໜັງ",
@@ -1373,6 +1373,10 @@
       "viewSlip": "ເບິ່ງສະລິບ",
       "export": "ສົ່ງອອກ",
       "noData": "ບໍ່ພົບຂໍ້ມູນລາຍງານການຊຳລະ",
+      "paymentTypes": {
+        "cash": "ເງິນສົດ",
+        "transfer": "ໂອນ"
+      },
       "metrics": {
         "totalRevenue": "ລາຍຮັບທັງໝົດ",
         "pendingPayments": "ການຊຳລະທີ່ລໍຖ້າ",

@@ -1,4 +1,5 @@
 import apiClient from "../../../../../common/configuration/axios.config";
+import i18n from "../../../../../locales";
 import type { IMemberOption } from "../interface/report-payment.interface";
 
 export function ReportPaymentComposible() {
@@ -33,11 +34,10 @@ export function ReportPaymentComposible() {
   };
 
   const getPaymentTypes = () => {
+    const t = i18n.global.t;
     return [
-      { value: "bank_transfer", label: "Bank Transfer" },
-      { value: "credit_card", label: "Credit Card" },
-      { value: "mobile_payment", label: "Mobile Payment" },
-      { value: "cash", label: "Cash" },
+      { value: "cash", label: t("modules.reportPayment.paymentTypes.cash") },
+      { value: "transfer", label: t("modules.reportPayment.paymentTypes.transfer") },
     ];
   };
 
@@ -48,7 +48,7 @@ export function ReportPaymentComposible() {
     return response.data.data || response.data;
   };
 
-  const exportToCSV = async (filters: {
+  const exportToExcel = async (filters: {
     search?: string;
     status?: string;
     payment_type?: string;
@@ -56,7 +56,7 @@ export function ReportPaymentComposible() {
     start_date?: string;
     end_date?: string;
   }) => {
-    const response = await apiClient.get("/payments/report/export", {
+    const response = await apiClient.get("/payments/export", {
       params: filters,
       responseType: "blob",
     });
@@ -68,6 +68,6 @@ export function ReportPaymentComposible() {
     fetchSummary,
     getPaymentTypes,
     getMembers,
-    exportToCSV,
+    exportToExcel,
   };
 }

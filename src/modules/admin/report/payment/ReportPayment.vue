@@ -82,10 +82,10 @@
               <a-select-option value="pending">
                 {{ t("modules.reportPayment.statusPending") }}
               </a-select-option>
-              <a-select-option value="approved">
+              <a-select-option value="success">
                 {{ t("modules.reportPayment.statusApproved") }}
               </a-select-option>
-              <a-select-option value="rejected">
+              <a-select-option value="failed">
                 {{ t("modules.reportPayment.statusRejected") }}
               </a-select-option>
             </a-select>
@@ -172,21 +172,38 @@
             {{ getRowNumber(index) }}
           </template>
           <template v-else-if="column.key === 'member_name'">
-            <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px">
               <img
                 v-if="record.user?.user_profile?.image_url"
                 :src="record.user.user_profile.image_url"
                 alt="Profile"
-                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                "
               />
               <div
                 v-else
-                style="width: 40px; height: 40px; border-radius: 50%; background-color: #ccc; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff;"
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  background-color: #ccc;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 18px;
+                  color: #fff;
+                "
               >
-                {{ record.customer?.name?.charAt(0) || '?' }}
+                {{ record.customer?.name?.charAt(0) || "?" }}
               </div>
               <div>
-                <div>{{ record.customer?.name }} {{ record.customer?.surname }}</div>
+                <div>
+                  {{ record.customer?.name }} {{ record.customer?.surname }}
+                </div>
                 <div style="font-size: 12px; color: #666">
                   {{ record.customer?.email }}
                 </div>
@@ -284,7 +301,7 @@ const {
   fetchSummary,
   getPaymentTypes,
   getMembers,
-  exportToCSV,
+  exportToExcel,
 } = ReportPaymentComposible();
 const { t } = useI18n();
 
@@ -376,7 +393,7 @@ const selectedPaymentType = ref<string | undefined>(undefined);
 const selectedMemberId = ref<number | undefined>(undefined);
 const dateRange = ref<any[]>([]);
 const members = ref<any[]>([]);
-const paymentTypes = getPaymentTypes();
+const paymentTypes = computed(() => getPaymentTypes());
 
 // Slip modal state
 const isSlipModalVisible = ref(false);
@@ -514,7 +531,7 @@ async function handleExport() {
       ? dateRange.value[1].format("YYYY-MM-DD")
       : undefined;
 
-    const response = await exportToCSV({
+    const response = await exportToExcel({
       search: searchText.value,
       status: selectedStatus.value,
       payment_type: selectedPaymentType.value,
@@ -523,10 +540,16 @@ async function handleExport() {
       end_date: endDate,
     });
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `payment-report-${new Date().getTime()}.csv`);
+    link.setAttribute(
+      "download",
+      `payment-report-${new Date().getTime()}.xlsx`,
+    );
     document.body.appendChild(link);
     link.click();
     link.remove();
