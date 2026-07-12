@@ -403,7 +403,6 @@ function goBack() {
           </template>
 
           <template v-else-if="column.key === 'status'">
-            <span class="canpay-debug" style="display: none">{{ can('approve', 'payment') }}</span>
             <a-dropdown
               v-if="can('approve', 'payment')"
               :trigger="['click']"

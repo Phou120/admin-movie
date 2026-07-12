@@ -271,6 +271,9 @@ function getAvailableStatuses(currentStatus: string) {
 
 // Update payment status
 async function updateStatus(id: number, newStatus: string) {
+  // Defense-in-depth: refuse the action without the approve-payment permission.
+  if (!can("approve", "payment")) return;
+
   // Set loading state for this payment
   paymentStatusLoading.value[id] = true;
 
@@ -384,7 +387,11 @@ async function updateStatus(id: number, newStatus: string) {
           </template>
 
           <template v-else-if="column.key === 'status'">
-            <a-dropdown :trigger="['click']" placement="bottomLeft">
+            <a-dropdown
+              v-if="can('approve', 'payment')"
+              :trigger="['click']"
+              placement="bottomLeft"
+            >
               <a-tag
                 :color="getStatusColor(record.status)"
                 class="status-badge clickable"
@@ -419,6 +426,10 @@ async function updateStatus(id: number, newStatus: string) {
                 </a-menu>
               </template>
             </a-dropdown>
+            <!-- Read-only status for users without approve-payment permission -->
+            <a-tag v-else :color="getStatusColor(record.status)" class="status-badge">
+              {{ getStatusLabel(record.status) }}
+            </a-tag>
           </template>
 
           <template v-else-if="column.key === 'slip'">
