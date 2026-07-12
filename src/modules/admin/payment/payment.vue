@@ -17,10 +17,12 @@ import {
   showSuccessNotification,
 } from "../../../common/utils/notification";
 import formatDate from "../../../common/utils/format-date.util";
+import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, fetchByMemberId, deletePaymentById, updatePaymentStatus } =
   PaymentComposible();
 const { t } = useI18n();
+const { can } = useAuth();
 
 const route = useRoute();
 const router = useRouter();
@@ -270,6 +272,10 @@ function getAvailableStatuses(currentStatus: string) {
 
 // Update payment status
 async function updateStatus(id: number, newStatus: string) {
+  // Defense-in-depth: refuse the action without the approve-payment permission,
+  // even if this is reached outside the (already gated) UI control.
+  if (!can("approve", "payment")) return;
+
   // Set loading state for this payment
   paymentStatusLoading.value[id] = true;
 
@@ -397,7 +403,12 @@ function goBack() {
           </template>
 
           <template v-else-if="column.key === 'status'">
-            <a-dropdown :trigger="['click']" placement="bottomLeft">
+            <span class="canpay-debug" style="display: none">{{ can('approve', 'payment') }}</span>
+            <a-dropdown
+              v-if="can('approve', 'payment')"
+              :trigger="['click']"
+              placement="bottomLeft"
+            >
               <a-tag
                 :color="getStatusColor(record.status)"
                 class="status-badge clickable"
@@ -432,6 +443,10 @@ function goBack() {
                 </a-menu>
               </template>
             </a-dropdown>
+            <!-- Read-only status for users without approve-payment permission -->
+            <a-tag v-else :color="getStatusColor(record.status)" class="status-badge">
+              {{ getStatusLabel(record.status) }}
+            </a-tag>
           </template>
 
           <template v-else-if="column.key === 'slip'">

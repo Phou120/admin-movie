@@ -19,6 +19,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
 } from "../../../common/utils/notification";
+import { getApiErrorMessage } from "../../../common/utils/api-error";
 import { useAuth } from "../../../common/composables/useAuth";
 
 const { fetchAll, deleteCategoryById, updateCategory, createCategory } =
@@ -111,7 +112,7 @@ function getRowNumber(index: number): number {
 // Function to load categories with pagination
 async function loadCategories(
   page = data.pagination.current,
-  limit = data.pagination.pageSize
+  limit = data.pagination.pageSize,
 ) {
   loading.value = true;
   try {
@@ -121,15 +122,21 @@ async function loadCategories(
 
     const paginate = response.pagination;
 
-    // Update pagination info based on response
+    // Update pagination info based on the backend envelope
+    // (backend keys: { total, total_pages, limit, page }). Guard against a
+    // missing pagination object so the list still renders.
     data.pagination = {
-      current: paginate.currentPage,
-      pageSize: paginate.limit,
-      total: paginate.total,
+      current: paginate?.page ?? page,
+      pageSize: paginate?.limit ?? limit,
+      total: paginate?.total ?? 0,
       showSizeChanger: true,
     };
   } catch (error) {
     console.error(error);
+    showErrorNotification(
+      getApiErrorMessage(error, t("common.loadingFailed")),
+      t("common.error"),
+    );
   } finally {
     loading.value = false;
   }
@@ -164,7 +171,10 @@ async function submitAdd() {
     isAddModalVisible.value = false;
     await loadCategories();
   } catch (error) {
-    showErrorNotification("Failed to add category", (error as Error).message);
+    showErrorNotification(
+      getApiErrorMessage(error, t("message.operationFailed")),
+      t("common.error"),
+    );
   } finally {
     submitting.value = false;
   }
@@ -191,7 +201,10 @@ async function submitUpdate() {
     isEditModalVisible.value = false;
     await loadCategories();
   } catch (err) {
-    showErrorNotification("Failed to update category", (err as Error).message);
+    showErrorNotification(
+      getApiErrorMessage(err, t("message.operationFailed")),
+      t("common.error"),
+    );
   } finally {
     submitting.value = false;
   }
@@ -205,7 +218,12 @@ async function deleteCategory(id: number) {
     showSuccessNotification(response.message);
     await loadCategories();
   } catch (error) {
-    showErrorNotification("Failed to delete category", (error as Error).message);
+    // Surfaces the backend rejection message (e.g. "category is used by
+    // videos and cannot be deleted"); the row stays in the list.
+    showErrorNotification(
+      getApiErrorMessage(error, t("message.operationFailed")),
+      t("common.error"),
+    );
   } finally {
     loading.value = false;
   }
@@ -223,155 +241,164 @@ function handleCancel() {
 </script>
 
 <template>
-  <div class="customer-header">
-    <h1>{{ t("modules.category.title") }}</h1>
-    <div>
-      <a-button
-        v-if="can('create', 'category')"
-        type="primary"
-        class="clear-btn"
-        :icon="h(PlusCircleFilled)"
-        @click="openAddModal"
-      >
-        {{ t("modules.category.addNew") }}
-      </a-button>
+  <div class="category-page">
+    <div class="customer-header">
+      <h1>{{ t("modules.category.title") }}</h1>
+      <div>
+        <a-button
+          v-if="can('create', 'category')"
+          type="primary"
+          class="clear-btn"
+          :icon="h(PlusCircleFilled)"
+          @click="openAddModal"
+        >
+          {{ t("modules.category.addNew") }}
+        </a-button>
+      </div>
     </div>
-  </div>
 
-  <a-table
-    :dataSource="data.categories"
-    :columns="columns"
-    :pagination="data.pagination"
-    :loading="loading"
-    :rowKey="getRecordKey"
-    @change="handleTableChange"
-  >
-    <template #bodyCell="{ column, record, index }">
-      <template v-if="column.key === 'no'">
-        {{ getRowNumber(index) }}
-      </template>
-      <template v-else-if="column.key === 'created_at'">
-        {{ formatDate(record.created_at) }}
-      </template>
-      <template v-else-if="column.key === 'updated_at'">
-        {{ formatDate(record.updated_at) }}
-      </template>
-      <template v-else-if="column.key === 'action'">
-        <span class="action-icons">
-          <a-tooltip v-if="can('update', 'category')" :title="t('actions.edit')">
-            <edit-outlined class="icon edit" @click="openEditModal(record)" />
-          </a-tooltip>
-          <a-popconfirm
-            v-if="can('delete', 'category')"
-            :title="t('message.deleteConfirm')"
-            @confirm="deleteCategory(record.id)"
-          >
-            <a-tooltip :title="t('actions.delete')">
-              <delete-outlined class="icon delete" />
+    <a-table
+      :dataSource="data.categories"
+      :columns="columns"
+      :pagination="data.pagination"
+      :loading="loading"
+      :rowKey="getRecordKey"
+      @change="handleTableChange"
+    >
+      <template #bodyCell="{ column, record, index }">
+        <template v-if="column.key === 'no'">
+          {{ getRowNumber(index) }}
+        </template>
+        <template v-else-if="column.key === 'created_at'">
+          {{ formatDate(record.created_at) }}
+        </template>
+        <template v-else-if="column.key === 'updated_at'">
+          {{ formatDate(record.updated_at) }}
+        </template>
+        <template v-else-if="column.key === 'action'">
+          <span class="action-icons">
+            <a-tooltip
+              v-if="can('update', 'category')"
+              :title="t('actions.edit')"
+            >
+              <edit-outlined class="icon edit" @click="openEditModal(record)" />
             </a-tooltip>
-          </a-popconfirm>
-        </span>
+            <a-popconfirm
+              v-if="can('delete', 'category')"
+              :title="t('message.deleteConfirm')"
+              @confirm="deleteCategory(record.id)"
+            >
+              <a-tooltip :title="t('actions.delete')">
+                <delete-outlined class="icon delete" />
+              </a-tooltip>
+            </a-popconfirm>
+          </span>
+        </template>
       </template>
-    </template>
-  </a-table>
+    </a-table>
 
-  <!-- Edit Modal -->
-  <a-modal
-    v-model:open="isEditModalVisible"
-    :title="t('modules.category.edit')"
-    :footer="null"
-    :closable="!submitting"
-    :mask-closable="!submitting"
-    @cancel="handleEditCancel"
-  >
-    <a-form layout="vertical">
-      <a-form-item
-        :label="t('modules.category.form.name')"
-        :validate-status="formUpdate.name ? 'success' : 'error'"
-        :help="
-          !formUpdate.name
-            ? t('modules.category.form.validation.nameRequired')
-            : ''
-        "
-      >
-        <a-input
-          v-model:value="formUpdate.name"
-          :placeholder="t('modules.category.form.placeholder.name')"
-        />
-      </a-form-item>
-      <a-form-item :label="t('modules.category.form.description')">
-        <a-input
-          v-model:value="formUpdate.description"
-          :placeholder="t('modules.category.form.placeholder.description')"
-        />
-      </a-form-item>
-    </a-form>
-    <div class="modal-footer">
-      <a-button
-        class="custom-cancel-btn"
-        :disabled="submitting"
-        @click="handleEditCancel"
-        ><CloseOutlined />{{ t("actions.close") }}</a-button
-      >
-      <a-button
-        type="primary"
-        class="custom-ok-btn"
-        :loading="submitting"
-        @click="submitUpdate"
-      >
-        <SaveOutlined />
-        {{ t("actions.update") }}
-      </a-button>
-    </div>
-  </a-modal>
+    <!-- Edit Modal -->
+    <a-modal
+      v-model:open="isEditModalVisible"
+      :title="t('modules.category.edit')"
+      :footer="null"
+      :closable="!submitting"
+      :mask-closable="!submitting"
+      @cancel="handleEditCancel"
+    >
+      <a-form layout="vertical">
+        <a-form-item
+          :label="t('modules.category.form.name')"
+          :validate-status="formUpdate.name ? 'success' : 'error'"
+          :help="
+            !formUpdate.name
+              ? t('modules.category.form.validation.nameRequired')
+              : ''
+          "
+        >
+          <a-input
+            v-model:value="formUpdate.name"
+            :placeholder="t('modules.category.form.placeholder.name')"
+          />
+        </a-form-item>
+        <a-form-item :label="t('modules.category.form.description')">
+          <a-textarea
+            v-model:value="formUpdate.description"
+            :placeholder="t('modules.category.form.placeholder.description')"
+            :rows="4"
+            :auto-size="{ minRows: 3, maxRows: 6 }"
+          />
+        </a-form-item>
+      </a-form>
+      <div class="modal-footer">
+        <a-button
+          class="custom-cancel-btn"
+          :disabled="submitting"
+          @click="handleEditCancel"
+          ><CloseOutlined />{{ t("actions.close") }}</a-button
+        >
+        <a-button
+          type="primary"
+          class="custom-ok-btn"
+          :loading="submitting"
+          @click="submitUpdate"
+        >
+          <SaveOutlined />
+          {{ t("actions.update") }}
+        </a-button>
+      </div>
+    </a-modal>
 
-  <!-- Add Modal -->
-  <a-modal
-    v-model:open="isAddModalVisible"
-    :title="t('modules.category.addNew')"
-    :footer="null"
-    :closable="!submitting"
-    :mask-closable="!submitting"
-    @cancel="handleCancel"
-  >
-    <a-form layout="vertical">
-      <a-form-item
-        :label="t('modules.category.form.name')"
-        :validate-status="formAdd.name ? 'success' : 'error'"
-        :help="
-          !formAdd.name
-            ? t('modules.category.form.validation.nameRequired')
-            : ''
-        "
-      >
-        <a-input
-          v-model:value="formAdd.name"
-          :placeholder="t('modules.category.form.placeholder.name')"
-        />
-      </a-form-item>
-      <a-form-item :label="t('modules.category.form.description')">
-        <a-input
-          v-model:value="formAdd.description"
-          :placeholder="t('modules.category.form.placeholder.description')"
-        />
-      </a-form-item>
-    </a-form>
-    <div class="modal-footer">
-      <a-button
-        class="custom-cancel-btn"
-        :disabled="submitting"
-        @click="handleCancel"
-        ><CloseOutlined />{{ t("actions.close") }}</a-button
-      >
-      <a-button
-        type="primary"
-        class="custom-ok-btn"
-        :loading="submitting"
-        @click="submitAdd"
-        ><SaveOutlined />{{ t("actions.create") }}</a-button
-      >
-    </div>
-  </a-modal>
+    <!-- Add Modal -->
+    <a-modal
+      v-model:open="isAddModalVisible"
+      :title="t('modules.category.addNew')"
+      :footer="null"
+      :closable="!submitting"
+      :mask-closable="!submitting"
+      @cancel="handleCancel"
+    >
+      <a-form layout="vertical">
+        <a-form-item
+          :label="t('modules.category.form.name')"
+          :validate-status="formAdd.name ? 'success' : 'error'"
+          :help="
+            !formAdd.name
+              ? t('modules.category.form.validation.nameRequired')
+              : ''
+          "
+        >
+          <a-input
+            v-model:value="formAdd.name"
+            :placeholder="t('modules.category.form.placeholder.name')"
+          />
+        </a-form-item>
+        <a-form-item :label="t('modules.category.form.description')">
+          <a-textarea
+            v-model:value="formAdd.description"
+            :placeholder="t('modules.category.form.placeholder.description')"
+            :rows="4"
+            :auto-size="{ minRows: 3, maxRows: 6 }"
+          />
+        </a-form-item>
+      </a-form>
+      <div class="modal-footer">
+        <a-button
+          class="custom-cancel-btn"
+          :disabled="submitting"
+          @click="handleCancel"
+          ><CloseOutlined />{{ t("actions.close") }}</a-button
+        >
+        <a-button
+          type="primary"
+          class="custom-ok-btn"
+          :loading="submitting"
+          @click="submitAdd"
+          ><SaveOutlined />{{ t("actions.create") }}</a-button
+        >
+      </div>
+    </a-modal>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -190,6 +190,7 @@
                     type="primary"
                     class="submit-btn"
                     html-type="submit"
+                    :loading="submitting"
                   >
                     <SaveOutlined />
                     {{ t('modules.user.addForm.actions.createUser') }}
@@ -527,11 +528,18 @@ const handleCancel = (): void => {
 
 async function onFinish() {
   submitting.value = true;
-  const response = await createUser(formState);
-  showSuccessNotification(response.message);
-
-  console.log("User data to submit:", response);
-  router.push({ name: "user" });
+  try {
+    const response = await createUser(formState);
+    showSuccessNotification(response.message);
+    router.push({ name: "user" });
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message ||
+      t("modules.user.addForm.validation.createError");
+    message.error(errorMessage);
+  } finally {
+    submitting.value = false;
+  }
 }
 
 const onFinishFailed = (errorInfo: any): void => {

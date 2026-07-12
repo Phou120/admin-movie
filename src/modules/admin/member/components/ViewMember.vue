@@ -1,77 +1,94 @@
 <template>
-  <div class="member-view-header">
-    <a-button @click="goBack">
-      <arrow-left-outlined />
-      {{ t('modules.member.view.backToMembers') }}
-    </a-button>
-    <h1>{{ getHeaderText() }} {{ t('modules.member.view.details') }}</h1>
-  </div>
+  <div class="member-view">
+    <div class="member-view-header">
+      <a-button @click="goBack">
+        <arrow-left-outlined />
+        {{ t("modules.member.view.backToMembers") }}
+      </a-button>
+      <h1>{{ getHeaderText() }} {{ t("modules.member.view.details") }}</h1>
+    </div>
 
-  <div class="form-container">
-    <a-card
-      :title="`${getHeaderText()} ${t('modules.member.view.information')}`"
-      class="member-view-card"
-      v-if="!loading"
-    >
-      <a-descriptions :column="2" bordered>
-        <!-- Profile Image -->
-        <a-descriptions-item :label="t('modules.member.view.profileImage')" :span="2">
-          <a-avatar
-            :src="member.user?.profile?.image_url"
-            :size="100"
-            shape="circle"
-            class="profile-avatar"
-          >
-            <template #icon>
-              <user-outlined v-if="!member.user?.profile?.image_url" />
-            </template>
-          </a-avatar>
-        </a-descriptions-item>
+    <div class="form-container">
+      <div v-if="!loading">
+        <a-card
+          :title="`${getHeaderText()} ${t('modules.member.view.information')}`"
+          class="member-view-card"
+        >
+          <a-descriptions :column="2" bordered>
+            <!-- Profile Image -->
+            <a-descriptions-item
+              :label="t('modules.member.view.profileImage')"
+              :span="2"
+            >
+              <a-avatar
+                :src="member.user?.profile?.image_url"
+                :size="100"
+                shape="circle"
+                class="profile-avatar"
+              >
+                <template #icon>
+                  <user-outlined v-if="!member.user?.profile?.image_url" />
+                </template>
+              </a-avatar>
+            </a-descriptions-item>
 
-        <!-- Basic Information -->
-        <a-descriptions-item :label="t('modules.member.columns.name')">
-          {{ member.name || "-" }}
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.columns.surname')">
-          {{ member.surname || "-" }}
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.columns.email')">
-          <a :href="`mailto:${member.email}`">{{ member.email || "-" }}</a>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.columns.phone')">
-          <a :href="`tel:${member.tel}`">{{ member.tel || "-" }}</a>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.view.type')" :span="2">
-          <a-tag :color="getTypeColor(member.type)" class="type-badge">
-            {{ member.type?.toUpperCase() || "-" }}
-          </a-tag>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.columns.status')" :span="2">
-          <a-tag :color="getStatusColor(member.status)" class="status-badge">
-            {{ member.status?.toUpperCase() || "-" }}
-          </a-tag>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.columns.address')" :span="2">
-          {{ member.address || "-" }}
-        </a-descriptions-item>
+            <!-- Basic Information -->
+            <a-descriptions-item :label="t('modules.member.columns.name')">
+              {{ member.name || "-" }}
+            </a-descriptions-item>
+            <a-descriptions-item :label="t('modules.member.columns.surname')">
+              {{ member.surname || "-" }}
+            </a-descriptions-item>
+            <a-descriptions-item :label="t('modules.member.columns.email')">
+              <a :href="`mailto:${member.email}`">{{ member.email || "-" }}</a>
+            </a-descriptions-item>
+            <a-descriptions-item :label="t('modules.member.columns.phone')">
+              <a :href="`tel:${member.tel}`">{{ member.tel || "-" }}</a>
+            </a-descriptions-item>
+            <a-descriptions-item
+              :label="t('modules.member.view.type')"
+              :span="2"
+            >
+              <a-tag :color="getTypeColor(member.type)" class="type-badge">
+                {{ member.type?.toUpperCase() || "-" }}
+              </a-tag>
+            </a-descriptions-item>
+            <a-descriptions-item
+              :label="t('modules.member.columns.status')"
+              :span="2"
+            >
+              <a-tag
+                :color="getStatusColor(member.status)"
+                class="status-badge"
+              >
+                {{ member.status?.toUpperCase() || "-" }}
+              </a-tag>
+            </a-descriptions-item>
+            <a-descriptions-item
+              :label="t('modules.member.columns.address')"
+              :span="2"
+            >
+              {{ member.address || "-" }}
+            </a-descriptions-item>
 
-        <!-- System Information -->
-        <a-descriptions-item :label="t('modules.member.columns.createdAt')">
-          {{ formatDate(member.created_at) }}
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('modules.member.columns.updatedAt')">
-          {{ formatDate(member.updated_at) }}
-        </a-descriptions-item>
-      </a-descriptions>
-    </a-card>
+            <!-- System Information -->
+            <a-descriptions-item :label="t('modules.member.columns.createdAt')">
+              {{ formatDate(member.created_at) }}
+            </a-descriptions-item>
+            <a-descriptions-item :label="t('modules.member.columns.updatedAt')">
+              {{ formatDate(member.updated_at) }}
+            </a-descriptions-item>
+          </a-descriptions>
+        </a-card>
+      </div>
 
-    <!-- Loading skeleton -->
-    <a-card class="member-view-card" v-else>
-      <a-skeleton active :paragraph="{ rows: 8 }" />
-    </a-card>
+      <!-- Loading skeleton -->
+      <a-card class="member-view-card" v-else>
+        <a-skeleton active :paragraph="{ rows: 8 }" />
+      </a-card>
+    </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -94,11 +111,11 @@ const getHeaderText = () => {
   const type = member.value.type?.toLowerCase();
   switch (type) {
     case "user":
-      return t('modules.member.usersTab');
+      return t("modules.member.usersTab");
     case "member":
-      return t('modules.member.membersTab');
+      return t("modules.member.membersTab");
     default:
-      return t('modules.member.membersTab');
+      return t("modules.member.membersTab");
   }
 };
 
@@ -115,7 +132,7 @@ const loadMemberData = async () => {
     console.log("Member data loaded:", member.value);
   } catch (error) {
     console.error("Error loading member data:", error);
-    message.error(t('modules.member.view.loadError'));
+    message.error(t("modules.member.view.loadError"));
     router.push("/member");
   } finally {
     loading.value = false;

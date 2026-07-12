@@ -1,15 +1,17 @@
 <template>
-  <div class="member-header">
-    <h1>{{ t('modules.member.title') }}</h1>
-  </div>
+  <div>
+    <div class="member-header">
+      <h1>{{ t("modules.member.title") }}</h1>
+    </div>
 
-  <div class="member-container">
-    <MemberTab
-      :members="members"
-      :loading="loading"
-      @load-members="loadMembers"
-      @delete-member="handleDeleteMember"
-    />
+    <div class="member-container">
+      <MemberTab
+        :members="members"
+        :loading="loading"
+        @load-members="loadMembers"
+        @delete-member="handleDeleteMember"
+      />
+    </div>
   </div>
 </template>
 
@@ -48,7 +50,7 @@ const members = reactive<IMemberMembers>({
 async function loadMembers(
   page = members.pagination.current,
   limit = members.pagination.pageSize,
-  search = ""
+  search = "",
 ) {
   loading.value = true;
   try {

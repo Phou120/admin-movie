@@ -61,7 +61,11 @@
           </template>
 
           <template v-else-if="column.key === 'status'">
-            <a-dropdown :trigger="['click']" placement="bottomLeft">
+            <a-dropdown
+              v-if="can('confirm', 'member')"
+              :trigger="['click']"
+              placement="bottomLeft"
+            >
               <a-tag
                 :color="getStatusColor(record.status)"
                 class="status-badge clickable"
@@ -96,6 +100,10 @@
                 </a-menu>
               </template>
             </a-dropdown>
+            <!-- Read-only status for users without confirm-member permission -->
+            <a-tag v-else :color="getStatusColor(record.status)" class="status-badge">
+              {{ getStatusLabel(record.status) }}
+            </a-tag>
           </template>
 
           <template v-else-if="column.key === 'created_at'">

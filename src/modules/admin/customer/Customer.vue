@@ -71,7 +71,11 @@
         </template>
 
         <template v-else-if="column.key === 'status'">
-          <a-dropdown :trigger="['click']" placement="bottomLeft">
+          <a-dropdown
+            v-if="can('approve', 'customer')"
+            :trigger="['click']"
+            placement="bottomLeft"
+          >
             <a-tag
               :color="getStatusColor(record.status)"
               class="status-badge clickable"
@@ -106,6 +110,10 @@
               </a-menu>
             </template>
           </a-dropdown>
+          <!-- Read-only status for users without approve-customer permission -->
+          <a-tag v-else :color="getStatusColor(record.status)" class="status-badge">
+            {{ getStatusLabel(record.status) }}
+          </a-tag>
         </template>
 
         <template v-else-if="column.key === 'total_revenue'">

@@ -43,7 +43,9 @@ const canSelectCustomer = computed(() => {
 
 // Only admin or super-admin can toggle a video's active/inactive status
 const canChangeStatus = computed(() => {
-  return hasRole("admin") || hasRole("super-admin");
+  // Gate video status changes by the approve-video permission.
+  // `can` already returns true for super-admins (they can do all).
+  return can("approve", "video");
 });
 
 // Check if user can manage videos (create, update, delete) - only for creator role
@@ -700,7 +702,7 @@ function handleStatusChange(id: number, checked: boolean) {
                     : 'status-inactive',
                 ]"
                 @change="
-                  (checked) => handleStatusChange(record.id, checked)
+                  (checked: boolean) => handleStatusChange(record.id, checked)
                 "
               />
             </div>
