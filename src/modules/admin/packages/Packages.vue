@@ -25,12 +25,12 @@ const { fetchAll, deletePackageById, updatePackage, createPackage } =
 const { t } = useI18n();
 const { can } = useAuth();
 
-const typeOptions = [
-  { label: t("modules.package.type.1month"), value: "1month" },
-  { label: t("modules.package.type.3months"), value: "3month" },
-  { label: t("modules.package.type.6months"), value: "6month" },
-  { label: t("modules.package.type.1year"), value: "1year" },
-];
+const typeOptions = computed(() => [
+  { label: t("modules.package.type.1month"), value: "one-month" },
+  { label: t("modules.package.type.3months"), value: "three-month" },
+  { label: t("modules.package.type.6months"), value: "six-month" },
+  { label: t("modules.package.type.1year"), value: "one-year" },
+]);
 
 const columns = computed(() => [
   {
@@ -96,6 +96,8 @@ const data = reactive<IPackagesData>({
 const isEditModalVisible = ref(false);
 const isAddModalVisible = ref(false);
 const loading = ref(false);
+const submittingAdd = ref(false);
+const submittingUpdate = ref(false);
 
 const selectedPackage = ref<IPackagesForm | null>(null);
 
@@ -165,6 +167,7 @@ function openAddModal() {
 
 // Submit new package
 async function submitAdd(form: IPackagesForm) {
+  submittingAdd.value = true;
   try {
     const response = await createPackage(form);
     showSuccessNotification(response.message);
@@ -173,6 +176,8 @@ async function submitAdd(form: IPackagesForm) {
   } catch (error: any) {
     const message = error.response?.data?.message || error.message;
     showErrorNotification(message);
+  } finally {
+    submittingAdd.value = false;
   }
 }
 
@@ -184,6 +189,7 @@ function openEditModal(pkg: IPackagesForm) {
 
 // Submit update
 async function submitUpdate(form: IPackagesForm) {
+  submittingUpdate.value = true;
   try {
     const response = await updatePackage(form);
     showSuccessNotification(response.message);
@@ -194,6 +200,8 @@ async function submitUpdate(form: IPackagesForm) {
     const message = error.response?.data?.message || error.message;
 
     showErrorNotification(message);
+  } finally {
+    submittingUpdate.value = false;
   }
 }
 
@@ -218,7 +226,7 @@ function formatPrice(price: number): string {
 
 // Get package type label
 function getPackageTypeLabel(type: string): string {
-  const option = typeOptions.find((opt) => opt.value === type);
+  const option = typeOptions.value.find((opt) => opt.value === type);
   return option ? option.label : type;
 }
 </script>
@@ -295,12 +303,17 @@ function getPackageTypeLabel(type: string): string {
   </a-table>
 
   <!-- Add Modal Component -->
-  <AddPackageModal v-model:visible="isAddModalVisible" @submit="submitAdd" />
+  <AddPackageModal
+    v-model:visible="isAddModalVisible"
+    :loading="submittingAdd"
+    @submit="submitAdd"
+  />
 
   <!-- Update Modal Component -->
   <UpdatePackageModal
     v-model:visible="isEditModalVisible"
     :packageData="selectedPackage"
+    :loading="submittingUpdate"
     @submit="submitUpdate"
   />
 </template>

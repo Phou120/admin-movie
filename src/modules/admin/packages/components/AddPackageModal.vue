@@ -8,6 +8,7 @@ import { formatNumber, parseFormattedNumber } from "../../../../common/utils/for
 
 interface Props {
   visible: boolean;
+  loading?: boolean;
 }
 
 interface Emits {
@@ -15,16 +16,16 @@ interface Emits {
   (e: "submit", form: IPackagesForm): void;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), { loading: false });
 const emit = defineEmits<Emits>();
 const { t } = useI18n();
 
-const typeOptions = [
+const typeOptions = computed(() => [
   { label: t('modules.package.type.1month'), value: "one-month" },
   { label: t('modules.package.type.3months'), value: "three-month" },
   { label: t('modules.package.type.6months'), value: "six-month" },
   { label: t('modules.package.type.1year'), value: "one-year" },
-];
+]);
 
 const formAdd = ref<IPackagesForm>({
   type: "one-month",
@@ -111,6 +112,7 @@ const handleSubmit = () => {
 
 // Cancel
 const handleCancel = () => {
+  if (props.loading) return;
   emit("update:visible", false);
 };
 </script>
@@ -120,6 +122,8 @@ const handleCancel = () => {
     :open="visible"
     :title="t('modules.package.addModal')"
     :footer="null"
+    :maskClosable="!loading"
+    :closable="!loading"
     @cancel="handleCancel"
   >
     <a-form layout="vertical">
@@ -160,16 +164,20 @@ const handleCancel = () => {
       </a-form-item>
     </a-form>
     <div class="modal-footer">
-      <a-button class="custom-cancel-btn" @click="handleCancel"
+      <a-button
+        class="custom-cancel-btn"
+        :disabled="loading"
+        @click="handleCancel"
         ><CloseOutlined />{{ t('actions.close') }}</a-button
       >
       <a-button
         type="primary"
         class="custom-ok-btn"
+        :loading="loading"
+        :disabled="!formAdd.type || formAdd.price <= 0 || loading"
         @click="handleSubmit"
-        :disabled="!formAdd.type || formAdd.price <= 0"
       >
-        <SaveOutlined />
+        <SaveOutlined v-if="!loading" />
         {{ t('actions.confirm') }}
       </a-button>
     </div>

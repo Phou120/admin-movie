@@ -238,7 +238,7 @@
             >
               {{
                 record.status === "success"
-                  ? t("modules.reportPayment.statusApproved")
+                  ? t("modules.reportPayment.statusApproved") 
                   : record.status === "pending"
                     ? t("modules.reportPayment.statusPending")
                     : record.status === "failed"

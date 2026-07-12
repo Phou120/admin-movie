@@ -41,6 +41,11 @@ const canSelectCustomer = computed(() => {
   return hasRole("admin") || hasRole("super-admin");
 });
 
+// Only admin or super-admin can toggle a video's active/inactive status
+const canChangeStatus = computed(() => {
+  return hasRole("admin") || hasRole("super-admin");
+});
+
 // Check if user can manage videos (create, update, delete) - only for creator role
 const canManageVideos = computed(() => {
   return can("update", "video") || can("delete", "video");
@@ -686,9 +691,7 @@ function handleStatusChange(id: number, checked: boolean) {
                 :checked="record.status === 'active'"
                 :checked-children="getStatusLabel('active')"
                 :un-checked-children="getStatusLabel('inactive')"
-                @change="
-                  (checked: boolean) => handleStatusChange(record.id, checked)
-                "
+                :disabled="!canChangeStatus"
                 :loading="isStatusLoading(record.id)"
                 :class="[
                   'status-toggle',
@@ -696,6 +699,9 @@ function handleStatusChange(id: number, checked: boolean) {
                     ? 'status-active'
                     : 'status-inactive',
                 ]"
+                @change="
+                  (checked) => handleStatusChange(record.id, checked)
+                "
               />
             </div>
           </template>

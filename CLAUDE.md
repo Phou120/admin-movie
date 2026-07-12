@@ -26,7 +26,6 @@ pnpm preview
 - **Vue 3.5** with Composition API and `<script setup>` syntax
 - **TypeScript** with strict type checking (uses project references: `tsconfig.app.json`, `tsconfig.node.json`)
 - **Ant Design Vue 4.x** for UI components
-
 - **Vue Router 4** for routing
 - **Axios** for HTTP requests
 - **Socket.io-client** for real-time payment notifications
@@ -291,6 +290,12 @@ Admin modules are in `src/modules/admin/` (auth, dashboard, video, user, role, p
   - `openspec/changes/` — in-flight change proposals with designs and tasks (e.g., `admin-report-pages/`, `customer-status-badge-redesign/`)
   - `openspec/specs/` — capability specifications
 - `docs/dashboard-api-spec.md` — dashboard API specification
+- `PROJECT_STRUCTURE.md` — long-form directory tree (overlaps with this file; treat CLAUDE.md as the source of truth and PROJECT_STRUCTURE.md as a deeper listing)
+- `README.md` — Vue/Vite template boilerplate only; no project-specific content
+
+### Deployment
+
+- Deployed to **Netlify** (`netlify.toml`). Build command: `pnpm build`, publish directory: `dist`, Node 20, `NETLIFY_USE_PNPM=true`. SPA fallback redirects all routes to `/index.html`.
 
 ### Environment Variables
 
